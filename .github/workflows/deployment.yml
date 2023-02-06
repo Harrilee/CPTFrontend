@@ -1,0 +1,31 @@
+name: deploy-master
+on:
+  push:
+    branches:
+      - "master"
+env:
+  CI: false
+jobs:
+  deploy-master:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - run: npm install
+      - name: build react into a different branch with only production build
+        run: |
+          git config --global user.email "github-actions[bot]@copilot.github.com"
+          git config --global user.name "github-actions[bot]"
+          git checkout -b built
+          npm run build
+          rm -r !(build)
+          mv build/* .
+          rm -r build
+          git add -Af
+          git commit -m "build react into a different branch"
+          git push -f origin built
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
