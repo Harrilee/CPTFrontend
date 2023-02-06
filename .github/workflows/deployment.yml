@@ -27,7 +27,7 @@ jobs:
           rm -r build
           git add -Af
           git commit -m "build react into a different branch"
-          git push -f origin built
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          git push --force --set-upstream origin built
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
