@@ -30,6 +30,6 @@ jobs:
           git commit -m "build react into a different branch"
           git push -f origin built
 
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
