@@ -20,7 +20,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git checkout -b built
           npm run build
-          GLOBIGNORE=build
+          GLOBIGNORE=build:.git
           rm -r *
           mv build/* .
           unset GLOBIGNORE
