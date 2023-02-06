@@ -20,9 +20,10 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git checkout -b built
           npm run build
-          rm -r !(build)
-          mv build/* .
-          rm -r build
+          
+          mv build/* ../
+          rm -r *
+          mv ../build/* .
           git add -Af
           git commit -m "build react into a different branch"
           git push -f origin built
