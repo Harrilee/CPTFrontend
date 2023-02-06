@@ -1,0 +1,15 @@
+{
+  "short_name": "上海纽约大学压力与心理健康研究",
+  "name": "上海纽约大学压力与心理健康研究",
+  "icons": [
+    {
+      "src": "rainbow.png",
+      "type": "image/png",
+      "sizes": "119*77"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
