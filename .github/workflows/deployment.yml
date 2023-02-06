@@ -20,10 +20,11 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git checkout -b built
           npm run build
-          
-          mv build/* ../
+          GLOBIGNORE=build
           rm -r *
-          mv ../build/* .
+          mv build/* .
+          unset GLOBIGNORE
+          rm -r build
           git add -Af
           git commit -m "build react into a different branch"
           git push -f origin built
