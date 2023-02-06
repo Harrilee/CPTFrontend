@@ -1,2 +1,1 @@
 ## NYU LGBT+ Survey
-
