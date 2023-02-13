@@ -7,7 +7,8 @@ import {
     BrowserRouter,
     Routes, Route, Navigate
 } from "react-router-dom";
-import {getUserNameFromCookie} from "./utility";
+
+import {Game} from "./components/Game/Game";
 
 // export const UserContext = createContext({ value: {user: "0", setUser: (user: string) => {}} })
 function App() {
@@ -16,13 +17,12 @@ function App() {
     // const value = {user, setUser}
 
 
-
-    const PrivateWrapper = ({children}: { children: JSX.Element }) => {
+    const PrivateWrapper = ({child}: { child: JSX.Element }) => {
         // const _user = useContext(UserContext).value.user;
         const cookie = document.cookie.split(";").map((x) => x.trim());
         const token = cookie.find((x) => x.startsWith("token="));
-        const username = getUserNameFromCookie();
-        return (token !== undefined && username !== "0") ? children : <Navigate to="/"/>;
+
+        return (token !== undefined) ? child : <Navigate to="/"/>;
     };
 
 
@@ -31,7 +31,9 @@ function App() {
             <Routes>
                 <Route path="/" element={<Login/>}>
                 </Route>
-                <Route path="home/" element={<PrivateWrapper children={<Home/>}/>}>
+                <Route path="home/" element={<PrivateWrapper child={<Home/>}/>}>
+                </Route>
+                <Route path="game/" element={<PrivateWrapper child={<Game/>}/>}>
                 </Route>
                 <Route path='*' element={<div>404</div>}/>
             </Routes>

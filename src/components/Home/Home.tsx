@@ -2,11 +2,11 @@ import React, {SyntheticEvent, useEffect, useState} from 'react'
 import style from './Home.module.scss'
 import Nav from 'react-bootstrap/Nav';
 import {Task} from "../Task/Task";
-import {getUserNameFromCookie, validateLogin} from "../../utility";
+import {getUserNameFromCookie,validateLogin} from "../../utility";
 export function Home() {
 
     const signOut = () => {
-        document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        // document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         window.location.href = "/"
     }
@@ -37,7 +37,7 @@ export function Home() {
                     <Nav.Link eventKey="link-1">阅读反馈</Nav.Link>
                     <Nav.Link eventKey="link-2">联系我们</Nav.Link>
                 </Nav>
-                <div className={style.signOut} onClick={signOut}><i className="fa-solid fa-right-from-bracket"></i> Sign Out</div>
+                <div className={style.signOut} onClick={signOut}><i className="fa-solid fa-right-from-bracket"></i>登出</div>
             </div>
             <div className={style.rightPanel}>
                     <div className={style.appBar}>
