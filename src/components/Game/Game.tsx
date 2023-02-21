@@ -47,14 +47,21 @@ export type choicePayload = {
 export function Game() {
 
 
-
     const [chat, setChat] = useState<any>([])
+    const [score, setScore] = useState(0);
+    const [displayID, setDisplayID] = useState(0);
+    const [realID, setRealID] = useState(0);
+    const visitorCount = 14;
 
-
-
-
-
-    const elicitResponse = async (payload:choicePayload={"choice":""}) => {
+    const clientColorHighlight = () => {
+        for (let i = 0; i < visitorCount; i++) {
+            const visitorElement = document.querySelector('#client' + (i + 1)) as HTMLElement;
+            visitorElement!.style.color = "";
+        }
+        const visitorElement = document.querySelector('#client' + (displayID + 1)) as HTMLElement;
+        visitorElement!.style.color = "#ff8300";
+    }
+    const elicitResponse = async (payload: choicePayload = {"choice": ""}) => {
 
 
         const res = await fetch(URL + "test/", {
@@ -68,28 +75,39 @@ export function Game() {
         })
         const response = await res.json()
 
+        console.log(response)
         const msgs = response.responses
-        console.log(msgs)
-        setChat((chat: any) => [...chat,...msgs])
+        const score = response.score
+        const displayID = response.scenario_display_id
+        const realID = response.scenario_true_id
+
+        setScore(score)
+        setDisplayID(displayID)
+        setRealID(realID)
+        setChat((chat: any) => [...chat, ...msgs])
+
+
 
 
     }
 
     useEffect(() => {
 
-        const response = async ()=> {
+        const response = async () => {
             await elicitResponse()
-
-
         }
 
         response().catch((e) => {
             console.log(e)
         })
 
-    },[])
+    }, [])
 
-
+    useEffect(()=>{
+        clientColorHighlight()
+        const element = document.querySelector('#chat_content');
+        element!.scrollTop = element!.scrollHeight;
+    })
 
 
     return <>
@@ -97,79 +115,84 @@ export function Game() {
             <div className={style.leftPanel}>
                 <div className={style.userInfo}>
 
-                    <div className={style.avatar}><img className={style.avatar} src={user_avatar} alt={"用户头像"}/></div>
+                    <div className={style.avatar}><img className={style.avatar} src={user_avatar} alt={"用户头像"}/>
+                    </div>
                     <div className={style.username}>{getUserNameFromCookie()}</div>
                 </div>
                 <div className={style.clientsHeader}>来访者列表</div>
 
                 <div className={style.clients}>
                     <div className={style.clientInfo}>
-                        <div ><img className={style.avatar} src={client1_avatar} alt={"来访者1头像"}/></div>
-                        <div className={style.clientName}>第1位来访者</div>
+                        <div><img className={style.avatar} src={client1_avatar} alt={"来访者1头像"}/></div>
+                        <div id={'client1'} className={style.clientName}>第1位来访者</div>
                     </div>
                     <div className={style.clientInfo}>
-                        <div ><img className={style.avatar} src={client2_avatar} alt={"来访者2头像"}/></div>
-                        <div className={style.clientName}>第2位来访者</div>
+                        <div><img className={style.avatar} src={client2_avatar} alt={"来访者2头像"}/></div>
+                        <div id={'client2'} className={style.clientName}>第2位来访者</div>
                     </div>
                     <div className={style.clientInfo}>
-                        <div ><img className={style.avatar} src={client3_avatar} alt={"来访者3头像"}/></div>
-                        <div className={style.clientName}>第3位来访者</div>
+                        <div><img className={style.avatar} src={client3_avatar} alt={"来访者3头像"}/></div>
+                        <div id={'client3'} className={style.clientName}>第3位来访者</div>
                     </div>
                     <div className={style.clientInfo}>
-                        <div ><img className={style.avatar} src={client4_avatar} alt={"来访者4头像"}/></div>
-                        <div className={style.clientName}>第4位来访者</div>
+                        <div><img className={style.avatar} src={client4_avatar} alt={"来访者4头像"}/></div>
+                        <div id={'client4'} className={style.clientName}>第4位来访者</div>
                     </div>
                     <div className={style.clientInfo}>
-                        <div ><img className={style.avatar} src={client5_avatar} alt={"来访者5头像"}/></div>
-                        <div className={style.clientName}>第5位来访者</div>
+                        <div><img className={style.avatar} src={client5_avatar} alt={"来访者5头像"}/></div>
+                        <div id={'client5'} className={style.clientName}>第5位来访者</div>
                     </div>
                     <div className={style.clientInfo}>
-                        <div ><img className={style.avatar} src={client6_avatar} alt={"来访者6头像"}/></div>
-                        <div className={style.clientName}>第6位来访者</div>
+                        <div><img className={style.avatar} src={client6_avatar} alt={"来访者6头像"}/></div>
+                        <div id={'client6'} className={style.clientName}>第6位来访者</div>
                     </div>
                     <div className={style.clientInfo}>
-                        <div ><img className={style.avatar} src={client7_avatar} alt={"来访者7头像"}/></div>
-                        <div className={style.clientName}>第7位来访者</div>
+                        <div><img className={style.avatar} src={client7_avatar} alt={"来访者7头像"}/></div>
+                        <div id={'client7'} className={style.clientName}>第7位来访者</div>
                     </div>
                     <div className={style.clientInfo}>
-                        <div ><img className={style.avatar} src={client8_avatar} alt={"来访者8头像"}/></div>
-                        <div className={style.clientName}>第8位来访者</div>
+                        <div><img className={style.avatar} src={client8_avatar} alt={"来访者8头像"}/></div>
+                        <div id={'client8'} className={style.clientName}>第8位来访者</div>
                     </div>
                     <div className={style.clientInfo}>
-                        <div ><img className={style.avatar} src={client9_avatar} alt={"来访者9头像"}/></div>
-                        <div className={style.clientName}>第9位来访者</div>
+                        <div><img className={style.avatar} src={client9_avatar} alt={"来访者9头像"}/></div>
+                        <div id={'client9'} className={style.clientName}>第9位来访者</div>
                     </div>
                     <div className={style.clientInfo}>
-                        <div ><img className={style.avatar} src={client10_avatar} alt={"来访者10头像"}/></div>
-                        <div className={style.clientName}>第10位来访者</div>
+                        <div><img className={style.avatar} src={client10_avatar} alt={"来访者10头像"}/></div>
+                        <div id={'client10'} className={style.clientName}>第10位来访者</div>
                     </div>
                     <div className={style.clientInfo}>
-                        <div ><img className={style.avatar} src={client11_avatar} alt={"来访者11头像"}/></div>
-                        <div className={style.clientName}>第11位来访者</div>
+                        <div><img className={style.avatar} src={client11_avatar} alt={"来访者11头像"}/></div>
+                        <div id={'client11'} className={style.clientName}>第11位来访者</div>
                     </div>
                     <div className={style.clientInfo}>
-                        <div ><img className={style.avatar} src={client12_avatar} alt={"来访者12头像"}/></div>
-                        <div className={style.clientName}>第12位来访者</div>
+                        <div><img className={style.avatar} src={client12_avatar} alt={"来访者12头像"}/></div>
+                        <div id={'client12'} className={style.clientName}>第12位来访者</div>
                     </div>
                     <div className={style.clientInfo}>
-                        <div ><img className={style.avatar} src={client13_avatar} alt={"来访者13头像"}/></div>
-                        <div className={style.clientName}>第13位来访者</div>
+                        <div><img className={style.avatar} src={client13_avatar} alt={"来访者13头像"}/></div>
+                        <div id={'client13'} className={style.clientName}>第13位来访者</div>
                     </div>
                     <div className={style.clientInfo}>
-                        <div ><img className={style.avatar} src={client14_avatar} alt={"来访者14头像"}/></div>
-                        <div className={style.clientName}>第14位来访者</div>
+                        <div><img className={style.avatar} src={client14_avatar} alt={"来访者14头像"}/></div>
+                        <div id={'client14'} className={style.clientName}>第14位来访者</div>
                     </div>
-
 
 
                 </div>
             </div>
             <div className={style.rightPanel}>
-                <div className={style.header}>来访者X </div>
-                <div className={style.content}>
-                    { chat.map((c: textResponse | questionResponse, index: number) =>
-                    { return <ChatBox elicitResponse={elicitResponse} message={c} key={index}/> })}
+                <div className={style.header}>
+                    <div>第{displayID + 1}位来访者</div>
+                    <div>分数：{score}</div>
                 </div>
+                <div className={style.content} id={'chat_content'}>
+                    {chat.map((c: textResponse | questionResponse, index: number) => {
+                        return <ChatBox elicitResponse={elicitResponse} message={c} key={index}/>
+                    })}
+                </div>
+
             </div>
 
         </div>

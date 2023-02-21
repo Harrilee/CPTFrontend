@@ -9,6 +9,7 @@ import {Choice} from "./Choice";
 
 type Prop = {
     message: textResponse|questionResponse,
+
     elicitResponse: (payload:choicePayload) => void
 }
 
@@ -30,6 +31,7 @@ export function ChatBox(props:Prop) {
         setShow(false)
         props.elicitResponse({"choice": choice})
         console.log(choice)
+
     }
 
     const clientWrapper = (content:textResponse) => {
@@ -79,6 +81,7 @@ export function ChatBox(props:Prop) {
 
 
     const message = props.message
+
     console.log(message)
 
     let result;
