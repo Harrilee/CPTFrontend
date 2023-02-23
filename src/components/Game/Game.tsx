@@ -51,6 +51,7 @@ export function Game() {
     const [score, setScore] = useState(0);
     const [displayID, setDisplayID] = useState(0);
     const [realID, setRealID] = useState(0);
+    const [showArr, setShowArr] = useState<boolean[]>([]);
     const visitorCount = 14;
 
     const clientColorHighlight = () => {
@@ -78,12 +79,22 @@ export function Game() {
         console.log(response)
         const msgs = response.responses
         const score = response.score
-        const displayID = response.scenario_display_id
+        const newDisplayID = response.scenario_display_id
         const realID = response.scenario_true_id
 
+        const newshowArr = new Array<boolean>(msgs.length).fill(false)
+        newshowArr[0] = true
+
+        // if (newDisplayID!==displayID){
+        //     const falseShowArr = new Array<boolean>(showArr.length).fill(false)
+        //     setShowArr(showArr)
+        //
+        // }
+
         setScore(score)
-        setDisplayID(displayID)
+        setDisplayID(newDisplayID)
         setRealID(realID)
+        setShowArr((oldArr) => [...oldArr, ...newshowArr])
         setChat((chat: any) => [...chat, ...msgs])
 
 
@@ -107,7 +118,11 @@ export function Game() {
         clientColorHighlight()
         const element = document.querySelector('#chat_content');
         element!.scrollTop = element!.scrollHeight;
+        console.log('rerender')
+
     })
+
+
 
 
     return <>
@@ -119,6 +134,7 @@ export function Game() {
                     </div>
                     <div className={style.username}>{getUserNameFromCookie()}</div>
                 </div>
+                <div className={style.score}>分数：{score}</div>
                 <div className={style.clientsHeader}>来访者列表</div>
 
                 <div className={style.clients}>
@@ -185,11 +201,11 @@ export function Game() {
             <div className={style.rightPanel}>
                 <div className={style.header}>
                     <div>第{displayID + 1}位来访者</div>
-                    <div>分数：{score}</div>
+
                 </div>
                 <div className={style.content} id={'chat_content'}>
                     {chat.map((c: textResponse | questionResponse, index: number) => {
-                        return <ChatBox elicitResponse={elicitResponse} message={c} key={index}/>
+                        return <ChatBox showArr={showArr} setShowArr={setShowArr} setChat={setChat} length={showArr.length} elicitResponse={elicitResponse} message={c} index={index} key={index}/>
                     })}
                 </div>
 

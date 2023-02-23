@@ -37,6 +37,12 @@ body {
       align-self: flex-start;
     }
 
+    .score {
+      margin-left: 1em;
+      font-weight: bolder;
+      align-self: flex-start;
+    }
+
     .clients {
       display: flex;
       flex-direction: column;
@@ -88,7 +94,7 @@ body {
     .header {
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
+      justify-content: center;
       padding: 1em 3em 0.5em 2em;
       border-bottom: 1px solid #d6d6d6;
 

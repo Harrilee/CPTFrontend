@@ -5,6 +5,6 @@ type Prop = {
     onClick: (event: React.MouseEvent) => void;
 }
 export function Choice(props:Prop) {
-
-    return <div className={style.choice} onClick={(e)=>props.onClick(e)}>{props.choice}</div>
+    const choice = props.choice.replace("//", "\n")
+    return <div className={style.choice} onClick={(e)=>props.onClick(e)}>{choice}</div>
 }

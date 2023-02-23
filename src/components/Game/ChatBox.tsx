@@ -1,5 +1,5 @@
 import {textResponse, questionResponse, choicePayload} from "./Game";
-import React, {MouseEventHandler, useState} from "react";
+import React, {Dispatch, MouseEventHandler, SetStateAction, useEffect, useState} from "react";
 import style from "./ChatBox.module.scss";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -8,9 +8,14 @@ import ModalDialog from 'react-bootstrap/ModalDialog';
 import {Choice} from "./Choice";
 
 type Prop = {
-    message: textResponse|questionResponse,
+    message: textResponse | questionResponse,
+    index: number,
+    length: number,
 
-    elicitResponse: (payload:choicePayload) => void
+    showArr: boolean[],
+    setShowArr: Dispatch<SetStateAction<boolean[]>>,
+    setChat: Dispatch<SetStateAction<any[]>>,
+    elicitResponse: (payload: choicePayload) => void
 }
 
 class DraggableModalDialog extends React.Component {
@@ -20,38 +25,98 @@ class DraggableModalDialog extends React.Component {
     }
 }
 
-export function ChatBox(props:Prop) {
-
-    const [show, setShow] = useState(true);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+export function ChatBox(props: Prop) {
+    const [showable, setShowable] = useState(false)
+    const [show, setShow] = useState(false)
+    const [close, setClose] = useState(false)
+    const [result, setResult] = useState<any>(null)
+    const handleClose = () => setShowable(false);
+    const handleShow = () => setShowable(true);
 
     const choiceHandler = (event: React.MouseEvent, choice: string) => {
 
         setShow(false)
+        setClose(true)
+        updateParentShowArr(0)
         props.elicitResponse({"choice": choice})
         console.log(choice)
 
     }
 
-    const clientWrapper = (content:textResponse) => {
-        return <div className={style.clientMsg}>{content.text}</div>
+    const transitionHandler = (event: React.MouseEvent, choice: string) => {
+
+        setShow(false)
+        setClose(true)
+        props.setShowArr([])
+        props.setChat([])
+        props.elicitResponse({"choice": choice})
+        console.log(choice)
+
     }
 
-    const userWrapper = (content:textResponse) => {
-        return <div className={style.userMsg}>{content.text}</div>
+    const textModalCloseHandler = (event: React.MouseEvent) => {
+        setShow(false)
+        setClose(true)
+        updateParentShowArr(0)
+
+
     }
 
-    const supervisorWrapper = (content:questionResponse) => {
+    // const transitionTextModalCloseHandler = (event: React.MouseEvent) => {
+    //     console.log('transitionTextModalCloseHandler')
+    //     setShow(false)
+    //     setClose(true)
+    //     const falseShowArr = new Array<boolean>(props.showArr.length).fill(false)
+    //     console.log(falseShowArr)
+    //     // props.setShowArr(falseShowArr)
+    //     updateParentShowArr(0)
+    //
+    //
+    // }
+
+
+
+    const updateParentShowArr = (waitingTime:number) => {
+        if (showable && props.index !== props.length - 1 && (props.showArr.some((value) => value === false))) {
+            setTimeout(()=>{
+                const arr = props.showArr.slice()
+                arr[props.index + 1] = true
+                console.log('finished callback')
+                props.setShowArr(arr)
+            }, waitingTime);
+
+        }
+    }
+    const clientWrapper = (content: textResponse) => {
+        updateParentShowArr(100)
+        return <div className={showable ? style.clientMsg : style.hide}>{content.text}</div>
+    }
+
+
+    const userWrapper = (content: textResponse) => {
+        updateParentShowArr(100)
+        return <div className={showable ? style.userMsg : style.hide}>{content.text}</div>
+    }
+
+    const supervisorWrapper = (content: questionResponse) => {
 
         const choices = JSON.parse(content.choices);
         const choicesArray = []
         console.log(choices)
+        let transition = false
+
         for (const [key, value] of Object.entries(choices)) {
-            choicesArray.push(value)
+            choicesArray.push(value as string)
         }
 
-        return   <>
+        if (choicesArray.length==1 && choicesArray[0]=="继续") {
+            console.log('transition caught here')
+            transition = true
+        }
+
+        content.text = content.text.replaceAll('//', '\n')
+
+        return <>
             <Modal dialogAs={DraggableModalDialog}
                    show={show}
                    animation={false}
@@ -60,17 +125,43 @@ export function ChatBox(props:Prop) {
                    onHide={handleClose}>
 
 
-                <Modal.Header className={style.modalHeader} closeButton>
+                <Modal.Header className={style.modalHeader}>
                     <Modal.Title>导师</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className={style.modalQuestion}>{content.text}</div>
                     <div>
-                        { choicesArray.map((choice, index: number) =>
-                        { return <Choice onClick={(e)=>choiceHandler(e,choice as string)} choice={choice as string} key={index}/> })}
+                        {choicesArray.map((choice, index: number) => {
+
+                            return <Choice onClick={transition? (e) => transitionHandler(e, choice as string) :(e) => choiceHandler(e, choice as string)} choice={choice as string} key={index}/>
+                        })}
                     </div>
 
 
+                </Modal.Body>
+
+            </Modal>
+        </>
+    }
+
+    const supervisorTextWrapper = (content: textResponse) => {
+
+        content.text = content.text.replaceAll('//', '\n')
+        return <>
+            <Modal dialogAs={DraggableModalDialog}
+                   show={show}
+                   animation={false}
+                   backdrop="static"
+                   centered
+                   onHide={handleClose}>
+
+
+                <Modal.Header className={style.modalHeader}>
+                    <Modal.Title>导师</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className={style.modalQuestion}>{content.text}</div>
+                    <Button variant="primary" onClick={(e) => textModalCloseHandler(e)}>继续</Button>
                 </Modal.Body>
 
             </Modal>
@@ -82,26 +173,45 @@ export function ChatBox(props:Prop) {
 
     const message = props.message
 
-    console.log(message)
 
-    let result;
 
-    if (message.speaker === "client") {
-        result = clientWrapper(message)
-    }
+    useEffect(() => {
+        console.log('useEffect')
+        console.log(message)
+        console.log(props.showArr)
+        console.log(props.index)
+        console.log('setShowable to',props.showArr[props.index])
 
-    else if (message.speaker === "supervisor") {
+        setShowable(props.showArr[props.index])
+        console.log('showable',showable)
+        if (close===true) {
+            setShow(false)
+        }
+        else{
+            setShow(showable)
+        }
+        console.log('set show to',show)
 
-        result = supervisorWrapper(message as questionResponse)
-    }
+        if (message.speaker === "client") {
+            setResult(clientWrapper(message))
+        } else if (message.speaker === "supervisorText") {
+            setResult(supervisorTextWrapper(message))
+        } else if (message.speaker === "supervisor") {
 
-    else if (message.speaker === "user") {
+            setResult(supervisorWrapper(message as questionResponse))
+        } else if (message.speaker === "user") {
 
-        result = userWrapper(message)
+            setResult(userWrapper(message))
 
-    }else{
-        console.log("response object does not have valid speaker")
-    }
+        }
+        else {
+            console.log("response object does not have valid speaker")
+        }
+
+    }, [showable,show,close,props.showArr[props.index]])
+
+
+
 
 
     return <>{result}</>;
