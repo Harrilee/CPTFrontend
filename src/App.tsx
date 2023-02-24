@@ -11,7 +11,8 @@ import {
 import {Game} from "./components/Game/Game";
 import {Survey} from "./components/Surveys/Survey";
 import {Writing123} from "./components/Writing123/Writing123";
-import {CONTENT_WRITING_DAY1} from "./content";
+import {CONTENT_WRITING_DAY1, CONTENT_WRITING_DAY2, CONTENT_WRITING_DAY3,CONTENT_WRITING_DAY6} from "./content";
+import {Writing6} from "./components/Writing6/Writing6";
 
 
 
@@ -45,6 +46,12 @@ function App() {
                 <Route path="day1/" element={<PrivateWrapper child={<Survey url={'https://nyu.qualtrics.com/jfe/form/SV_4Z9HRQoFIEaFKei'}/>}/>}>
                 </Route>
                 <Route path="writing1/" element={<PrivateWrapper child={<Writing123 day={1} content={CONTENT_WRITING_DAY1}/>}/>}>
+                </Route>
+                <Route path="writing2/" element={<PrivateWrapper child={<Writing123 day={2} content={CONTENT_WRITING_DAY2}/>}/>}>
+                </Route>
+                <Route path="writing3/" element={<PrivateWrapper child={<Writing123 day={3} content={CONTENT_WRITING_DAY3}/>}/>}>
+                </Route>
+                <Route path="writing6/" element={<PrivateWrapper child={<Writing6 day={6} content={CONTENT_WRITING_DAY6}/>}/>}>
                 </Route>
                 <Route path="day29/" element={<PrivateWrapper child={<Survey url={'https://nyu.qualtrics.com/jfe/form/SV_0fEtLt7hh5za4BM'}/>}/>}>
                 </Route>

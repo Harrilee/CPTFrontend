@@ -3,19 +3,23 @@ import style from './Writing123.module.scss'
 import {getTokenFromCookie, URL} from "../../utility";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import {ChatBox} from "../Game/ChatBox";
-import {questionResponse, textResponse} from "../Game/Game";
+
+
 type Prop = {
-   day:number,
-    content:string
+    day: number,
+    content: string
 }
-export function Writing123 (props:Prop) {
+
+export function Writing123(props: Prop) {
 
     const [content1, setContent1] = useState('');
     const [content2, setContent2] = useState('');
     const [validated, setValidated] = useState(false);
     const handleSubmit = async (event: SyntheticEvent) => {
         const form = event.currentTarget;
+
+
+
         event.preventDefault();
         if (!(form as HTMLInputElement).checkValidity()) {
             event.stopPropagation();
@@ -23,15 +27,18 @@ export function Writing123 (props:Prop) {
 
         setValidated(true);
 
+
         const payload = {
+            'day': props.day,
             "content1": content1,
             "content2": content2
         }
-        const res = await fetch(URL + "api/login/", {
+        const res = await fetch(URL + "api/writing123/", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + getTokenFromCookie()
             },
             body: JSON.stringify(payload),
 
@@ -40,52 +47,58 @@ export function Writing123 (props:Prop) {
         console.log(response)
         if (response.status === "Success") {
 
-            document.cookie = "token=" + JSON.parse(response.message).access;
-            // document.cookie = "username=" + phone;
-            // update UserContext
-            console.log(getTokenFromCookie())
-
-
-
-
+            alert(response.message)
             window.location.href = "/home"
-        }else{
+
+        } else {
             alert(response.message)
         }
-    };
 
+
+    };
 
 
     const articles = props.content.split("\n\n")
 
-    // {chat.map((c: textResponse | questionResponse, index: number) => {
-    //     return <ChatBox showArr={showArr} setShowArr={setShowArr} setChat={setChat} length={showArr.length} elicitResponse={elicitResponse} message={c} index={index} key={index}/>
-    // })}
+
+    const WORD_MIN_LIMIT = 20;
     return <div className={style.container}>
         <div className={style.title}>第{props.day}天</div>
-        <div>{articles.map((article,index)=>{return <p className={style.paragraph} key={index}>{article}</p>})}</div>
-        <div>
-            <Form validated={validated} onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+        <div>{articles.map((article, index) => {
+            return <p className={style.paragraph} key={index}>{article}</p>
+        })}</div>
+        <div className={style.line}></div>
+        <div className={style.form}>
+            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                <Form.Label>发生的事情</Form.Label>
+                <Form.Group controlId="formBasicContent1">
                     <Form.Control
                         required
+                        minLength={WORD_MIN_LIMIT}
                         type="text"
-                        placeholder="👤手机号"
+                        as="textarea" rows={5}
                         value={content1}
                         onChange={e => setContent1(e.target.value)}
                     />
-                </Form.Group>
-                <Form.Group className={`${style.formInput}`} controlId="formBasicPassword">
-                    <Form.Control
-                        required
-                        type="password"
-                        placeholder="🔒验证码"
-                        value={content2}
-                        onChange={e => setContent2(e.target.value)}
-                    />
+                    <Form.Control.Feedback type="invalid">
+                        请至少输入20个字
+                    </Form.Control.Feedback>
 
                 </Form.Group>
-                <Button id={style.login_button} variant="primary" type="submit">
+                <Form.Group controlId="formBasicContent2">
+                    <Form.Label>您当时的想法</Form.Label>
+                    <Form.Control
+                        required
+                        type="text"
+                        as="textarea" rows={5}
+                        value={content2}
+                        minLength={WORD_MIN_LIMIT}
+                        onChange={e => setContent2(e.target.value)}/>
+                    <Form.Control.Feedback type="invalid">
+                        请至少输入20个字
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Button className={style.button} variant="primary" type="submit">
                     提交
                 </Button>
             </Form>
@@ -93,3 +106,6 @@ export function Writing123 (props:Prop) {
 
     </div>
 }
+
+
+

@@ -65,7 +65,7 @@ export function Game() {
     const elicitResponse = async (payload: choicePayload = {"choice": ""}) => {
 
         console.log(payload)
-        const res = await fetch(URL + "test/", {
+        const res = await fetch(URL + "game/", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
