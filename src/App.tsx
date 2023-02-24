@@ -9,6 +9,11 @@ import {
 } from "react-router-dom";
 
 import {Game} from "./components/Game/Game";
+import {Survey} from "./components/Surveys/Survey";
+import {Writing123} from "./components/Writing123/Writing123";
+import {CONTENT_WRITING_DAY1} from "./content";
+
+
 
 // export const UserContext = createContext({ value: {user: "0", setUser: (user: string) => {}} })
 function App() {
@@ -34,6 +39,18 @@ function App() {
                 <Route path="home/" element={<PrivateWrapper child={<Home/>}/>}>
                 </Route>
                 <Route path="game/" element={<PrivateWrapper child={<Game/>}/>}>
+                </Route>
+                <Route path="day0/" element={<PrivateWrapper child={<Survey url={'https://nyu.qualtrics.com/jfe/form/SV_b3oXwg0uErHbNqK'}/>}/>}>
+                </Route>
+                <Route path="day1/" element={<PrivateWrapper child={<Survey url={'https://nyu.qualtrics.com/jfe/form/SV_4Z9HRQoFIEaFKei'}/>}/>}>
+                </Route>
+                <Route path="writing1/" element={<PrivateWrapper child={<Writing123 day={1} content={CONTENT_WRITING_DAY1}/>}/>}>
+                </Route>
+                <Route path="day29/" element={<PrivateWrapper child={<Survey url={'https://nyu.qualtrics.com/jfe/form/SV_0fEtLt7hh5za4BM'}/>}/>}>
+                </Route>
+                <Route path="day45/" element={<PrivateWrapper child={<Survey url={'https://nyu.qualtrics.com/jfe/form/SV_9TQwYhtFVafdQma'}/>}/>}>
+                </Route>
+                <Route path="day105/" element={<PrivateWrapper child={<Survey url={'https://nyu.qualtrics.com/jfe/form/SV_4HJi8oX4onYNtPg'}/>}/>}>
                 </Route>
                 <Route path='*' element={<div>404</div>}/>
             </Routes>

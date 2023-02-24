@@ -10,9 +10,18 @@ type Props = {
 
 }
 export function Task(props: Props){
+
+    let placeHolder=''
+    if (props.days<10){
+        placeHolder = ''
+    }
+    else if (props.days<100){
+        placeHolder = ''
+    }
+
     return <>
         <div className={style.taskContainer}>
-            <div className={style.taskTitle}>第{props.days}天</div>
+            <div className={style.taskTitle}>第{placeHolder+props.days}天</div>
             <div>{props.questionType}</div>
             <Button className={style.button} onClick={()=>{window.location.href = props.taskURL}}>
                 点击开始

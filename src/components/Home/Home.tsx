@@ -55,14 +55,20 @@ export function Home() {
                         任务列表
                     </div>
                     <div className={style.bottomContainer}>
-                        <Task days={0} questionType={"问卷调查"} timeToFinish={30} taskURL={"https://stackoverflow.com/questions/1226714/how-to-get-the-browser-to-navigate-to-url-in-javascript"}/>
-                        <Task days={1} questionType={"问卷调查"} timeToFinish={30} taskURL={""}/>
-                        <Task days={2} questionType={"问卷调查"} timeToFinish={30} taskURL={""}/>
-                        <Task days={3} questionType={"问卷调查"} timeToFinish={30} taskURL={""}/>
-                        <Task days={4} questionType={"问卷调查"} timeToFinish={30} taskURL={""}/>
-                        <Task days={5} questionType={"问卷调查"} timeToFinish={30} taskURL={""}/>
-                        <Task days={6} questionType={"问卷调查"} timeToFinish={30} taskURL={""}/>
-                        <Task days={7} questionType={"问卷调查"} timeToFinish={30} taskURL={""}/>
+                        <Task days={0} questionType={"问卷调查"} timeToFinish={30} taskURL={"/day0"}/>
+                        <Task days={1} questionType={"问卷调查"} timeToFinish={30} taskURL={"/day1"}/>
+                        <Task days={1} questionType={"菜鸟写作"} timeToFinish={30} taskURL={"/writing1"}/>
+                        <Task days={2} questionType={"菜鸟写作"} timeToFinish={30} taskURL={"/writing2"}/>
+                        <Task days={3} questionType={"菜鸟写作"} timeToFinish={30} taskURL={"/writing3"}/>
+                        <Task days={4} questionType={"菜鸟游戏"} timeToFinish={30} taskURL={"/game"}/>
+                        <Task days={6} questionType={"菜鸟写作"} timeToFinish={30} taskURL={"/writing6"}/>
+                        <Task days={8} questionType={"菜鸟写作"} timeToFinish={30} taskURL={"/writing8"}/>
+                        <Task days={10} questionType={"菜鸟写作"} timeToFinish={30} taskURL={"/writing10"}/>
+                        <Task days={12} questionType={"菜鸟写作"} timeToFinish={30} taskURL={"/writing12"}/>
+                        <Task days={14} questionType={"菜鸟写作"} timeToFinish={30} taskURL={"/writing14"}/>
+                        <Task days={29} questionType={"问卷调查"} timeToFinish={30} taskURL={"/day29"}/>
+                        <Task days={45} questionType={"问卷调查"} timeToFinish={30} taskURL={"/day45"}/>
+                        <Task days={105} questionType={"问卷调查"} timeToFinish={30} taskURL={"/day105"}/>
 
                     </div>
 

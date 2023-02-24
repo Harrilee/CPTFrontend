@@ -13,6 +13,8 @@
     background-color: #5A57FF;
     border-radius: 0 2em 2em 0;
     min-width: 120px;
+    height: 100vh;
+    overflow-y: scroll;
 
     .NavBar {
       flex-grow: 1;
@@ -47,6 +49,8 @@
     flex-direction: column;
     justify-content: flex-start;
     flex-grow: 4;
+    height: 100vh;
+    overflow-y: scroll;
 
 
     .appBar {
