@@ -50,7 +50,7 @@ export function ChatBox(props: Prop) {
         props.setShowArr([])
         props.setChat([])
         props.elicitResponse({"choice": choice})
-        console.log(choice)
+        console.log('transitionHandler',choice)
 
     }
 
@@ -62,26 +62,13 @@ export function ChatBox(props: Prop) {
 
     }
 
-    // const transitionTextModalCloseHandler = (event: React.MouseEvent) => {
-    //     console.log('transitionTextModalCloseHandler')
-    //     setShow(false)
-    //     setClose(true)
-    //     const falseShowArr = new Array<boolean>(props.showArr.length).fill(false)
-    //     console.log(falseShowArr)
-    //     // props.setShowArr(falseShowArr)
-    //     updateParentShowArr(0)
-    //
-    //
-    // }
-
-
 
     const updateParentShowArr = (waitingTime:number) => {
         if (showable && props.index !== props.length - 1 && (props.showArr.some((value) => value === false))) {
             setTimeout(()=>{
                 const arr = props.showArr.slice()
                 arr[props.index + 1] = true
-                console.log('finished callback')
+                // console.log('finished callback')
                 props.setShowArr(arr)
             }, waitingTime);
 
@@ -110,7 +97,7 @@ export function ChatBox(props: Prop) {
         }
 
         if (choicesArray.length==1 && choicesArray[0]=="继续") {
-            console.log('transition caught here')
+            // console.log('transition caught here')
             transition = true
         }
 
@@ -147,6 +134,30 @@ export function ChatBox(props: Prop) {
     const supervisorTextWrapper = (content: textResponse) => {
 
         content.text = content.text.replaceAll('//', '\n')
+        if (content.text === "游戏结束") {
+            console.log('game over')
+            return <>
+                <Modal dialogAs={DraggableModalDialog}
+                       show={show}
+                       animation={false}
+                       backdrop="static"
+                       centered
+                       onHide={handleClose}>
+
+
+                    <Modal.Header className={style.modalHeader}>
+                        <Modal.Title>导师</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className={style.modalQuestion}>{content.text}</div>
+                        <Button variant="primary" onClick={(e) => window.location.href='/home'}>继续</Button>
+                    </Modal.Body>
+
+                </Modal>
+            </>
+        }
+
+
         return <>
             <Modal dialogAs={DraggableModalDialog}
                    show={show}
@@ -176,21 +187,21 @@ export function ChatBox(props: Prop) {
 
 
     useEffect(() => {
-        console.log('useEffect')
-        console.log(message)
-        console.log(props.showArr)
-        console.log(props.index)
-        console.log('setShowable to',props.showArr[props.index])
+        // console.log('useEffect')
+        // console.log(message)
+        // console.log(props.showArr)
+        // console.log(props.index)
+        // console.log('setShowable to',props.showArr[props.index])
 
         setShowable(props.showArr[props.index])
-        console.log('showable',showable)
+        // console.log('showable',showable)
         if (close===true) {
             setShow(false)
         }
         else{
             setShow(showable)
         }
-        console.log('set show to',show)
+        // console.log('set show to',show)
 
         if (message.speaker === "client") {
             setResult(clientWrapper(message))
