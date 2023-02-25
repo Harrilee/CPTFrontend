@@ -20,20 +20,20 @@ export function Task(props: Props){
         placeHolder = ''
     }
 
-    const button =  <Button className={style.button} onClick={()=>{window.location.href = props.taskURL}}>
+    let button =  <Button className={style.button} onClick={()=>{window.location.href = props.taskURL}}>
         点击开始
     </Button>
 
-    // if (props.questionType !== '问卷调查' && props.currentDay > props.days) {
-    //     button =  <Button className={style.button} disabled>
-    //         已经完成
-    //     </Button>
-    // }
-    // else if (props.questionType !== '问卷调查' && props.currentDay < props.days){
-    //     button =  <Button className={style.button} disabled>
-    //         尚未开启
-    //     </Button>
-    // }
+    if (props.questionType !== '问卷调查' && props.currentDay > props.days) {
+        button =  <Button className={style.button} disabled>
+            已经完成
+        </Button>
+    }
+    else if (props.questionType !== '问卷调查' && props.currentDay < props.days){
+        button =  <Button className={style.button} disabled>
+            尚未开启
+        </Button>
+    }
 
     return <>
         <div className={style.taskContainer}>
