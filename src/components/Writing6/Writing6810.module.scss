@@ -1,0 +1,55 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    height: 100vh;
+
+    .title {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-top: 3em;
+        align-self: center;
+    }
+    .line {
+        border-bottom: 1px solid gray;
+        margin:0 1.5em 0 1.5em;
+    }
+
+    .paragraph {
+        margin: 3em;
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+        margin: 3em;
+
+    }
+    .button {
+        margin-top: 1em;
+        background-color: #5A57FF;
+
+    }
+    textarea{
+        margin: 0 0 1em 0;
+    }
+    .checkboxContainer{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 0.8em 0 0.8em 0;
+
+    }
+    .checkbox{
+        margin-left: 1em;
+        height: 1em;
+        width: 1em;
+    }
+    .hiddenThought {
+        display: None;
+    }
+    .checkboxLabel {
+        min-width: 120px;
+    }
+}

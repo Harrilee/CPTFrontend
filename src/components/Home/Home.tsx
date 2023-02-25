@@ -2,7 +2,7 @@ import React, {SyntheticEvent, useEffect, useState} from 'react'
 import style from './Home.module.scss'
 import Nav from 'react-bootstrap/Nav';
 import {Task} from "../Task/Task";
-import {getTokenFromCookie, getUserNameFromCookie, URL, validateLogin} from "../../utility";
+import {getTokenFromCookie, getUserNameFromCookie, parseJwt, URL, validateLogin} from "../../utility";
 import {choicePayload} from "../Game/Game";
 
 export function Home() {
@@ -34,7 +34,7 @@ export function Home() {
         console.log(response)
         if (response.status === "Success") {
             const msg = JSON.parse(response.message);
-            console.log(msg)
+            // console.log(msg)
             setScore(msg.score)
             setDay(msg.day)
         }
@@ -45,7 +45,7 @@ export function Home() {
     useEffect(() => {
         const response = async () => {
             const result = await validateLogin()
-            console.log(result)
+            // console.log(result)
             if (result === false) {
                 signOut()
                 window.location.href = "/"
@@ -54,6 +54,10 @@ export function Home() {
         response().catch((e) => {
             console.log(e)
         })
+
+        const token = parseJwt(getTokenFromCookie());
+        const timeToExpireMinute = Math.floor((token.exp - Math.floor(Date.now() / 1000))/60);
+        console.log(timeToExpireMinute)
 
     })
 

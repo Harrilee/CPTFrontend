@@ -11,8 +11,15 @@ import {
 import {Game} from "./components/Game/Game";
 import {Survey} from "./components/Surveys/Survey";
 import {Writing123} from "./components/Writing123/Writing123";
-import {CONTENT_WRITING_DAY1, CONTENT_WRITING_DAY2, CONTENT_WRITING_DAY3,CONTENT_WRITING_DAY6} from "./content";
-import {Writing6} from "./components/Writing6/Writing6";
+import {
+    CONTENT_WRITING_DAY1, CONTENT_WRITING_DAY10, CONTENT_WRITING_DAY12, CONTENT_WRITING_DAY14,
+    CONTENT_WRITING_DAY2,
+    CONTENT_WRITING_DAY3,
+    CONTENT_WRITING_DAY6,
+    CONTENT_WRITING_DAY8
+} from "./content";
+import {Writing6810} from "./components/Writing6/Writing6810";
+import {Writing1214} from "./components/Writing1214/Writing1214";
 
 
 
@@ -51,7 +58,15 @@ function App() {
                 </Route>
                 <Route path="writing3/" element={<PrivateWrapper child={<Writing123 day={3} content={CONTENT_WRITING_DAY3}/>}/>}>
                 </Route>
-                <Route path="writing6/" element={<PrivateWrapper child={<Writing6 day={6} content={CONTENT_WRITING_DAY6}/>}/>}>
+                <Route path="writing6/" element={<PrivateWrapper child={<Writing6810 day={6} content={CONTENT_WRITING_DAY6}/>}/>}>
+                </Route>
+                <Route path="writing8/" element={<PrivateWrapper child={<Writing6810 day={8} content={CONTENT_WRITING_DAY8}/>}/>}>
+                </Route>
+                <Route path="writing10/" element={<PrivateWrapper child={<Writing6810 day={10} content={CONTENT_WRITING_DAY10}/>}/>}>
+                </Route>
+                <Route path="writing12/" element={<PrivateWrapper child={<Writing1214 day={12} content={CONTENT_WRITING_DAY12}/>}/>}>
+                </Route>
+                <Route path="writing14/" element={<PrivateWrapper child={<Writing1214 day={14} content={CONTENT_WRITING_DAY14}/>}/>}>
                 </Route>
                 <Route path="day29/" element={<PrivateWrapper child={<Survey url={'https://nyu.qualtrics.com/jfe/form/SV_0fEtLt7hh5za4BM'}/>}/>}>
                 </Route>
