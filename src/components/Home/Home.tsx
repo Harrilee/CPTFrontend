@@ -1,9 +1,9 @@
-import React, {SyntheticEvent, useEffect, useState} from 'react'
+import React, { useEffect, useState} from 'react'
 import style from './Home.module.scss'
 import Nav from 'react-bootstrap/Nav';
 import {Task} from "../Task/Task";
 import {getTokenFromCookie, getUserNameFromCookie, parseJwt, URL, validateLogin} from "../../utility";
-import {choicePayload} from "../Game/Game";
+import {TimeOutAlert} from "../TimeOutAlert/TimeOutAlert";
 
 export function Home() {
 
@@ -55,9 +55,6 @@ export function Home() {
             console.log(e)
         })
 
-        const token = parseJwt(getTokenFromCookie());
-        const timeToExpireMinute = Math.floor((token.exp - Math.floor(Date.now() / 1000))/60);
-        console.log(timeToExpireMinute)
 
     })
 
@@ -88,6 +85,7 @@ export function Home() {
             <div className={style.rightPanel}>
                 <div className={style.appBar}>
                     <div className={style.appBarContent}>{getUserNameFromCookie()}</div>
+                    <TimeOutAlert/>
                 </div>
                 <div className={style.rightContainer}>
                     <div className={style.topTitle}>

@@ -75,13 +75,13 @@ export function ChatBox(props: Prop) {
         }
     }
     const clientWrapper = (content: textResponse) => {
-        updateParentShowArr(100)
+        updateParentShowArr(700)
         return <div className={showable ? style.clientMsg : style.hide}>{content.text}</div>
     }
 
 
     const userWrapper = (content: textResponse) => {
-        updateParentShowArr(100)
+        updateParentShowArr(700)
         return <div className={showable ? style.userMsg : style.hide}>{content.text}</div>
     }
 

@@ -3,6 +3,7 @@ import style from './Writing6810.module.scss'
 import {getTokenFromCookie, URL} from "../../utility";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import {TimeOutAlert} from "../TimeOutAlert/TimeOutAlert";
 
 
 type Prop = {
@@ -181,6 +182,7 @@ export function Writing6810(props: Prop) {
     const WORD_MIN_LIMIT = 20;
     return <div className={style.container}>
         <div className={style.title}>第{props.day}天</div>
+        <TimeOutAlert/>
         <div>{articles.map((article, index) => {
             return <p className={style.paragraph} key={index}>{article}</p>
         })}</div>
