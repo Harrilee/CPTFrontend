@@ -153,7 +153,7 @@ export function Writing6(props: Prop) {
                             <Form.Label>对应的想法：</Form.Label>
                             <Form.Control
                                 disabled
-                                required
+                                required={a5isChecked}
                                 type="text"
                                 as="textarea" rows={3}
                                 value={content5}

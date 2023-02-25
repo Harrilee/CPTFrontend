@@ -18,40 +18,44 @@ export function Writing123(props: Prop) {
     const handleSubmit = async (event: SyntheticEvent) => {
         const form = event.currentTarget;
 
+        const notValid = !(form as HTMLInputElement).checkValidity();
 
-
-        event.preventDefault();
-        if (!(form as HTMLInputElement).checkValidity()) {
+        if (notValid) {
+            event.preventDefault();
             event.stopPropagation();
         }
 
+        console.log(notValid);
+
         setValidated(true);
 
+        if (!notValid) {
 
-        const payload = {
-            'day': props.day,
-            "content1": content1,
-            "content2": content2
-        }
-        const res = await fetch(URL + "api/writing123/", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                "Authorization": "Bearer " + getTokenFromCookie()
-            },
-            body: JSON.stringify(payload),
+            const payload = {
+                'day': props.day,
+                "content1": content1,
+                "content2": content2
+            }
+            const res = await fetch(URL + "api/writing123/", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "Authorization": "Bearer " + getTokenFromCookie()
+                },
+                body: JSON.stringify(payload),
 
-        })
-        const response = await res.json()
-        console.log(response)
-        if (response.status === "Success") {
+            })
+            const response = await res.json()
+            console.log(response)
+            if (response.status === "Success") {
 
-            alert(response.message)
-            window.location.href = "/home"
+                alert(response.message)
+                window.location.href = "/home"
 
-        } else {
-            alert(response.message)
+            } else {
+                alert(response.message)
+            }
         }
 
 
