@@ -1,7 +1,7 @@
 import {Navigate} from "react-router-dom";
 import React from "react";
 
-export const URL = 'http://127.0.0.1:8000/';
+export const URL = 'http://linode.zifengallen.me:8888/';
 
 export const getUserNameFromCookie = (): string => {
     const cookie = document.cookie.split(";").map((x) => x.trim());

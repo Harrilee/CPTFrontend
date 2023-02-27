@@ -45,7 +45,7 @@ export function Home() {
     useEffect(() => {
         const response = async () => {
             const result = await validateLogin()
-            // console.log(result)
+            console.log(result)
             if (result === false) {
                 signOut()
                 window.location.href = "/"

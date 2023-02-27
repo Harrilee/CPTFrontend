@@ -40,7 +40,7 @@ function App() {
 
 
     // return <UserContext.Provider value={{value}}>
-    return <HashRouter>
+    return <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Login/>}>
                 </Route>
@@ -76,7 +76,7 @@ function App() {
                 </Route>
                 <Route path='*' element={<div>404</div>}/>
             </Routes>
-        </HashRouter>
+        </BrowserRouter>
     // </UserContext.Provider>
 
 
