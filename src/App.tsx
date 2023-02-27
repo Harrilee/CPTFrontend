@@ -5,7 +5,7 @@ import {Home} from "./components/Home/Home";
 import './App.scss';
 import {
     BrowserRouter,
-    Routes, Route, Navigate
+    Routes, Route, Navigate, HashRouter
 } from "react-router-dom";
 
 import {Game} from "./components/Game/Game";
@@ -40,7 +40,7 @@ function App() {
 
 
     // return <UserContext.Provider value={{value}}>
-    return <BrowserRouter>
+    return <HashRouter>
             <Routes>
                 <Route path="/" element={<Login/>}>
                 </Route>
@@ -76,7 +76,7 @@ function App() {
                 </Route>
                 <Route path='*' element={<div>404</div>}/>
             </Routes>
-        </BrowserRouter>
+        </HashRouter>
     // </UserContext.Provider>
 
 
