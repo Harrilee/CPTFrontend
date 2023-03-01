@@ -1,8 +1,8 @@
 import {Navigate} from "react-router-dom";
 import React from "react";
 
-export const URL = 'https://linode.zifengallen.me:8888/';
-
+// export const URL = 'https://linode.zifengallen.me:8888/';
+export const URL = 'http://127.0.0.1:8000/';
 export const getUserNameFromCookie = (): string => {
     const cookie = document.cookie.split(";").map((x) => x.trim());
     const token = cookie.find((x) => x.startsWith("token="));
@@ -34,7 +34,7 @@ export const validateLogin = async (): Promise<boolean> => {
         return false;
     }
 
-    const res = await fetch(URL + "validate/", {
+    const res = await fetch(URL + "api/validate/", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

@@ -17,6 +17,7 @@ export function Writing1214(props: Prop) {
 
     const [validated, setValidated] = useState(false);
     const handleSubmit = async (event: SyntheticEvent) => {
+        event.preventDefault();
         const form = event.currentTarget;
 
         const notValid = !(form as HTMLInputElement).checkValidity();

@@ -20,7 +20,7 @@ export function Home() {
     const elicitUserState = async () => {
 
 
-        const res = await fetch(URL + "info/", {
+        const res = await fetch(URL + "api/info/", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

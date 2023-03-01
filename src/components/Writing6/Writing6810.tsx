@@ -98,6 +98,7 @@ export function Writing6810(props: Prop) {
 
 
     const handleSubmit = async (event: SyntheticEvent) => {
+        event.preventDefault();
         const form = event.currentTarget;
 
 
