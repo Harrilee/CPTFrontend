@@ -6,6 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import Draggable from 'react-draggable';
 import ModalDialog from 'react-bootstrap/ModalDialog';
 import {Choice} from "./Choice";
+import {conversationGap} from "../../utility";
 
 type Prop = {
     message: textResponse | questionResponse,
@@ -75,13 +76,13 @@ export function ChatBox(props: Prop) {
         }
     }
     const clientWrapper = (content: textResponse) => {
-        updateParentShowArr(700)
+        updateParentShowArr(conversationGap)
         return <div className={showable ? style.clientMsg : style.hide}>{content.text}</div>
     }
 
 
     const userWrapper = (content: textResponse) => {
-        updateParentShowArr(700)
+        updateParentShowArr(conversationGap)
         return <div className={showable ? style.userMsg : style.hide}>{content.text}</div>
     }
 

@@ -4,6 +4,9 @@ import React from "react";
 // export const URL = 'https://linode.zifengallen.me:8888/';
 // export const URL = 'http://127.0.0.1:8000/';
 export const URL = 'https://rookietherapist.hosting.nyu.edu/';
+export const timeOut = 600;
+export const conversationGap = 700;
+
 export const getUserNameFromCookie = (): string => {
     const cookie = document.cookie.split(";").map((x) => x.trim());
     const token = cookie.find((x) => x.startsWith("token="));

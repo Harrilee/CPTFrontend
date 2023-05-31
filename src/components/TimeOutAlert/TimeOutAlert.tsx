@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {getTokenFromCookie, parseJwt, URL} from "../../utility";
+import {getTokenFromCookie, parseJwt, timeOut, URL} from "../../utility";
 import {Alert} from "react-bootstrap";
 import style from './TimeOutAlert.module.scss'
 
@@ -35,7 +35,7 @@ export function TimeOutAlert() {
         const timeToExpire = Math.floor((token.exp - Math.floor(Date.now() / 1000)));
         setTimeToExpire(timeToExpire)
 
-        if (timeToExpire <= 600) { // 28800 max
+        if (timeToExpire <= timeOut) { // 28800 max
             setShow(true)
         }else{
             setShow(false)
