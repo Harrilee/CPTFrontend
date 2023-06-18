@@ -22,6 +22,15 @@
         display: flex;
         flex-direction: row;
         position: relative;
+        margin-bottom: 4px;
+        input {
+            background-image: none !important;
+        }
+    }
+    .errorMsg{
+        color: rgb(255, 158, 158);
+        font-size: 0.8em;
+        margin-top: 0.5em;
         margin-bottom: 2em;
     }
 
@@ -51,7 +60,7 @@
         .formInput{
             display: flex;
             flex-direction: column;
-            margin-bottom: 1em;
+            margin-bottom: 4px;
         }
 
         #sms_button {
@@ -76,4 +85,8 @@
         background-repeat: no-repeat;
         background-size: cover;
     }
+}
+
+.mobileText{
+    background-color: white;
 }

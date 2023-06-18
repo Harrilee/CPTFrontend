@@ -89,6 +89,16 @@
         font-weight: bold;
         margin: 1em 0 0 2em;
       }
+      .refresh {
+        cursor: pointer;
+        font-size: 0.8em;
+        color: #5a57ff;
+        padding: 0 16px;
+      }
+      .refreshPop{
+        background-color: #5A57FF;
+        color: rebeccapurple
+      }
       .bottomContainer{
         display: flex;
         flex-direction:column;

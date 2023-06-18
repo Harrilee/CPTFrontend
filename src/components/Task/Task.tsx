@@ -12,35 +12,48 @@ type Props = {
 }
 export function Task(props: Props){
 
-    let placeHolder=''
-    if (props.days<10){
-        placeHolder = ''
-    }
-    else if (props.days<100){
-        placeHolder = ''
-    }
+  const intDay = parseInt(props.days.toString())
 
-    let button =  <Button className={style.button} onClick={()=>{window.location.href = props.taskURL}}>
-        点击开始
-    </Button>
+  let placeHolder = ''
+  if (props.days < 10) {
+      placeHolder = ''
+  } else if (props.days < 100) {
+      placeHolder = ''
+  }
 
-    if (props.questionType !== '问卷调查' && props.currentDay > props.days) {
-        button =  <Button className={style.button} disabled>
-            已经完成
-        </Button>
-    }
-    else if (props.questionType !== '问卷调查' && props.currentDay < props.days){
-        button =  <Button className={style.button} disabled>
-            尚未开启
-        </Button>
-    }
+  let button = (
+      <Button
+          className={style.button}
+          onClick={() => {
+              window.location.href = props.taskURL
+          }}
+      >
+          点击开始
+      </Button>
+  )
 
-    return <>
-        <div className={style.taskContainer}>
-            <div className={style.taskTitle}>第{placeHolder+props.days}天</div>
-            <div>{props.questionType}</div>
-            {button}
-            <div>预计时间：{props.timeToFinish}分钟</div>
-        </div>
-    </>
+  if (props.currentDay > props.days) {
+      button = (
+          <Button className={style.button} disabled>
+              已经完成
+          </Button>
+      )
+  } else if (props.currentDay < props.days) {
+      button = (
+          <Button className={style.button} disabled>
+              尚未开启
+          </Button>
+      )
+  }
+
+  return (
+      <>
+          <div className={style.taskContainer}>
+              <div className={style.taskTitle}>第{placeHolder + intDay}天</div>
+              <div>{props.questionType}</div>
+              {button}
+              <div>预计时间：{props.timeToFinish}分钟</div>
+          </div>
+      </>
+  )
 }
