@@ -42,8 +42,7 @@ function App() {
     }
 
     // return <UserContext.Provider value={{value}}>
-    return (
-        <BrowserRouter>
+    return <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Login />}></Route>
                 <Route path="home/" element={<PrivateWrapper child={<Home />} />}></Route>
@@ -144,8 +143,5 @@ function App() {
                 <Route path="*" element={<div>404</div>} />
             </Routes>
         </BrowserRouter>
-    )
-    // </UserContext.Provider>
-}
 
 export default App;
