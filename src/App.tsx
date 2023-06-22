@@ -46,8 +46,7 @@ function App() {
         <Routes>
             <Route path="/" element={<Login/>}></Route>
             <Route path="home/" element={<PrivateWrapper child={<Home/>}/>}></Route>
-            <Route path="game1/" element={<PrivateWrapper child={<Game day={1}/>}/>}></Route>
-            <Route path="game2/" element={<PrivateWrapper child={<Game day={2}/>}/>}></Route>
+            <Route path="game/" element={<PrivateWrapper child={<Game/>}/>}></Route>
             <Route
                 path="day0/"
                 element={
