@@ -1,21 +1,43 @@
 import {Navigate} from "react-router-dom";
 import React from "react";
+import { parse } from 'path'
+
+const usernameEncryptionSalt = 1237890 // same as in backend
 
 // export const URL = 'https://linode.zifengallen.me:8888/';
-// export const URL = 'http://127.0.0.1:8000/';
-export const URL = 'https://linode.zifengallen.top:8888/';
-export const timeOut = 600;
-export const conversationGap = 700;
+export const URL = 'http://127.0.0.1:8000/'
+// export const URL = 'https://linode.zifengallen.top:8888/';
+export const timeOut = 600
+export const conversationGap = 1200
 
 export const getUserNameFromCookie = (): string => {
-    const cookie = document.cookie.split(";").map((x) => x.trim());
-    const token = cookie.find((x) => x.startsWith("token="));
-    if (token === undefined) {
-        return "0";
-    }else{
-        return parseJwt(token.slice(6)).username;
-    }
+  const cookie = document.cookie.split(';').map(x => x.trim())
+  const token = cookie.find(x => x.startsWith('token='))
+  if (token === undefined) {
+    return '0'
+  } else {
+    return parseJwt(token.slice(6)).username
+  }
 }
+
+export const encryptUsername = (username: string): string => {
+  /* 
+  Encryption algorithm:
+    1. Convert username to int
+    2. remove the first digit "1" (since all usernames start with 1)
+    3. Add salt
+    4. Convert back to string in base 36
+  */
+  const usernameInt = parseInt(username) - 10000000000
+  return Number(usernameInt - usernameEncryptionSalt)
+    .toString(36)
+    .toUpperCase()
+}
+
+export const getEncryptedUsernameFromCookie = (): string => {
+  return encryptUsername(getUserNameFromCookie())
+}
+
 export function parseJwt (token:string) {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -54,4 +76,10 @@ export const validateLogin = async (): Promise<boolean> => {
     else {
         return false;
     }
+}
+
+export const signOut = () => {
+    // document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+    window.location.href = '/'
 }
