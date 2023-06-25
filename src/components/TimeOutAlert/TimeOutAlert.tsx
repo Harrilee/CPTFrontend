@@ -35,11 +35,15 @@ export function TimeOutAlert() {
         const timeToExpire = Math.floor((token.exp - Math.floor(Date.now() / 1000)));
         setTimeToExpire(timeToExpire)
 
-        if (timeToExpire <= timeOut) { // 28800 max
+
+        if (timeToExpire <= 1) {
+            signOut()
+        }
+        else if (timeToExpire <= timeOut) { // 28800 max
             setShow(true)
         }else{
             setShow(false)
-            signOut()
+
 
         }
 
