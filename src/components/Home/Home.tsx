@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import style from './Home.module.scss'
 import Nav from 'react-bootstrap/Nav'
 import { Task } from '../Task/Task'
-import { getTokenFromCookie, getEncryptedUsernameFromCookie, URL, validateLogin } from '../../utility'
+import {getTokenFromCookie, getEncryptedUsernameFromCookie, URL, validateLogin, signOut} from '../../utility'
 import { TimeOutAlert } from '../TimeOutAlert/TimeOutAlert'
 import Overlay from 'react-bootstrap/Overlay'
 
@@ -12,11 +12,11 @@ export function Home() {
     const [refreshPop, setRefreshPop] = useState(false)
     const refreshRef = useRef(null)
 
-    const signOut = () => {
-        // document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
-        window.location.href = '/'
-    }
+    // const signOut = () => {
+    //     // document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    //     document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+    //     window.location.href = '/'
+    // }
 
     const elicitUserState = async () => {
         const res = await fetch(URL + 'api/info/', {

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {getTokenFromCookie, parseJwt, timeOut, URL} from "../../utility";
+import {getTokenFromCookie, parseJwt, signOut, timeOut, URL} from "../../utility";
 import {Alert} from "react-bootstrap";
 import style from './TimeOutAlert.module.scss'
 
@@ -39,6 +39,8 @@ export function TimeOutAlert() {
             setShow(true)
         }else{
             setShow(false)
+            signOut()
+
         }
 
         const interval = setInterval(()=>{
