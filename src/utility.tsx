@@ -13,7 +13,7 @@ export const conversationGap = 1200
 export const getUserNameFromCookie = (): string => {
   const cookie = document.cookie.split(';').map(x => x.trim())
   const token = cookie.find(x => x.startsWith('token='))
-  if (token === undefined) {
+  if (token === undefined ) {
     return '0'
   } else {
     return parseJwt(token.slice(6)).username
@@ -39,6 +39,10 @@ export const getEncryptedUsernameFromCookie = (): string => {
 }
 
 export function parseJwt (token:string) {
+    if (token.length<=1){
+        signOut()
+    }
+
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
