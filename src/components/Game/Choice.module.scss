@@ -1,10 +1,13 @@
 .choice:hover{
-    cursor: pointer;
-  background-color: #d6d6d6;
-  transition: 0.5s;
+  cursor: pointer;
+  background-color: #aaa;
+  transition: 0.2s;
 
 }
 
 .choice {
   padding: 0.5em;
+  margin:0.8em 0;
+  background-color: #e9ecef;
+  border-radius: 2em;
 }

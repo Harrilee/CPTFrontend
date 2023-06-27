@@ -30,13 +30,13 @@
     }
 
     .clientsHeader {
-      margin: 1em;
+      margin: 1.5em 1em 0.1em 2em;
       font-weight: bolder;
       align-self: flex-start;
     }
 
     .score {
-      margin-left: 1em;
+      margin-left: 2em;
       font-weight: bolder;
       align-self: flex-start;
     }
@@ -58,7 +58,7 @@
         flex-direction: row;
         align-items: center;
         justify-content: center;;
-        margin: 0.5em 0.8em 0.5em 0.5em;
+        margin: 0.5em 2em 0.5em 2em;
 
         .clientName {
 

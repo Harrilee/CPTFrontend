@@ -1,5 +1,5 @@
 import {textResponse, questionResponse, choicePayload} from "./Game";
-import React, {Dispatch, MouseEventHandler, SetStateAction, useEffect, useState} from "react";
+import React, {Component, Dispatch, MouseEventHandler, SetStateAction, useEffect, useState} from "react";
 import style from "./ChatBox.module.scss";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -7,6 +7,7 @@ import Draggable from 'react-draggable';
 import ModalDialog from 'react-bootstrap/ModalDialog';
 import {Choice} from "./Choice";
 import {conversationGap} from "../../utility";
+import supervisor_avatar from "./avatar/Supervisor.png";
 
 type Prop = {
     message: textResponse | questionResponse,
@@ -26,6 +27,17 @@ class DraggableModalDialog extends React.Component {
     }
 }
 
+export class SupervisorHeader extends Component {
+
+    render() {
+        return (
+            <div className={style.supervisor_container}>
+                <div><img className={style.supervisor_avatar} src={supervisor_avatar} alt={"导师头像"}/></div>
+                <div className={style.supervisor_name}>导师</div>
+            </div>
+        );
+    }
+}
 export function ChatBox(props: Prop) {
     const [showable, setShowable] = useState(false)
     const [show, setShow] = useState(false)
@@ -114,7 +126,7 @@ export function ChatBox(props: Prop) {
 
 
                 <Modal.Header className={style.modalHeader}>
-                    <Modal.Title>导师</Modal.Title>
+                    <Modal.Title><SupervisorHeader/></Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className={style.modalQuestion}>{content.text}</div>
@@ -147,7 +159,7 @@ export function ChatBox(props: Prop) {
 
 
                     <Modal.Header className={style.modalHeader}>
-                        <Modal.Title>导师</Modal.Title>
+                        <Modal.Title><SupervisorHeader/></Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <div className={style.modalQuestion}>{content.text}</div>
@@ -169,7 +181,7 @@ export function ChatBox(props: Prop) {
 
 
                 <Modal.Header className={style.modalHeader}>
-                    <Modal.Title>导师</Modal.Title>
+                    <Modal.Title><SupervisorHeader/></Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className={style.modalQuestion}>{content.text}</div>
