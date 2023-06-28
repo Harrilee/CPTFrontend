@@ -7,7 +7,7 @@ const usernameEncryptionSalt = 1237890 // same as in backend
 // export const URL = 'http://127.0.0.1:8000/'
 export const URL = 'https://linode.zifengallen.top:8888/';
 export const timeOut = 600
-export const conversationGap = 1200
+export const conversationGap = 3000
 export const shuffleArrayFlag = true
 export const getUserNameFromCookie = (): string => {
   const cookie = document.cookie.split(';').map(x => x.trim())
