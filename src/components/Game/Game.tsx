@@ -1,5 +1,5 @@
 import style from './Game.module.scss'
-import {getTokenFromCookie, getUserNameFromCookie, URL} from "../../utility";
+import {getEncryptedUsernameFromCookie, getTokenFromCookie, getUserNameFromCookie, URL} from "../../utility";
 import user_avatar from './avatar/User.png'
 import supervisor_avatar from './avatar/Supervisor.png'
 import client1_avatar from './avatar/Client 1.png'
@@ -53,6 +53,7 @@ export function Game() {
     const [displayID, setDisplayID] = useState(0);
     const [realID, setRealID] = useState(0);
     const [showArr, setShowArr] = useState<boolean[]>([]);
+    const [names, setNames] = useState<string[]>([]);
     const visitorCount = 14;
 
     const clientColorHighlight = () => {
@@ -82,6 +83,7 @@ export function Game() {
         const score = response.score
         const newDisplayID = response.scenario_display_id
         const realID = response.scenario_true_id
+        const name_list = response.name_list
 
         const newshowArr = new Array<boolean>(msgs.length).fill(false)
         newshowArr[0] = true
@@ -97,7 +99,7 @@ export function Game() {
         setRealID(realID)
         setShowArr((oldArr) => [...oldArr, ...newshowArr])
         setChat((chat: any) => [...chat, ...msgs])
-
+        setNames(name_list)
 
 
 
@@ -114,6 +116,8 @@ export function Game() {
         })
 
     }, [])
+
+
 
     useEffect(()=>{
         clientColorHighlight()
@@ -133,7 +137,7 @@ export function Game() {
 
                     <div className={style.avatar}><img className={style.avatar} src={user_avatar} alt={"用户头像"}/>
                     </div>
-                    <div className={style.username}>{getUserNameFromCookie()}</div>
+                    <div className={style.username}>{getEncryptedUsernameFromCookie()}</div>
                 </div>
                 <div className={style.score}>分数：{score}</div>
                 <div className={style.clientsHeader}>来访者列表</div>
@@ -141,59 +145,59 @@ export function Game() {
                 <div className={style.clients}>
                     <div className={style.clientInfo}>
                         <div><img className={style.avatar} src={client1_avatar} alt={"来访者1头像"}/></div>
-                        <div id={'client1'} className={style.clientName}>第1位来访者</div>
+                        <div id={'client1'} className={style.clientName}>{names[0]}</div>
                     </div>
                     <div className={style.clientInfo}>
                         <div><img className={style.avatar} src={client2_avatar} alt={"来访者2头像"}/></div>
-                        <div id={'client2'} className={style.clientName}>第2位来访者</div>
+                        <div id={'client2'} className={style.clientName}>{names[1]}</div>
                     </div>
                     <div className={style.clientInfo}>
                         <div><img className={style.avatar} src={client3_avatar} alt={"来访者3头像"}/></div>
-                        <div id={'client3'} className={style.clientName}>第3位来访者</div>
+                        <div id={'client3'} className={style.clientName}>{names[2]}</div>
                     </div>
                     <div className={style.clientInfo}>
                         <div><img className={style.avatar} src={client4_avatar} alt={"来访者4头像"}/></div>
-                        <div id={'client4'} className={style.clientName}>第4位来访者</div>
+                        <div id={'client4'} className={style.clientName}>{names[3]}</div>
                     </div>
                     <div className={style.clientInfo}>
                         <div><img className={style.avatar} src={client5_avatar} alt={"来访者5头像"}/></div>
-                        <div id={'client5'} className={style.clientName}>第5位来访者</div>
+                        <div id={'client5'} className={style.clientName}>{names[4]}</div>
                     </div>
                     <div className={style.clientInfo}>
                         <div><img className={style.avatar} src={client6_avatar} alt={"来访者6头像"}/></div>
-                        <div id={'client6'} className={style.clientName}>第6位来访者</div>
+                        <div id={'client6'} className={style.clientName}>{names[5]}</div>
                     </div>
                     <div className={style.clientInfo}>
                         <div><img className={style.avatar} src={client7_avatar} alt={"来访者7头像"}/></div>
-                        <div id={'client7'} className={style.clientName}>第7位来访者</div>
+                        <div id={'client7'} className={style.clientName}>{names[6]}</div>
                     </div>
                     <div className={style.clientInfo}>
                         <div><img className={style.avatar} src={client8_avatar} alt={"来访者8头像"}/></div>
-                        <div id={'client8'} className={style.clientName}>第8位来访者</div>
+                        <div id={'client8'} className={style.clientName}>{names[7]}</div>
                     </div>
                     <div className={style.clientInfo}>
                         <div><img className={style.avatar} src={client9_avatar} alt={"来访者9头像"}/></div>
-                        <div id={'client9'} className={style.clientName}>第9位来访者</div>
+                        <div id={'client9'} className={style.clientName}>{names[8]}</div>
                     </div>
                     <div className={style.clientInfo}>
                         <div><img className={style.avatar} src={client10_avatar} alt={"来访者10头像"}/></div>
-                        <div id={'client10'} className={style.clientName}>第10位来访者</div>
+                        <div id={'client10'} className={style.clientName}>{names[9]}</div>
                     </div>
                     <div className={style.clientInfo}>
                         <div><img className={style.avatar} src={client11_avatar} alt={"来访者11头像"}/></div>
-                        <div id={'client11'} className={style.clientName}>第11位来访者</div>
+                        <div id={'client11'} className={style.clientName}>{names[10]}</div>
                     </div>
                     <div className={style.clientInfo}>
                         <div><img className={style.avatar} src={client12_avatar} alt={"来访者12头像"}/></div>
-                        <div id={'client12'} className={style.clientName}>第12位来访者</div>
+                        <div id={'client12'} className={style.clientName}>{names[11]}</div>
                     </div>
                     <div className={style.clientInfo}>
                         <div><img className={style.avatar} src={client13_avatar} alt={"来访者13头像"}/></div>
-                        <div id={'client13'} className={style.clientName}>第13位来访者</div>
+                        <div id={'client13'} className={style.clientName}>{names[12]}</div>
                     </div>
                     <div className={style.clientInfo}>
                         <div><img className={style.avatar} src={client14_avatar} alt={"来访者14头像"}/></div>
-                        <div id={'client14'} className={style.clientName}>第14位来访者</div>
+                        <div id={'client14'} className={style.clientName}>{names[13]}</div>
                     </div>
 
 
@@ -201,7 +205,7 @@ export function Game() {
             </div>
             <div className={style.rightPanel}>
                 <div className={style.header}>
-                    <div>第{displayID + 1}位来访者</div>
+                    <div>{names[displayID]}</div>
                     <TimeOutAlert/>
 
                 </div>
