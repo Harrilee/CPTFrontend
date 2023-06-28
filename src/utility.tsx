@@ -4,9 +4,8 @@ import { parse } from 'path'
 
 const usernameEncryptionSalt = 1237890 // same as in backend
 
-// export const URL = 'https://linode.zifengallen.me:8888/';
-export const URL = 'http://127.0.0.1:8000/'
-// export const URL = 'https://linode.zifengallen.top:8888/';
+// export const URL = 'http://127.0.0.1:8000/'
+export const URL = 'https://linode.zifengallen.top:8888/';
 export const timeOut = 600
 export const conversationGap = 1200
 export const shuffleArrayFlag = true
