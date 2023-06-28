@@ -6,7 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import Draggable from 'react-draggable';
 import ModalDialog from 'react-bootstrap/ModalDialog';
 import {Choice} from "./Choice";
-import {conversationGap} from "../../utility";
+import {conversationGap, shuffleArrayFlag} from "../../utility";
 import supervisor_avatar from "./avatar/Supervisor.png";
 
 type Prop = {
@@ -46,13 +46,34 @@ export function ChatBox(props: Prop) {
     const handleClose = () => setShowable(false);
     const handleShow = () => setShowable(true);
 
+    function shuffleArray<T>(array: T[]): T[] {
+        let currentIndex = array.length;
+        let temporaryValue: T;
+        let randomIndex: number;
+
+        // While there remain elements to shuffle...
+        while (currentIndex !== 0) {
+
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+
+        return array;
+    }
+
     const choiceHandler = (event: React.MouseEvent, choice: string) => {
 
         setShow(false)
         setClose(true)
         updateParentShowArr(0)
         props.elicitResponse({"choice": choice})
-        console.log(choice)
+        console.log('choiceHandler',choice)
 
     }
 
@@ -101,18 +122,30 @@ export function ChatBox(props: Prop) {
     const supervisorWrapper = (content: questionResponse) => {
 
         const choices = JSON.parse(content.choices);
-        const choicesArray = []
-        console.log(choices)
+        let choicesArray = []
+        // console.log(choices)
         let transition = false
 
         for (const [key, value] of Object.entries(choices)) {
             choicesArray.push(value as string)
         }
 
+        // console.log('before **************')
+        // console.log(choicesArray)
+
         if (choicesArray.length==1 && choicesArray[0]=="继续") {
             // console.log('transition caught here')
             transition = true
         }
+        else if (shuffleArrayFlag && choicesArray.length < 5 && choicesArray[0]!="1分") {
+            // random shuffle choices array
+            choicesArray = shuffleArray(choicesArray);
+
+        }
+
+
+        // console.log('after **************')
+        // console.log(choicesArray)
 
         content.text = content.text.replaceAll('//', '\n')
 
@@ -147,7 +180,7 @@ export function ChatBox(props: Prop) {
     const supervisorTextWrapper = (content: textResponse) => {
 
         content.text = content.text.replaceAll('//', '\n')
-        if (content.text === "游戏结束") {
+        if (content.text.includes("游戏结束")) {
             console.log('game over')
             return <>
                 <Modal dialogAs={DraggableModalDialog}

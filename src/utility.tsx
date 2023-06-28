@@ -9,7 +9,7 @@ export const URL = 'http://127.0.0.1:8000/'
 // export const URL = 'https://linode.zifengallen.top:8888/';
 export const timeOut = 600
 export const conversationGap = 1200
-
+export const shuffleArrayFlag = true
 export const getUserNameFromCookie = (): string => {
   const cookie = document.cookie.split(';').map(x => x.trim())
   const token = cookie.find(x => x.startsWith('token='))
