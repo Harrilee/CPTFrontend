@@ -1,9 +1,8 @@
 import React, {SyntheticEvent, useContext, useEffect, useState} from 'react'
 import style from './Login.module.scss'
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import {getTokenFromCookie, URL} from "../../utility";
+import { getTokenFromCookie, URL } from '../../utility'
 import { UAParser } from 'ua-parser-js'
+import Welcome from '../Welcome/Welcome'
 
 export function Login() {
     const [phone, setPhone] = useState('')
@@ -14,6 +13,12 @@ export function Login() {
     const [errorMsg, setErrorMsg] = useState('')
     const ua = new UAParser(window.navigator.userAgent)
     const isMobile = ua.getDevice().type === 'mobile'
+
+    // If logged in, redirect to welcome page
+    const cookie = document.cookie.split(';').map(x => x.trim())
+    const token = cookie.find(x => x.startsWith('token='))
+    console.log(token)
+    if (token) return <Welcome />
 
     const getSMS = async () => {
         setSmsState(true)
@@ -89,7 +94,7 @@ export function Login() {
             // update UserContext
             console.log(getTokenFromCookie())
 
-            window.location.href = '/home'
+            window.location.reload()
         } else {
             setErrorMsg(response.message)
         }
@@ -105,35 +110,49 @@ export function Login() {
                 {isMobile ? (
                     <div className={style.mobileText}>手机端暂不支持登录，请使用电脑端登录</div>
                 ) : (
-                    <div>
-                        <Form validated={validated} onSubmit={handleSubmit}>
-                            <Form.Group className="mb-3" controlId="formBasicEmail">
-                                <Form.Control
-                                    required
+                    <div className={style.formGroup}>
+                        <div className={style.inputGroupWrapper}>
+                            <div className={style.inputGroup}>
+                                <img src="/user.svg" alt="phone" className={style.icon} width="20" height={'20'} />
+                                <input
                                     type="text"
-                                    placeholder="👤手机号"
+                                    placeholder="手机号"
+                                    className={style.input}
                                     value={phone}
                                     onChange={e => setPhone(e.target.value)}
                                 />
-                            </Form.Group>
-                            <Form.Group className={`${style.formInput}`} controlId="formBasicPassword">
-                                <Form.Control
-                                    required
+                            </div>
+                        </div>
+                        <div className={style.inputGroupWrapper}>
+                            <button
+                                disabled={smsState}
+                                className={style.smsButton + ' ' + style.smsButtonHidden}
+                                onClick={getSMS}
+                            >
+                                {smsText}
+                            </button>
+                            <div className={style.inputGroup}>
+                                <img src="/lock.svg" alt="password" className={style.icon} width="20" height={'20'} />
+                                <input
                                     type="password"
-                                    placeholder="🔒验证码"
+                                    placeholder="验证码"
+                                    className={style.input}
                                     value={pwd}
                                     onChange={e => setPwd(e.target.value)}
                                 />
-                                <Button id={style.sms_button} variant="primary" disabled={smsState} onClick={getSMS}>
-                                    {smsText}
-                                </Button>
-                            </Form.Group>
-
-                            <div className={style.errorMsg}>{errorMsg}</div>
-                            <Button id={style.login_button} variant="primary" type="submit">
-                                登录
-                            </Button>
-                        </Form>
+                            </div>
+                            <button disabled={smsState} className={style.smsButton} onClick={getSMS}>
+                                {smsText}
+                            </button>
+                        </div>
+                        <div className={style.errorMsg}>{errorMsg}</div>
+                        <button
+                            className={style.loginButton + ' ' + style.smsButton}
+                            type="submit"
+                            onClick={handleSubmit}
+                        >
+                            登录
+                        </button>
                     </div>
                 )}
             </div>
