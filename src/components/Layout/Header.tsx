@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styles from './Layout.module.scss'
 import Modal from 'react-bootstrap/Modal'
 
-const Header = () => {
+export function Header () {
     const [projShow, setProjShow] = useState(false)
     const [FAQShow, setFAQShow] = useState(false)
     const goHome = () => {
@@ -16,8 +16,7 @@ const Header = () => {
         setFAQShow(true)
     }
 
-    return (
-        <header className={styles.header}>
+    return <header className={styles.header}>
             <div className={styles.headerInner}>
                 <div className={styles.button} onClick={goHome}>
                     回到主页
@@ -89,7 +88,7 @@ const Header = () => {
                 </Modal.Body>
             </Modal>
         </header>
-    )
+
 }
 
 export default Header

@@ -1,11 +1,10 @@
 import React from 'react'
 import styles from './Welcome.module.scss'
-import Header from '../Layout/Header'
-import Footer from '../Layout/Footer'
+import {Header} from '../Layout/Header'
+import {Footer} from '../Layout/Footer'
 
-const Welcome = () => {
-    return (
-        <>
+export function Welcome () {
+    return <>
             <div style={{ position: 'fixed', width: '100%', zIndex: 100 }}>
                 <Header />
             </div>
@@ -31,7 +30,7 @@ const Welcome = () => {
                 <Footer />
             </div>
         </>
-    )
+
 }
 
 export default Welcome
