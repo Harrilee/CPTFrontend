@@ -1,9 +1,9 @@
-import React, {createContext, useState} from 'react';
-import {useContext} from 'react';
-import {Login} from "./components/Login/Login";
-import {Home} from "./components/Home/Home";
-import './App.scss';
-import { getEncryptedUsernameFromCookie } from './utility'
+import React, { createContext, useState, useEffect } from 'react'
+import { useContext } from 'react'
+import { Login } from './components/Login/Login'
+import { Home } from './components/Home/Home'
+import './App.scss'
+import { getEncryptedUsernameFromCookie, cloudWatchLogger } from './utility'
 import { BrowserRouter, Routes, Route, Navigate, HashRouter } from 'react-router-dom'
 import { UAParser } from 'ua-parser-js'
 
@@ -23,24 +23,40 @@ import {
 import { Writing6810 } from './components/Writing6/Writing6810'
 import { Writing1214 } from './components/Writing1214/Writing1214'
 import Video from './components/Video'
+import moment from 'moment'
 
 // export const UserContext = createContext({ value: {user: "0", setUser: (user: string) => {}} })
 function App() {
     // const [user, setUser] = useState("0")
     // const value = {user, setUser}
 
-    const PrivateWrapper = ({child}: { child: JSX.Element }) => {
+    const PrivateWrapper = ({ child }: { child: JSX.Element }) => {
         // const _user = useContext(UserContext).value.user;
         const ua = new UAParser(window.navigator.userAgent)
         const isMobile = ua.getDevice().type === 'mobile'
         if (isMobile) {
-            return <Navigate to="/"/>
+            return <Navigate to="/" />
         }
         const cookie = document.cookie.split(';').map(x => x.trim())
         const token = cookie.find(x => x.startsWith('token='))
         console.log(token)
-        return token !== undefined ? child : <Navigate to="/"/>
+        return token !== undefined ? child : <Navigate to="/" />
     }
+
+    useEffect(() => {
+        cloudWatchLogger('enter_page', '')
+        window.localStorage.setItem('enterDate', moment().toString())
+        document.addEventListener('visibilitychange', function logData() {
+            if (document.visibilityState === 'hidden') {
+                cloudWatchLogger(
+                    'leave_page',
+                    (Number(moment().toDate()) - Number(moment(window.localStorage.getItem('enterDate')).toDate())) /
+                        1000 +
+                        's'
+                )
+            }
+        })
+    }, [])
 
     // return <UserContext.Provider value={{value}}>
     return (
@@ -147,4 +163,4 @@ function App() {
         </BrowserRouter>
     )
 }
-export default App;
+export default App
