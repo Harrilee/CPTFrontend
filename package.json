@@ -16,6 +16,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/ua-parser-js": "^0.7.36",
     "bootstrap": "^5.2.2",
+    "moment": "^2.29.4",
     "node-sass": "^7.0.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",

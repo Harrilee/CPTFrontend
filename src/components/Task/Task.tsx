@@ -41,7 +41,7 @@ export function Task(props: Props){
   } else if (props.currentDay < props.days) {
       button = (
           <Button className={style.button} disabled>
-              尚未开启
+              尚未开放
           </Button>
       )
   }
@@ -50,9 +50,9 @@ export function Task(props: Props){
       <>
           <div className={style.taskContainer}>
               <div className={style.taskTitle}>第{placeHolder + intDay}天</div>
-              <div>{props.questionType}</div>
+              <div style={{ minWidth: '8em' }}>{props.questionType}</div>
               {button}
-              <div>预计时间：{props.timeToFinish}分钟</div>
+              <div className={style.timeToFinish}>预计时间：{props.timeToFinish}分钟</div>
           </div>
       </>
   )
