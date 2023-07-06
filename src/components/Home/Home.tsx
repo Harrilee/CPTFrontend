@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
-import Header from '../Layout/Header'
-import Footer from '../Layout/Footer'
+import {Header} from '../Layout/Header'
+import {Footer} from '../Layout/Footer'
 import style from './Home.module.scss'
 import Nav from 'react-bootstrap/Nav'
 import { Task } from '../Task/Task'

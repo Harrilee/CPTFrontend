@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import styles from './Video.module.scss'
-import Header from '../Layout/Header'
-import Footer from '../Layout/Footer'
+import {Header} from '../Layout/Header'
+import {Footer} from '../Layout/Footer'
 import moment from 'moment'
 import { getTokenFromCookie, URL } from '../../utility'
 
