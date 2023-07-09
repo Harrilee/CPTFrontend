@@ -47,6 +47,7 @@
         flex-grow: 4;
         overflow-y: auto;
         background-color: #eeebf3;
+        padding: 0 16px;
         .appBar {
             display: flex;
             flex-direction: row;
@@ -68,10 +69,12 @@
                 font-weight: bold;
                 margin: 1em 0 0;
             }
+
             .topContainer {
                 display: flex;
                 flex-direction: row;
                 gap: 24px;
+
                 .topCard {
                     background-color: white;
                     padding: 1em;
@@ -79,20 +82,24 @@
                     border-radius: 1em;
                 }
             }
+
             .bottomTitle {
                 font-weight: bold;
                 margin: 1em 0 0;
             }
+
             .refresh {
                 cursor: pointer;
                 font-size: 0.8em;
                 color: #5a57ff;
                 padding: 0 16px;
             }
+
             .refreshPop {
                 background-color: #5a57ff;
                 color: rebeccapurple;
             }
+
             .bottomContainer {
                 display: flex;
                 flex-direction: column;
