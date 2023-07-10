@@ -24,6 +24,7 @@ import { Writing6810 } from './components/Writing6/Writing6810'
 import { Writing1214 } from './components/Writing1214/Writing1214'
 import Video from './components/Video'
 import moment from 'moment'
+import Welcome from "./components/Welcome/Welcome";
 
 // export const UserContext = createContext({ value: {user: "0", setUser: (user: string) => {}} })
 function App() {
@@ -71,6 +72,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Login />}></Route>
                 <Route path="home/" element={<PrivateWrapper child={<Home />} />}></Route>
+                <Route path="welcome/" element={<PrivateWrapper child={<Welcome />} />}></Route>
                 <Route path="game/" element={<PrivateWrapper child={<Game />} />}></Route>
                 <Route
                     path="day0/"

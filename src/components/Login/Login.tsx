@@ -2,7 +2,7 @@ import React, {SyntheticEvent, useContext, useEffect, useState} from 'react'
 import style from './Login.module.scss'
 import { getTokenFromCookie, URL } from '../../utility'
 import { UAParser } from 'ua-parser-js'
-import Welcome from '../Welcome/Welcome'
+
 
 export function Login() {
     const [phone, setPhone] = useState('')
@@ -17,8 +17,7 @@ export function Login() {
     // If logged in, redirect to welcome page
     const cookie = document.cookie.split(';').map(x => x.trim())
     const token = cookie.find(x => x.startsWith('token='))
-    console.log(token)
-    if (token) return <Welcome />
+
 
     const getSMS = async () => {
         setSmsState(true)
@@ -94,7 +93,7 @@ export function Login() {
             // update UserContext
             console.log(getTokenFromCookie())
 
-            window.location.reload()
+            window.location.href = "/welcome"
         } else {
             setErrorMsg(response.message)
         }
