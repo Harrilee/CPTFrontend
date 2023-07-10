@@ -1,7 +1,7 @@
 import {Navigate} from "react-router-dom";
 import React from "react";
 import { parse } from 'path'
-import send from 'send'
+
 
 const usernameEncryptionSalt = 1237890 // same as in backend
 
