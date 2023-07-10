@@ -177,30 +177,37 @@ export function ChatBox(props: Prop) {
         </>
     }
 
+
     const supervisorTextWrapper = (content: textResponse) => {
+
+        const goHomeModal = <>
+            <Modal dialogAs={DraggableModalDialog}
+                   show={show}
+                   animation={false}
+                   backdrop="static"
+                   centered
+                   onHide={handleClose}>
+
+
+                <Modal.Header className={style.modalHeader}>
+                    <Modal.Title><SupervisorHeader/></Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className={style.modalQuestion}>{content.text}</div>
+                    <Button variant="primary" onClick={(e) => window.location.href='/home'}>继续</Button>
+                </Modal.Body>
+
+            </Modal>
+        </>
 
         content.text = content.text.replaceAll('//', '\n')
         if (content.text.includes("游戏结束")) {
             console.log('game over')
-            return <>
-                <Modal dialogAs={DraggableModalDialog}
-                       show={show}
-                       animation={false}
-                       backdrop="static"
-                       centered
-                       onHide={handleClose}>
-
-
-                    <Modal.Header className={style.modalHeader}>
-                        <Modal.Title><SupervisorHeader/></Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <div className={style.modalQuestion}>{content.text}</div>
-                        <Button variant="primary" onClick={(e) => window.location.href='/home'}>继续</Button>
-                    </Modal.Body>
-
-                </Modal>
-            </>
+            return goHomeModal
+        }
+        else if (content.text.includes("今天辛苦啦")){
+            console.log('game break')
+            return goHomeModal
         }
 
 
