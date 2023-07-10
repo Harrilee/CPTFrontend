@@ -74,7 +74,7 @@ export function Home() {
                         <div className={style.topContainer}>
                             <div className={style.topCard}>
                                 {parseInt(day.toString()) == 999 ? (
-                                    <div>由于成绩原因,您的训练已经结束</div>
+                                    <div>由于成绩过低,您的训练已经结束</div>
                                 ) : (
                                     <div>今天，是您坚持参与本次训练营的第{parseInt(day.toString())}天</div>
                                 )}
