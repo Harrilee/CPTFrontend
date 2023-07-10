@@ -5,8 +5,8 @@ import Modal from 'react-bootstrap/Modal'
 export function Header () {
     const [projShow, setProjShow] = useState(false)
     const [FAQShow, setFAQShow] = useState(false)
-    const goHome = () => {
-        window.location.href = '/'
+    const goWelcome = () => {
+        window.location.href = '/welcome'
     }
     const aboutProject = () => {
         setProjShow(true)
@@ -18,7 +18,7 @@ export function Header () {
 
     return <header className={styles.header}>
             <div className={styles.headerInner}>
-                <div className={styles.button} onClick={goHome}>
+                <div className={styles.button} onClick={goWelcome}>
                     回到主页
                 </div>
                 <div className={styles.button} onClick={aboutProject}>
@@ -28,7 +28,7 @@ export function Header () {
                 <div className={styles.button} onClick={FAQ}>
                     常见疑问
                 </div>
-                <div className={styles.button} onClick={goHome}>
+                <div className={styles.button} onClick={goWelcome}>
                     联系我们
                 </div>
             </div>

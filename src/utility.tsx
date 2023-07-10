@@ -35,7 +35,7 @@ export const encryptUsername = (username: string): string => {
 }
 
 export const getEncryptedUsernameFromCookie = (): string => {
-    return encryptUsername(getUserNameFromCookie())
+    return getUserNameFromCookie()
 }
 
 export function parseJwt(token: string) {
