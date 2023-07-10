@@ -25,7 +25,12 @@ export function Task(props: Props){
       <Button
           className={style.button}
           onClick={() => {
+            if (['/day0', '/day1', '/day29', '/day45', '/day105'].includes(props.taskURL)) {
+              window.open(props.taskURL, '_blank')
+            }
+            else {
               window.location.href = props.taskURL
+            }
           }}
       >
           点击开始

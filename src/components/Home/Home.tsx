@@ -155,10 +155,16 @@ export function Home() {
                                 currentDay={day}
                                 days={4.1}
                                 questionType={'游戏'}
-                                timeToFinish={60}
+                                timeToFinish={30}
                                 taskURL={'/game'}
                             />
-                            <Task currentDay={day} days={5} questionType={'游戏'} timeToFinish={60} taskURL={'/game'} />
+                            <Task
+                                currentDay={day}
+                                days={5}
+                                questionType={'游戏'}
+                                timeToFinish={30}
+                                taskURL={'/game'}
+                            />
 
                             <Task
                                 currentDay={day}

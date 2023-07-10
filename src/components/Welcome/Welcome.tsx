@@ -4,7 +4,7 @@ import {Header} from '../Layout/Header'
 import {Footer} from '../Layout/Footer'
 
 export function Welcome () {
-    return <>
+    return <div className={styles.wrapper}>
             <div style={{ position: 'fixed', width: '100%', zIndex: 100 }}>
                 <Header />
             </div>
@@ -26,10 +26,8 @@ export function Welcome () {
                     </div>
                 </div>
             </div>
-            <div style={{ position: 'fixed', width: '100%', bottom: 0, zIndex: 100 }}>
-                <Footer />
-            </div>
-        </>
+            <Footer />
+        </div>
 
 }
 

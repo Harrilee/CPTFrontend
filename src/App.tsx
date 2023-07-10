@@ -45,6 +45,13 @@ function App() {
     // return <UserContext.Provider value={{value}}>
     return (
         <BrowserRouter>
+            <style>
+                {`
+                .was-validated textarea {
+                    background-image: none !important;
+                }
+            `}
+            </style>
             <Routes>
                 <Route path="/" element={<Login />}></Route>
                 <Route path="home/" element={<PrivateWrapper child={<Home />} />}></Route>

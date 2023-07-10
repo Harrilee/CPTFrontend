@@ -1,7 +1,7 @@
 .welcomeWrapper {
     background-color: #eeebf3;
     width: 100%;
-    min-height: 100vh;
+    flex: 1;
     .welcome {
         max-width: 1100px;
         margin: 0 auto;
@@ -44,4 +44,11 @@
             }
         }
     }
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
 }
