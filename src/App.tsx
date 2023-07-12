@@ -25,6 +25,7 @@ import { Writing1214 } from './components/Writing1214/Writing1214'
 import Video from './components/Video'
 import moment from 'moment'
 import Welcome from "./components/Welcome/Welcome";
+import Feedback from './components/Feedback/Feedback';
 
 // export const UserContext = createContext({ value: {user: "0", setUser: (user: string) => {}} })
 function App() {
@@ -40,7 +41,6 @@ function App() {
         }
         const cookie = document.cookie.split(';').map(x => x.trim())
         const token = cookie.find(x => x.startsWith('token='))
-        console.log(token)
         return token !== undefined ? child : <Navigate to="/" />
     }
 
@@ -85,7 +85,7 @@ function App() {
                             }
                         />
                     }
-                ></Route>
+                />
                 <Route
                     path="day1/"
                     element={
@@ -97,40 +97,48 @@ function App() {
                             }
                         />
                     }
-                ></Route>
+                />
                 <Route
                     path="writing1/"
                     element={<PrivateWrapper child={<Writing123 day={1} content={CONTENT_WRITING_DAY1} />} />}
-                ></Route>
+                />
                 <Route
                     path="writing2/"
                     element={<PrivateWrapper child={<Writing123 day={2} content={CONTENT_WRITING_DAY2} />} />}
-                ></Route>
+                />
                 <Route
                     path="writing3/"
                     element={<PrivateWrapper child={<Writing123 day={3} content={CONTENT_WRITING_DAY3} />} />}
-                ></Route>
+                />
                 <Route
                     path="writing6/"
                     element={<PrivateWrapper child={<Writing6810 day={6} content={CONTENT_WRITING_DAY6} />} />}
-                ></Route>
+                />
+                <Route
+                    path="feedback6/"
+                    element={<PrivateWrapper child={<Feedback day={6} content={"TODO"} />} />}
+                />
                 <Route
                     path="writing8/"
                     element={<PrivateWrapper child={<Writing6810 day={8} content={CONTENT_WRITING_DAY8} />} />}
-                ></Route>
+                />
+                <Route path="feedback8/" element={<PrivateWrapper child={<Feedback day={8} content={"TODO"} />} />} />
                 <Route
                     path="writing10/"
                     element={<PrivateWrapper child={<Writing6810 day={10} content={CONTENT_WRITING_DAY10} />} />}
-                ></Route>
+                />
+                <Route path="feedback10/" element={<PrivateWrapper child={<Feedback day={10} content={"TODO"} />} />} />
                 <Route
                     path="writing12/"
                     element={<PrivateWrapper child={<Writing1214 day={12} content={CONTENT_WRITING_DAY12} />} />}
-                ></Route>
+                />
+                <Route path="feedback12/" element={<PrivateWrapper child={<Feedback day={12} content={"TODO"} />} />} />
                 <Route
                     path="writing14/"
                     element={<PrivateWrapper child={<Writing1214 day={14} content={CONTENT_WRITING_DAY14} />} />}
-                ></Route>
-                <Route path="video4/" element={<PrivateWrapper child={<Video />} />}></Route>
+                />
+                <Route path="feedback14/" element={<PrivateWrapper child={<Feedback day={14} content={"TODO"} />} />} />
+                <Route path="video4/" element={<PrivateWrapper child={<Video />} />} />
                 <Route
                     path="day29/"
                     element={
@@ -142,7 +150,7 @@ function App() {
                             }
                         />
                     }
-                ></Route>
+                />
                 <Route
                     path="day45/"
                     element={
@@ -154,7 +162,7 @@ function App() {
                             }
                         />
                     }
-                ></Route>
+                />
                 <Route
                     path="day105/"
                     element={
@@ -166,7 +174,7 @@ function App() {
                             }
                         />
                     }
-                ></Route>
+                />
                 <Route path="*" element={<div>404</div>} />
             </Routes>
         </BrowserRouter>
