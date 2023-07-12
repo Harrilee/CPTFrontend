@@ -12,12 +12,11 @@ import moment from 'moment'
 
 
 enum Rule {
-    'basic', // isValidUser, equalDayProgress, isValidTimeRange, hasNotOverdue
+    'basic', // isValidUser, equalDayProgress, isValidTimeRange
     'feedback', // hasFeedback
-    'writing23', // basic, qualityCheck
-    'writing8101214day29', // basic, qualityCheck, viewedFeedback
-    'video', // isValidUser, afterEarlistStartDate, qualityCheck
-    'global', // isValidUser, hasNotOverdue -> this is for global display
+    'viewFbFirst', // basic, viewedFeedback
+    'video', // isValidUser, afterEarlistStartDate
+    'global', // isValidUser -> this is for global display
 }
 
 const tasks = [
@@ -41,14 +40,14 @@ const tasks = [
         questionType: '自由写作',
         timeToFinish: 30,
         taskURL: '/writing2',
-        rule: Rule.writing23
+        rule: Rule.basic
     },
     {
         day: 3,
         questionType: '自由写作',
         timeToFinish: 30,
         taskURL: '/writing3',
-        rule: Rule.writing23
+        rule: Rule.basic
     },
     {
         day: 4,
@@ -90,7 +89,7 @@ const tasks = [
         questionType: '挑战型写作',
         timeToFinish: 30,
         taskURL: '/writing8',
-        rule: Rule.writing8101214day29
+        rule: Rule.viewFbFirst
     },
     {
         day: 9,
@@ -104,7 +103,7 @@ const tasks = [
         questionType: '挑战型写作',
         timeToFinish: 30,
         taskURL: '/writing10',
-        rule: Rule.writing8101214day29
+        rule: Rule.viewFbFirst
     },
     {
         day: 11,
@@ -118,7 +117,7 @@ const tasks = [
         questionType: '信件写作',
         timeToFinish: 30,
         taskURL: '/writing12',
-        rule: Rule.writing8101214day29
+        rule: Rule.viewFbFirst
     },
     {
         day: 13,
@@ -132,7 +131,7 @@ const tasks = [
         questionType: '信件写作',
         timeToFinish: 30,
         taskURL: '/writing14',
-        rule: Rule.writing8101214day29
+        rule: Rule.viewFbFirst
     },
     {
         day: 15,
@@ -146,7 +145,7 @@ const tasks = [
         questionType: '问卷调查',
         timeToFinish: 25,
         taskURL: '/day29',
-        rule: Rule.writing8101214day29
+        rule: Rule.viewFbFirst
     },
     {
         day: 45,
@@ -173,27 +172,18 @@ export function Home() {
         banFlag: false,
         banReason: "",
 
-        writingDay1QualityCheck: false,
-        writingDay2QualityCheck: false,
-        writingDay3QualityCheck: false,
-
-        writingDay6QualityCheck: false,
         feedbackDay6: "",
         feedbackDay6Viewed: false,
 
-        writingDay8QualityCheck: false,
         feedbackDay8: "",
         feedbackDay8Viewed: false,
 
-        writingDay10QualityCheck: false,
         feedbackDay10: "",
         feedbackDay10Viewed: false,
 
-        writingDay12QualityCheck: false,
         feedbackDay12: "",
         feedbackDay12Viewed: false,
 
-        writingDay14QualityCheck: false,
         feedbackDay14: "",
         feedbackDay14Viewed: false,
     })
@@ -253,7 +243,7 @@ export function Home() {
             if (moment().isAfter(earlistStartDate)) {
                 return true
             }
-            return "(afterEarlistStartDate) 未到达任务开启时间。开启时间为" + earlistStartDate.format('YYYY-MM-DD HH:mm:ss') + "。"
+            return "(afterEarlistStartDate) 未到达任务开启时间。开启时间为" + earlistStartDate.format('YYYY-MM-DD hh:mm A') + "。"
         }
 
         // if local time is within the time range of the task
@@ -263,28 +253,14 @@ export function Home() {
             // earlist start date = user_experiment_start_date + (current_task_day - 1) + 4 hours (4 am)
             // 任务开启当天的4点开始
             const earlistStartDate = startDate.clone().add(currentTaskDay - 1, 'days').add(4, 'hours')
-            // latest start date = user_experiment_start_date + (current_task_day + 1) + 9 hours (9 am)
-            // 任务开启第三天9点结束
-            const latestStartDate = startDate.clone().add(currentTaskDay + 1, 'days').add(9, 'hours')
+            // latest start date = user_experiment_start_date + (current_task_day + 1) + 4 hours (9 am)
+            // 任务开启第三天4点结束
+            const latestStartDate = startDate.clone().add(currentTaskDay + 1, 'days').add(4, 'hours')
             // if current time is within the time range
             if (moment().isBetween(earlistStartDate, latestStartDate)) {
                 return true
             }
-            return "(isValidTimeRange) 当前时间不在任务开启时间范围内。开启时间为" + earlistStartDate.format('YYYY-MM-DD HH:mm:ss') + "，结束时间为" + latestStartDate.format('YYYY-MM-DD HH:mm:ss') + "。"
-        }
-
-        // if user has not overdue
-        static hasNotOverdue(): true | string {
-            const startDate = moment(info.startDate)
-            const currentTaskDay = Math.floor(info.day)
-            // latest start date = user_experiment_start_date + (current_task_day + 1) + 9 hours (9 am)
-            // 任务开启第三天9点结束
-            const latestStartDate = startDate.clone().add(currentTaskDay + 1, 'days').add(9, 'hours')
-            // if current time is within the time range
-            if (moment().isBefore(latestStartDate)) {
-                return true
-            }
-            return "(hasNotOverdue) 您有超时未提交的任务。结束时间为" + latestStartDate.format('YYYY-MM-DD HH:mm:ss') + "。超过2天未完成任务的用户将自动丢失继续参与研究的资格。如有疑问，请联系管理员。"
+            return "(isValidTimeRange) 当前时间不在任务开启时间范围内。开启时间为" + earlistStartDate.format('YYYY-MM-DD hh:mm A') + "，结束时间为" + latestStartDate.format('YYYY-MM-DD hh:mm A') + "。"
         }
 
         // if user has view the feedback
@@ -322,54 +298,6 @@ export function Home() {
             }
         }
 
-        // if user has passed the quality check
-        static qualityCheck(taskDay: number): true | string {
-            switch (taskDay) {
-                case 2:
-                    if (info.writingDay1QualityCheck)
-                        return true
-                    else
-                        return "(qualityCheck) 您的第1天写作未通过后台核验，请联系管理员。"
-                case 3:
-                    if (info.writingDay2QualityCheck)
-                        return true
-                    else
-                        return "(qualityCheck) 您的第2天写作未通过后台核验，请联系管理员。"
-                case 4:
-                    if (info.writingDay3QualityCheck)
-                        return true
-                    else
-                        return "(qualityCheck) 您的第3天写作未通过后台核验，请联系管理员。"
-                case 8:
-                    if (info.writingDay6QualityCheck)
-                        return true
-                    else
-                        return "(qualityCheck) 您的第6天写作未通过后台核验，请联系管理员。"
-                case 10:
-                    if (info.writingDay8QualityCheck)
-                        return true
-                    else
-                        return "(qualityCheck) 您的第8天写作未通过后台核验，请联系管理员。"
-                case 12:
-                    if (info.writingDay10QualityCheck)
-                        return true
-                    else
-                        return "(qualityCheck) 您的第10天写作未通过后台核验，请联系管理员。"
-                case 14:
-                    if (info.writingDay12QualityCheck)
-                        return true
-                    else
-                        return "(qualityCheck) 您的第12天写作未通过后台核验，请联系管理员。"
-                case 29:
-                    if (info.writingDay14QualityCheck)
-                        return true
-                    else
-                        return "(qualityCheck) 您的第14天写作未通过后台核验，请联系管理员。"
-                default:
-                    console.error("qualityCheck: taskDay is not in the list")
-                    return "(qualityCheck) 这是一个程序错误。请通知管理员联系开发者。"
-            }
-        }
 
         // if user has feedback, they should not be able to access the task
         static hasFeedback(taskDay: number): true | string {
@@ -414,31 +342,24 @@ export function Home() {
                     reasons.push(result)
                 }
             }
-            if (rule === Rule.basic || rule === Rule.writing23 || rule === Rule.writing8101214day29) {
+            if (rule === Rule.basic || rule === Rule.viewFbFirst) {
                 check(this.isValidUser())
                 check(this.equalDayProgress(taskDay))
                 check(this.isValidTimeRange(taskDay))
-                check(this.hasNotOverdue())
             }
             switch (rule) {
                 case Rule.feedback:
                     check(this.hasFeedback(taskDay))
                     break
-                case Rule.writing23:
-                    check(this.qualityCheck(taskDay))
-                    break
-                case Rule.writing8101214day29:
-                    check(this.qualityCheck(taskDay))
+                case Rule.viewFbFirst:
                     check(this.viewedFeedback(taskDay))
                     break
                 case Rule.video:
                     check(this.isValidUser())
                     check(this.afterEarlistStartDate(taskDay))
-                    check(this.qualityCheck(taskDay))
                     break
                 case Rule.global:
                     check(this.isValidUser())
-                    check(this.hasNotOverdue())
                     break
             }
             if (reasons.length === 0)
@@ -485,7 +406,7 @@ export function Home() {
                             {globalAccess.map((reason, index) => {
                                 return <div className={style.errorCard} key={index}>{reason}</div>
                             })}
-                            <p>您所支付的9.9元参与费将于第105天最后一次随访评估后三天内原路返回您的账户。再次感谢您的支持！</p>
+                            <p>您所支付的9.9元参与费将于24小时内返回您的账户。再次感谢您的支持！</p>
                         </div>
 
 
@@ -513,7 +434,7 @@ export function Home() {
                         >
                             刷新
                         </span>
-                        <Overlay target={refreshRef.current} show={refreshPop} placement="right">
+                        <Overlay target={refreshRef} show={refreshPop} placement="right">
                             <div
                                 style={{
                                     backgroundColor: '#5A57FF',
@@ -527,6 +448,7 @@ export function Home() {
                             </div>
                         </Overlay>
                     </div>
+                    <span style={{ fontSize: '0.8em', marginTop: '4px' }}>当天任务将于早上 4:00 am 开启</span>
                     <div className={style.bottomContainer}>
                         {
                             tasks.map(task => <Task
