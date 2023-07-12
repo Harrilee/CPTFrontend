@@ -78,7 +78,6 @@ export const validateLogin = async (): Promise<boolean> => {
         },
     })
     const response = await res.json()
-    console.log(response)
     if (response.status === 'Success') {
         return true
     } else {
