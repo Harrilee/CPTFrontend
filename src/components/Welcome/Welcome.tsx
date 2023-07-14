@@ -1,9 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './Welcome.module.scss'
 import {Header} from '../Layout/Header'
 import {Footer} from '../Layout/Footer'
+import { getTokenFromCookie, getEncryptedUsernameFromCookie, URL, validateLogin, signOut } from '../../utility'
 
 export function Welcome () {
+    const [hasUnread, setHasUnread] = useState(false)
+
+    useEffect(() => {
+        fetch(URL + 'api/msg/', {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + getTokenFromCookie(),
+            },
+        }).then(res => res.json()).then(res => {
+            const unreadSum = res.message.reduce((acc: number, cur: any) => acc + (cur.isRead ? 0 : 1), 0)
+            if (unreadSum > 0) {
+                setHasUnread(true)
+            }
+        })
+    }, [])
+
     return <div className={styles.wrapper}>
             <div style={{ position: 'fixed', width: '100%', zIndex: 100 }}>
                 <Header />
@@ -18,7 +37,12 @@ export function Welcome () {
                         </button>
                     </div>
                     <div className={styles.card}>
-                        <h2 className={styles.cardTitle}>站内信</h2>
+                    <div className={styles.titleWrapper}>
+                        <h2 className={styles.cardTitle}>
+                            站内信
+                        </h2>
+                        {hasUnread && <span className={styles.unread}>●</span>}
+                    </div>
                         <img src="/folder.svg" alt="站内信" className={styles.image} />
                         <button className={styles.button} onClick={() => (location.href = '/message')}>
                             点击进入
