@@ -117,28 +117,28 @@ function App() {
                 />
                 <Route
                     path="feedback6/"
-                    element={<PrivateWrapper child={<Feedback day={6} content={"TODO"} />} />}
+                    element={<PrivateWrapper child={<Feedback day={6} />} />}
                 />
                 <Route
                     path="writing8/"
                     element={<PrivateWrapper child={<Writing6810 day={8} content={CONTENT_WRITING_DAY8} />} />}
                 />
-                <Route path="feedback8/" element={<PrivateWrapper child={<Feedback day={8} content={"TODO"} />} />} />
+                <Route path="feedback8/" element={<PrivateWrapper child={<Feedback day={8} />} />} />
                 <Route
                     path="writing10/"
                     element={<PrivateWrapper child={<Writing6810 day={10} content={CONTENT_WRITING_DAY10} />} />}
                 />
-                <Route path="feedback10/" element={<PrivateWrapper child={<Feedback day={10} content={"TODO"} />} />} />
+                <Route path="feedback10/" element={<PrivateWrapper child={<Feedback day={10} />} />} />
                 <Route
                     path="writing12/"
                     element={<PrivateWrapper child={<Writing1214 day={12} content={CONTENT_WRITING_DAY12} />} />}
                 />
-                <Route path="feedback12/" element={<PrivateWrapper child={<Feedback day={12} content={"TODO"} />} />} />
+                <Route path="feedback12/" element={<PrivateWrapper child={<Feedback day={12} />} />} />
                 <Route
                     path="writing14/"
                     element={<PrivateWrapper child={<Writing1214 day={14} content={CONTENT_WRITING_DAY14} />} />}
                 />
-                <Route path="feedback14/" element={<PrivateWrapper child={<Feedback day={14} content={"TODO"} />} />} />
+                <Route path="feedback14/" element={<PrivateWrapper child={<Feedback day={14} />} />} />
                 <Route path="video4/" element={<PrivateWrapper child={<Video />} />} />
                 <Route
                     path="day29/"

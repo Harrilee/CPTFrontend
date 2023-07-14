@@ -4,24 +4,62 @@ import { Footer } from '../Layout/Footer'
 import style from './Feedback.module.scss'
 import Nav from 'react-bootstrap/Nav'
 import { Task } from '../Task/Task'
-import { getTokenFromCookie, getEncryptedUsernameFromCookie, URL, validateLogin, signOut } from '../../utility'
+import { getTokenFromCookie, URL, signOut } from '../../utility'
+import Markdown from 'markdown-to-jsx';
 
 
 interface FeedbackProps {
     day: number
-    content: string
 }
 
 export default function Feedback(props: FeedbackProps) {
-    return <>
+    const [info, setInfo] = useState('')
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        fetch(URL + 'api/info/', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + getTokenFromCookie(),
+            },
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                if (res.status === 'Success') {
+                    const msg = JSON.parse(res.message)
+                    setInfo(msg[`feedbackDay${props.day}`])
+                    setLoading(false)
+                }
+            })
+            .then(() => {
+                fetch(URL + 'api/info/', {
+                    method: 'PATCH',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + getTokenFromCookie(),
+                    },
+                    body: JSON.stringify({
+                        [`feedbackDay${props.day}Viewed`]: true
+                    })
+                })
+            })
+    }, [])
+    return <div className={style.feedbackwrapper}>
         <Header />
         <div className={style.container}>
             <div className={style.content}>
-                <h1>Feedback</h1>
-                <h2>Writing Day {props.day}</h2>
-                <p>{props.content}</p>
+                <h1>写作反馈：第{props.day}天</h1>
+                <Markdown>
+                    {info}
+                </Markdown>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '64px' }}>
+                    <button onClick={() => window.location.href = '/home'}>已阅</button>
+                </div>
             </div>
         </div>
         <Footer />
-    </>
+    </div>
 }
