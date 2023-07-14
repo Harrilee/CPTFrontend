@@ -6,6 +6,7 @@ import Nav from 'react-bootstrap/Nav'
 import { Task } from '../Task/Task'
 import { getTokenFromCookie, getEncryptedUsernameFromCookie, URL, validateLogin, signOut } from '../../utility'
 
+
 interface FeedbackProps {
     day: number
     content: string

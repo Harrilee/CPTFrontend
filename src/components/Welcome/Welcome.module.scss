@@ -52,3 +52,14 @@
     justify-content: space-between;
     min-height: 100vh;
 }
+.unread {
+    position: absolute;
+    top: -10px;
+    right: -14px;
+    font-size: 14px;
+    color: rgb(187, 26, 26);
+}
+
+.titleWrapper {
+    position: relative;
+}

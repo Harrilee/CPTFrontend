@@ -26,6 +26,7 @@ import Video from './components/Video'
 import moment from 'moment'
 import Welcome from "./components/Welcome/Welcome";
 import Feedback from './components/Feedback/Feedback';
+import Message from './components/Message'
 
 // export const UserContext = createContext({ value: {user: "0", setUser: (user: string) => {}} })
 function App() {
@@ -175,6 +176,7 @@ function App() {
                         />
                     }
                 />
+                <Route path='message/' element={<PrivateWrapper child={<Message />} />} />
                 <Route path="*" element={<div>404</div>} />
             </Routes>
         </BrowserRouter>
