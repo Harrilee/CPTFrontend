@@ -22,8 +22,7 @@ import Modal from 'react-bootstrap/Modal';
 import Draggable from 'react-draggable';
 import ModalDialog from 'react-bootstrap/ModalDialog';
 import React from "react";
-import {ChatBox} from "./ChatBox";
-import {TimeOutAlert} from "../TimeOutAlert/TimeOutAlert";
+import { ChatBox } from "./ChatBox";
 
 class DraggableModalDialog extends React.Component {
     render() {
@@ -206,7 +205,6 @@ export function Game() {
             <div className={style.rightPanel}>
                 <div className={style.header}>
                     <div>{names[displayID]}</div>
-                    <TimeOutAlert/>
 
                 </div>
                 <div className={style.content} id={'chat_content'}>

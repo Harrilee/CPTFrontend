@@ -16,8 +16,8 @@ export function Welcome () {
                 Authorization: 'Bearer ' + getTokenFromCookie(),
             },
         }).then(res => res.json()).then(res => {
-            const unreadSum = res.message.reduce((acc: number, cur: any) => acc + (cur.isRead ? 0 : 1), 0)
-            if (unreadSum > 0) {
+            const unreadSum = res.message?.reduce((acc: number, cur: any) => acc + (cur.isRead ? 0 : 1), 0)
+            if (unreadSum) {
                 setHasUnread(true)
             }
         })

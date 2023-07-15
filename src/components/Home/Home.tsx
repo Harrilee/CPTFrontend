@@ -6,7 +6,6 @@ import Nav from 'react-bootstrap/Nav'
 import { Task } from '../Task/Task'
 import { getTokenFromCookie, getEncryptedUsernameFromCookie, URL, validateLogin, signOut } from '../../utility'
 import Spinner from 'react-bootstrap/Spinner';
-import { TimeOutAlert } from '../TimeOutAlert/TimeOutAlert'
 import Overlay from 'react-bootstrap/Overlay'
 import moment from 'moment'
 
