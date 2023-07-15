@@ -56,6 +56,11 @@ function App() {
                         1000 +
                         's'
                 )
+            } else {
+                if (document.visibilityState === 'visible') {
+                    cloudWatchLogger('enter_page', '')
+                    window.localStorage.setItem('enterDate', moment().toString())
+                }
             }
         })
     }, [])
