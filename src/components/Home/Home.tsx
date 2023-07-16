@@ -18,7 +18,7 @@ enum Rule {
     'global', // isValidUser -> this is for global display
 }
 
-const tasks = [
+const tasks_expgroup = [
     {
         day: 1,
         questionType: '问卷调查',
@@ -162,6 +162,150 @@ const tasks = [
     }
 ]
 
+const tasks_controlgroup = [
+    {
+        day: 1,
+        questionType: '问卷调查',
+        timeToFinish: 25,
+        taskURL: '/day1',
+        rule: Rule.basic
+    },
+    {
+        day: 29,
+        questionType: '问卷调查',
+        timeToFinish: 25,
+        taskURL: '/day29',
+        rule: Rule.basic
+    },
+    {
+        day: 45,
+        questionType: '问卷调查',
+        timeToFinish: 25,
+        taskURL: '/day45',
+        rule: Rule.basic
+    },
+    {
+        day: 105,
+        questionType: '问卷调查',
+        timeToFinish: 25,
+        taskURL: '/day105',
+        rule: Rule.basic
+    },
+    {
+
+        day: 106,
+        questionType: '自由写作*',
+        timeToFinish: 30,
+        taskURL: '/writing1',
+        rule: Rule.basic
+    },
+    {
+        day: 106,
+        questionType: '自由写作*',
+        timeToFinish: 30,
+        taskURL: '/writing2',
+        rule: Rule.basic
+    },
+    {
+        day: 106,
+        questionType: '自由写作*',
+        timeToFinish: 30,
+        taskURL: '/writing3',
+        rule: Rule.basic
+    },
+    {
+        day: 106,
+        questionType: '科普视频*',
+        timeToFinish: 10,
+        taskURL: '/video4',
+        rule: Rule.basic
+    },
+    {
+        day: 106,
+        questionType: '游戏*',
+        timeToFinish: 30,
+        taskURL: '/game',
+        rule: Rule.basic
+    },
+    {
+        day: 106,
+        questionType: '游戏*',
+        timeToFinish: 30,
+        taskURL: '/game',
+        rule: Rule.basic
+    },
+    {
+        day: 106,
+        questionType: '挑战型写作*',
+        timeToFinish: 30,
+        taskURL: '/writing6',
+        rule: Rule.basic
+    },
+    {
+        day: 106,
+        questionType: '阅读反馈*',
+        timeToFinish: 10,
+        taskURL: '/feedback6',
+        rule: Rule.basic
+    },
+    {
+        day: 106,
+        questionType: '挑战型写作*',
+        timeToFinish: 30,
+        taskURL: '/writing8',
+        rule: Rule.basic
+    },
+    {
+        day: 106,
+        questionType: '阅读反馈*',
+        timeToFinish: 10,
+        taskURL: '/feedback8',
+        rule: Rule.basic
+    },
+    {
+        day: 106,
+        questionType: '挑战型写作*',
+        timeToFinish: 30,
+        taskURL: '/writing10',
+        rule: Rule.basic
+    },
+    {
+        day: 106,
+        questionType: '阅读反馈*',
+        timeToFinish: 10,
+        taskURL: '/feedback10',
+        rule: Rule.basic
+    },
+    {
+        day: 106,
+        questionType: '信件写作*',
+        timeToFinish: 30,
+        taskURL: '/writing12',
+        rule: Rule.basic
+    },
+    {
+        day: 106,
+        questionType: '阅读反馈*',
+        timeToFinish: 10,
+        taskURL: '/feedback12',
+        rule: Rule.basic
+    },
+    {
+        day: 106,
+        questionType: '信件写作*',
+        timeToFinish: 30,
+        taskURL: '/writing14',
+        rule: Rule.basic
+    },
+    {
+        day: 106,
+        questionType: '阅读反馈*',
+        timeToFinish: 10,
+        taskURL: '/feedback14',
+        rule: Rule.basic
+    },
+]
+
 export function Home() {
     const [loading, setLoading] = useState(true)
     const [info, setInfo] = useState({
@@ -170,6 +314,7 @@ export function Home() {
         startDate: moment().format('YYYY-MM-DD'),
         banFlag: false,
         banReason: "",
+        expGroup: "",
 
         feedbackDay6: "",
         feedbackDay6Viewed: false,
@@ -412,7 +557,9 @@ export function Home() {
                     }
                     <div className={style.topContainer}>
                         <div className={style.topCard}>
-                            <div>今天，是您坚持参与本次训练营的第{parseInt(info.day.toString())}天</div>
+                            <div>今天，是您坚持参与本次训练营的第{
+                                moment().diff(moment(info.startDate), 'days') + 1
+                            }天</div>
                         </div>
                         <div className={style.topCard}>累计得分: {info.score}分</div>
                     </div>
@@ -450,7 +597,9 @@ export function Home() {
                     <span style={{ fontSize: '0.8em', marginTop: '4px' }}>当天任务将于早上 4:00 am 开启</span>
                     <div className={style.bottomContainer}>
                         {
-                            tasks.map(task => <Task
+                            info.expGroup === 'Exp1' || info.expGroup === 'Exp2'
+                                ?
+                                tasks_controlgroup.map(task => <Task
                                 key={task.day}
                                 currentDay={info.day}
                                 days={task.day}
@@ -459,6 +608,21 @@ export function Home() {
                                 taskURL={task.taskURL}
                                 isOpen={AcsMngr.checkAccess(task.day, task.rule)} />
                             )
+                                :
+                                info.expGroup === 'Waitlist' ? <>
+                                    <p style={{ fontSize: '0.8em ' }}>注：标*的为可选任务</p>
+                                    {tasks_controlgroup.map(task => <Task
+                                        key={task.day}
+                                        currentDay={info.day}
+                                        days={task.day}
+                                        questionType={task.questionType}
+                                        timeToFinish={task.timeToFinish}
+                                        taskURL={task.taskURL}
+                                        isOpen={AcsMngr.checkAccess(task.day, task.rule)} />
+                                    )}
+                                </>
+                                    :
+                                    <p>实验组分类{info.expGroup}没有对应的任务列表，请联系管理员</p>
                         }
                     </div>
                 </div>
@@ -473,10 +637,10 @@ export function Home() {
                 loading ?
                     <div className={style.loading}>
                         <Spinner id={style.spinner} animation="border" role="status" />
-                </div>
-                :
-                <Main />
-        }
+                    </div>
+                    :
+                    <Main />
+            }
             <Footer />
         </div>
     )

@@ -53,11 +53,11 @@ export default function Feedback(props: FeedbackProps) {
             <div className={style.content}>
                 <h1>写作反馈：第{props.day}天</h1>
                 <Markdown>
-                    {info}
+                    {info ? info : "暂无反馈"}
                 </Markdown>
-                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '64px' }}>
+                {info && <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '64px' }}>
                     <button onClick={() => window.location.href = '/home'}>已阅</button>
-                </div>
+                </div>}
             </div>
         </div>
         <Footer />
