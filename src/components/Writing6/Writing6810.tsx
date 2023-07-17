@@ -3,7 +3,6 @@ import style from './Writing6810.module.scss'
 import {getTokenFromCookie, URL} from "../../utility";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import {TimeOutAlert} from "../TimeOutAlert/TimeOutAlert";
 import { Header } from '../Layout/Header'
 import { Footer } from '../Layout/Footer'
 import Markdown from 'markdown-to-jsx';
@@ -328,7 +327,6 @@ export function Writing6810(props: Prop) {
             `}
             </style>
             <div className={style.title}>第{props.day}天</div>
-            <TimeOutAlert />
             <div style={{ margin: '3em' }}>
                 <Markdown>
                     {articles}

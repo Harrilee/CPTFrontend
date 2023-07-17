@@ -3,7 +3,6 @@ import style from './Writing1214.module.scss'
 import {getTokenFromCookie, URL} from "../../utility";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { TimeOutAlert } from "../TimeOutAlert/TimeOutAlert";
 import { Header } from '../Layout/Header'
 import { Footer } from '../Layout/Footer'
 import moment from 'moment';
@@ -95,7 +94,6 @@ export function Writing1214(props: Prop) {
         <Header />
         <div className={style.content}>
             <div className={style.title}>第{props.day}天</div>
-            <TimeOutAlert />
             <div>{articles.map((article, index) => {
                 return <p className={style.paragraph} key={index}>{article}</p>
             })}</div>

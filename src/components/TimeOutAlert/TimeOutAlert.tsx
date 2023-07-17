@@ -4,7 +4,7 @@ import {Alert} from "react-bootstrap";
 import style from './TimeOutAlert.module.scss'
 
 export function TimeOutAlert() {
-    const [show, setShow] = useState(true);
+    const [show, setShow] = useState(false);
     const [timeToExpire, setTimeToExpire] = useState(0);
 
 
@@ -23,7 +23,6 @@ export function TimeOutAlert() {
         if (response.status === "Success") {
 
             document.cookie = "token=" + JSON.parse(response.message).access;
-            console.log(getTokenFromCookie())
 
         }else{
             alert(response.message)
@@ -31,6 +30,9 @@ export function TimeOutAlert() {
     }
 
     useEffect(() => {
+        if (window.location.pathname === '/') {
+            return
+        }
         const token = parseJwt(getTokenFromCookie());
         const timeToExpire = Math.floor((token.exp - Math.floor(Date.now() / 1000)));
         setTimeToExpire(timeToExpire)
@@ -43,8 +45,6 @@ export function TimeOutAlert() {
             setShow(true)
         }else{
             setShow(false)
-
-
         }
 
         const interval = setInterval(()=>{
