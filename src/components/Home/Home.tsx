@@ -561,7 +561,19 @@ export function Home() {
                                 moment().diff(moment(info.startDate), 'days') + 1
                             }天</div>
                         </div>
-                        <div className={style.topCard}>累计得分: {info.score}分</div>
+                        <div className={style.topCard}>
+                            {(info.expGroup === 'Exp1' || info.expGroup === 'Exp2') ? <>
+                                <p>无论您是否完成研究，先前收取的费用（9.9元人民币）都将在第105天最后一次随访评估后三天内返还给您。
+
+                                </p><p>
+                                    您还可以在完成15天的任务、第29天、第45天与第105天的评估后分别额外获得京东E卡，所获京东卡的金额将由研究完成进度和质量共同决定。奖励金额将逐次累积，在第105天最后一次随访评估后三天内统一发放给您。</p>
+                            </> :
+                                info.expGroup === 'Waitlist' ? <>
+                                    <p>无论您是否完成研究，先前收取的费用（9.9元人民币）都将在第105天最后一次随访评估后三天内返还给您。
+                                    </p>
+                                    <p>在填写完第1天、第29天、第45天和第105天的问卷并且通过了质量检测之后，您将分别获得价值10、30、60、100元人民币的京东E卡（电子礼品卡）作为报酬。但只有您同时完成第1天的问卷和随后三次中的一次后续测评才可以领取奖励。奖励金额将逐次累积，在第105天最后一份评估后三天内统一通过站内信发放给您。</p>
+                                </> : <><p>您暂未被分配实验分组，请联系管理员。</p></>}
+                        </div>
                     </div>
                     <div className={style.bottomTitle}>
                         任务列表{' '}
@@ -597,9 +609,9 @@ export function Home() {
                     <span style={{ fontSize: '0.8em', marginTop: '4px' }}>当天任务将于早上 4:00 am 开启</span>
                     <div className={style.bottomContainer}>
                         {
-                            info.expGroup === 'Exp1' || info.expGroup === 'Exp2'
+                            (info.expGroup === 'Exp1' || info.expGroup === 'Exp2')
                                 ?
-                                tasks_controlgroup.map(task => <Task
+                                tasks_expgroup.map(task => <Task
                                 key={task.day}
                                 currentDay={info.day}
                                 days={task.day}

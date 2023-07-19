@@ -74,13 +74,19 @@
             .topContainer {
                 display: flex;
                 flex-direction: row;
-                gap: 24px;
+                gap: 16px;
+                    margin-bottom: 24px;
 
                 .topCard {
                     background-color: white;
                     padding: 1em;
                     border-radius: 1em;
                     margin-top: 1em;
+                    display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        height: 100%;
+                        font-size: 0.8em;
                 }
             }
 
