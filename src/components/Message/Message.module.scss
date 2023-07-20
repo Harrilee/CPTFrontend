@@ -11,18 +11,18 @@
         display: flex;
         justify-content: space-evenly;
         flex-direction: column;
-        gap: 16px;
+        gap: 32px;
 
         .msgCard {
             border-radius: 32px;
             background: #B8B5FF;
-            padding: 32px 48px 32px 108px;
+            padding: 24px 48px 24px 108px;
             width: 100%;
             background-repeat: no-repeat;
             background-position: bottom left;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 8px;
 
             .title {
                 display: flex;
@@ -48,7 +48,14 @@
                 padding: 0;
                 font-size: 16px;
                 color: white;
+                p {
+                    margin: 0.3em 0;
+                }
             }
+        }
+
+        .isRead {
+            filter: grayscale(100%);
         }
     }
 }
@@ -57,9 +64,9 @@ button {
     border-radius: 20px;
     background: #9a7af1;
     color: #fff;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 700;
-    padding: 4px 12px;
+    padding: 6px 32px;
     box-shadow: none;
     outline: none;
     border: none;

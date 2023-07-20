@@ -29,10 +29,10 @@ const MsgCard = (props: MsgCardProps) => {
         })
         setShow(false)
     }
-    return <div className={style.msgCard} style={{ backgroundImage: 'url(/blue-bubbles.svg)' }}>
+    return <div className={style.msgCard + `${!show ? (" " + style.isRead) : ""}`} style={{ backgroundImage: 'url(/blue-bubbles.svg)' }}>
         <div className={style.title}>
             <h1>{title}</h1>
-            <h2>{moment(time).format("MM-DD hh:MM a")}</h2>
+            <h2>{moment(time).format("MM-DD hh:mm a")}</h2>
         </div>
         <div className={style.markdown}>
             {message && <Markdown>
