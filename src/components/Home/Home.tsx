@@ -143,7 +143,7 @@ const tasks_expgroup = [
         day: 29,
         questionType: '问卷调查',
         timeToFinish: 25,
-        taskURL: '/day29',
+        taskURL: '/day29ct',
         rule: Rule.viewFbFirst
     },
     {
@@ -174,7 +174,7 @@ const tasks_controlgroup = [
         day: 29,
         questionType: '问卷调查',
         timeToFinish: 25,
-        taskURL: '/day29',
+        taskURL: '/day29wl',
         rule: Rule.basic
     },
     {
