@@ -22,7 +22,7 @@ jobs:
         run: |
           git config --global user.email "github-actions[bot]@copilot.github.com"
           git config --global user.name "github-actions[bot]"
-          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/Harrilee/CPTFrontend.git
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Harrilee/CPTFrontend.git
           git checkout -b _built
           npm run build
           GLOBIGNORE=build:.git
@@ -33,6 +33,4 @@ jobs:
           git add -Af
           git commit -m "build react into a different branch"
           git push --force --set-upstream origin _built
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
