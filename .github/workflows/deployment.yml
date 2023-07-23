@@ -2,7 +2,7 @@ name: deploy-master
 on:
   push:
     branches:
-      - "master"
+      - "production"
 env:
   CI: false
 jobs:
@@ -18,8 +18,8 @@ jobs:
         run: |
           git config --global user.email "github-actions[bot]@copilot.github.com"
           git config --global user.name "github-actions[bot]"
-          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/AllenAnZifeng/NYUFrontend.git
-          git checkout -b built
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/Harrilee/CPTFrontend.git
+          git checkout -b _built
           npm run build
           GLOBIGNORE=build:.git
           rm -r *
