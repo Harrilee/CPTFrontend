@@ -149,12 +149,24 @@ function App() {
                     <Route path="feedback14/" element={<PrivateWrapper child={<Feedback day={14} />} />} />
                     <Route path="video4/" element={<PrivateWrapper child={<Video />} />} />
                     <Route
-                        path="day29/"
+                        path="day29ct/"
                         element={
                             <PrivateWrapper
                                 child={
                                     <Survey
                                         url={`https://nyu.qualtrics.com/jfe/form/SV_0fEtLt7hh5za4BM?userId=${getEncryptedUsernameFromCookie()}`}
+                                    />
+                                }
+                            />
+                        }
+                    />
+                    <Route
+                        path="day29wl/"
+                        element={
+                            <PrivateWrapper
+                                child={
+                                    <Survey
+                                        url={`https://nyu.qualtrics.com/jfe/form/SV_cRXdri5diJ1hVqK?userId=${getEncryptedUsernameFromCookie()}`}
                                     />
                                 }
                             />
