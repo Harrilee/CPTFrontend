@@ -193,116 +193,116 @@ const tasks_controlgroup = [
     },
     {
 
-        day: 106,
+        day: 107,
         questionType: '自由写作*',
         timeToFinish: 30,
         taskURL: '/writing1',
-        rule: Rule.basic
+        rule: Rule.video
     },
     {
-        day: 106,
+        day: 107,
         questionType: '自由写作*',
         timeToFinish: 30,
         taskURL: '/writing2',
-        rule: Rule.basic
+        rule: Rule.video
     },
     {
-        day: 106,
+        day: 107,
         questionType: '自由写作*',
         timeToFinish: 30,
         taskURL: '/writing3',
-        rule: Rule.basic
+        rule: Rule.video
     },
     {
-        day: 106,
+        day: 107,
         questionType: '科普视频*',
         timeToFinish: 10,
         taskURL: '/video4',
-        rule: Rule.basic
+        rule: Rule.video
     },
     {
-        day: 106,
+        day: 107,
         questionType: '游戏*',
         timeToFinish: 30,
         taskURL: '/game1',
-        rule: Rule.basic
+        rule: Rule.video
     },
     {
-        day: 106,
+        day: 107,
         questionType: '游戏*',
         timeToFinish: 30,
         taskURL: '/game2',
-        rule: Rule.basic
+        rule: Rule.video
     },
     {
-        day: 106,
+        day: 107,
         questionType: '挑战型写作*',
         timeToFinish: 30,
         taskURL: '/writing6',
-        rule: Rule.basic
+        rule: Rule.video
     },
     {
-        day: 106,
+        day: 107,
         questionType: '阅读反馈*',
         timeToFinish: 10,
         taskURL: '/feedback6',
-        rule: Rule.basic
+        rule: Rule.video
     },
     {
-        day: 106,
+        day: 107,
         questionType: '挑战型写作*',
         timeToFinish: 30,
         taskURL: '/writing8',
-        rule: Rule.basic
+        rule: Rule.video
     },
     {
-        day: 106,
+        day: 107,
         questionType: '阅读反馈*',
         timeToFinish: 10,
         taskURL: '/feedback8',
-        rule: Rule.basic
+        rule: Rule.video
     },
     {
-        day: 106,
+        day: 107,
         questionType: '挑战型写作*',
         timeToFinish: 30,
         taskURL: '/writing10',
-        rule: Rule.basic
+        rule: Rule.video
     },
     {
-        day: 106,
+        day: 107,
         questionType: '阅读反馈*',
         timeToFinish: 10,
         taskURL: '/feedback10',
-        rule: Rule.basic
+        rule: Rule.video
     },
     {
-        day: 106,
+        day: 107,
         questionType: '信件写作*',
         timeToFinish: 30,
         taskURL: '/writing12',
-        rule: Rule.basic
+        rule: Rule.video
     },
     {
-        day: 106,
+        day: 107,
         questionType: '阅读反馈*',
         timeToFinish: 10,
         taskURL: '/feedback12',
-        rule: Rule.basic
+        rule: Rule.video
     },
     {
-        day: 106,
+        day: 107,
         questionType: '信件写作*',
         timeToFinish: 30,
         taskURL: '/writing14',
-        rule: Rule.basic
+        rule: Rule.video
     },
     {
-        day: 106,
+        day: 107,
         questionType: '阅读反馈*',
         timeToFinish: 10,
         taskURL: '/feedback14',
-        rule: Rule.basic
+        rule: Rule.video
     },
 ]
 
