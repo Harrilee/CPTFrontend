@@ -7,7 +7,7 @@ import { Header } from '../Layout/Header'
 import { Footer } from '../Layout/Footer'
 import Markdown from 'markdown-to-jsx';
 import moment from 'moment';
-
+import Spinner from 'react-bootstrap/Spinner';
 
 type Prop = {
     day: number,
@@ -15,316 +15,406 @@ type Prop = {
 }
 
 export function Writing6810(props: Prop) {
+    const [loading, setLoading] = useState(true);
+    const [content, setContent] = useState<any>();
 
-    const [content1, setContent1] = useState('加载中');
-    const [content2, setContent2] = useState('加载中');
-    const [content3, setContent3] = useState('');
-    const [content4, setContent4] = useState('');
-    const [fiveAisChecked, setFiveAisChecked] = useState(false);
-    const [content5a, setContent5a] = useState('');
-    const [fiveBisChecked, setFiveBisChecked] = useState(false);
-    const [content5b, setContent5b] = useState('');
-    const [fiveCisChecked, setFiveCisChecked] = useState(false);
-    const [content5c, setContent5c] = useState('');
-    const [fiveDisChecked, setFiveDisChecked] = useState(false);
-    const [content5d, setContent5d] = useState('');
-    const [fiveEisChecked, setFiveEisChecked] = useState(false);
-    const [content5e, setContent5e] = useState('');
-    const [fiveFisChecked, setFiveFisChecked] = useState(false);
-    const [content5f, setContent5f] = useState('');
-    const [fiveGisChecked, setFiveGisChecked] = useState(false);
-    const [content5g, setContent5g] = useState('');
-
-    const [sixAisChecked, setsixAisChecked] = useState(false);
-    const [content6a, setContent6a] = useState('');
-    const [sixBisChecked, setsixBisChecked] = useState(false);
-    const [content6b, setContent6b] = useState('');
-    const [sixCisChecked, setsixCisChecked] = useState(false);
-    const [content6c, setContent6c] = useState('');
-    const [sixDisChecked, setsixDisChecked] = useState(false);
-    const [content6d, setContent6d] = useState('');
-    const [sixEisChecked, setsixEisChecked] = useState(false);
-    const [content6e, setContent6e] = useState('');
-    const [sixFisChecked, setsixFisChecked] = useState(false);
-    const [content6f, setContent6f] = useState('');
-    const [sixGisChecked, setsixGisChecked] = useState(false);
-    const [content6g, setContent6g] = useState('');
-
-    const [content7, setContent7] = useState('');
-
-    const [validated, setValidated] = useState(false);
-
-    const [dateSaved, setDateSaved] = useState("");
-
-    const [error5, setError5] = useState("");
-    const [error6, setError6] = useState("");
-
-
-    const handle5ACheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFiveAisChecked(event.target.checked);
-    }
-
-    const handle5BCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFiveBisChecked(event.target.checked);
-    }
-    const handle5CCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFiveCisChecked(event.target.checked);
-    }
-    const handle5DCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFiveDisChecked(event.target.checked);
-    }
-    const handle5ECheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFiveEisChecked(event.target.checked);
-    }
-    const handle5FCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFiveFisChecked(event.target.checked);
-    }
-    const handle5GCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFiveGisChecked(event.target.checked);
-    }
-
-    const handle6ACheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setsixAisChecked(event.target.checked);
-    }
-
-    const handle6BCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setsixBisChecked(event.target.checked);
-    }
-    const handle6CCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setsixCisChecked(event.target.checked);
-    }
-    const handle6DCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setsixDisChecked(event.target.checked);
-    }
-    const handle6ECheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setsixEisChecked(event.target.checked);
-    }
-    const handle6FCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setsixFisChecked(event.target.checked);
-    }
-    const handle6GCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setsixGisChecked(event.target.checked);
-    }
-
-    // get the content from the database
     useEffect(() => {
-        let writing123Day
-        if (props.day === 6) {
-            writing123Day = 1
-        } else if (props.day === 8) {
-            writing123Day = 2
-        } else if (props.day === 10) {
-            writing123Day = 3
-        }
-        fetch(URL + `api/writing123?day=${writing123Day}`, {
+        fetch(URL + 'api/info/', {
+            method: 'POST',
             headers: {
-                'Accept': 'application/json',
+                Accept: 'application/json',
                 'Content-Type': 'application/json',
-                "Authorization": "Bearer " + getTokenFromCookie()
+                Authorization: 'Bearer ' + getTokenFromCookie(),
+            },
+        }).then(res => res.json()).then(data => {
+            const day = JSON.parse(data.message).day;
+            if (day <= props.day) { // task not done
+                setLoading(false);
+            } else {
+                fetch(URL + `api/writing6810?day=${props.day}`, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        "Authorization": "Bearer " + getTokenFromCookie()
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        data.message = JSON.parse(data.message)
+                        setContent(data.message)
+                        setLoading(false);
+                    })
             }
         })
-            .then(response => response.json())
-            .then(data => {
-                data.message = JSON.parse(data.message)
-                setContent1(data.message.content1)
-                setContent2(data.message.content2)
-            })
     }, [])
 
-    // load the content from the localstorage
-    useEffect(() => {
-        const content = JSON.parse(localStorage.getItem(window.location.href + '_content') || '{}')
-        if (content.content3) setContent3(content.content3)
-        if (content.content4) setContent4(content.content4)
-        if (content.content5a) setContent5a(content.content5a)
-        if (content.content5b) setContent5b(content.content5b)
-        if (content.content5c) setContent5c(content.content5c)
-        if (content.content5d) setContent5d(content.content5d)
-        if (content.content5e) setContent5e(content.content5e)
-        if (content.content5f) setContent5f(content.content5f)
-        if (content.content5g) setContent5g(content.content5g)
-        if (content.fiveAisChecked) setFiveAisChecked(content.fiveAisChecked)
-        if (content.fiveBisChecked) setFiveBisChecked(content.fiveBisChecked)
-        if (content.fiveCisChecked) setFiveCisChecked(content.fiveCisChecked)
-        if (content.fiveDisChecked) setFiveDisChecked(content.fiveDisChecked)
-        if (content.fiveEisChecked) setFiveEisChecked(content.fiveEisChecked)
-        if (content.fiveFisChecked) setFiveFisChecked(content.fiveFisChecked)
-        if (content.fiveGisChecked) setFiveGisChecked(content.fiveGisChecked)
-        if (content.content6a) setContent6a(content.content6a)
-        if (content.content6b) setContent6b(content.content6b)
-        if (content.content6c) setContent6c(content.content6c)
-        if (content.content6d) setContent6d(content.content6d)
-        if (content.content6e) setContent6e(content.content6e)
-        if (content.content6f) setContent6f(content.content6f)
-        if (content.content6g) setContent6g(content.content6g)
-        if (content.sixAisChecked) setsixAisChecked(content.sixAisChecked)
-        if (content.sixBisChecked) setsixBisChecked(content.sixBisChecked)
-        if (content.sixCisChecked) setsixCisChecked(content.sixCisChecked)
-        if (content.sixDisChecked) setsixDisChecked(content.sixDisChecked)
-        if (content.sixEisChecked) setsixEisChecked(content.sixEisChecked)
-        if (content.sixFisChecked) setsixFisChecked(content.sixFisChecked)
-        if (content.sixGisChecked) setsixGisChecked(content.sixGisChecked)
-        if (content.content7) setContent7(content.content7)
-        setDateSaved("已自动加载上次的写作内容")
-    }, [])
+    const Main = () => {
+        const [content1, setContent1] = useState('加载中');
+        const [content2, setContent2] = useState('加载中');
+        const [content3, setContent3] = useState('');
+        const [content4, setContent4] = useState('');
+        const [fiveAisChecked, setFiveAisChecked] = useState(false);
+        const [content5a, setContent5a] = useState('');
+        const [fiveBisChecked, setFiveBisChecked] = useState(false);
+        const [content5b, setContent5b] = useState('');
+        const [fiveCisChecked, setFiveCisChecked] = useState(false);
+        const [content5c, setContent5c] = useState('');
+        const [fiveDisChecked, setFiveDisChecked] = useState(false);
+        const [content5d, setContent5d] = useState('');
+        const [fiveEisChecked, setFiveEisChecked] = useState(false);
+        const [content5e, setContent5e] = useState('');
+        const [fiveFisChecked, setFiveFisChecked] = useState(false);
+        const [content5f, setContent5f] = useState('');
+        const [fiveGisChecked, setFiveGisChecked] = useState(false);
+        const [content5g, setContent5g] = useState('');
 
-    // save the content to the localstorage
-    useEffect(() => {
-        const raw_content = {
-            "content3": content3,
-            "content4": content4,
-            "content5a": content5a,
-            "content5b": content5b,
-            "content5c": content5c,
-            "content5d": content5d,
-            "content5e": content5e,
-            "content5f": content5f,
-            "content5g": content5g,
-            "fiveAisChecked": fiveAisChecked,
-            "fiveBisChecked": fiveBisChecked,
-            "fiveCisChecked": fiveCisChecked,
-            "fiveDisChecked": fiveDisChecked,
-            "fiveEisChecked": fiveEisChecked,
-            "fiveFisChecked": fiveFisChecked,
-            "fiveGisChecked": fiveGisChecked,
-            "content6a": content6a,
-            "content6b": content6b,
-            "content6c": content6c,
-            "content6d": content6d,
-            "content6e": content6e,
-            "content6f": content6f,
-            "content6g": content6g,
-            "sixAisChecked": sixAisChecked,
-            "sixBisChecked": sixBisChecked,
-            "sixCisChecked": sixCisChecked,
-            "sixDisChecked": sixDisChecked,
-            "sixEisChecked": sixEisChecked,
-            "sixFisChecked": sixFisChecked,
-            "sixGisChecked": sixGisChecked,
-            "content7": content7
-        }
-        const content = JSON.stringify(raw_content)
-        if (content != localStorage.getItem(window.location.href + '_content') && Object.values(raw_content).some(key => key)) {
-            localStorage.setItem(window.location.href + '_content', content)
-            setDateSaved(moment().format("HH:mm") + " 已自动保存于本地")
-        }
-    }, [
-        content3, content4, content5a, content5b, content5c, content5d, content5e, content5f, content5g,
-        fiveAisChecked, fiveBisChecked, fiveCisChecked, fiveDisChecked, fiveEisChecked, fiveFisChecked, fiveGisChecked,
-        content6a, content6b, content6c, content6d, content6e, content6f, content6g,
-        sixAisChecked, sixBisChecked, sixCisChecked, sixDisChecked, sixEisChecked, sixFisChecked, sixGisChecked,
-        content7])
+        const [sixAisChecked, setsixAisChecked] = useState(false);
+        const [content6a, setContent6a] = useState('');
+        const [sixBisChecked, setsixBisChecked] = useState(false);
+        const [content6b, setContent6b] = useState('');
+        const [sixCisChecked, setsixCisChecked] = useState(false);
+        const [content6c, setContent6c] = useState('');
+        const [sixDisChecked, setsixDisChecked] = useState(false);
+        const [content6d, setContent6d] = useState('');
+        const [sixEisChecked, setsixEisChecked] = useState(false);
+        const [content6e, setContent6e] = useState('');
+        const [sixFisChecked, setsixFisChecked] = useState(false);
+        const [content6f, setContent6f] = useState('');
+        const [sixGisChecked, setsixGisChecked] = useState(false);
+        const [content6g, setContent6g] = useState('');
+
+        const [content7, setContent7] = useState('');
+
+        const [validated, setValidated] = useState(false);
+
+        const [dateSaved, setDateSaved] = useState("");
+
+        const [error5, setError5] = useState("");
+        const [error6, setError6] = useState("");
 
 
-
-    const handleSubmit = async (event: SyntheticEvent) => {
-        event.preventDefault();
-        const form = event.currentTarget;
-
-        let valid = true
-
-        console.log(form)
-
-        if (!((form as HTMLInputElement).checkValidity())) {
-            valid = false
+        const handle5ACheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            setFiveAisChecked(event.target.checked);
         }
 
-        if ([fiveAisChecked, fiveBisChecked, fiveCisChecked, fiveDisChecked, fiveEisChecked, fiveFisChecked, fiveGisChecked].every(key => !key)) {
-            valid = false
-            setError5("请至少选择一个选项")
-        } else {
-            setError5("")
+        const handle5BCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            setFiveBisChecked(event.target.checked);
+        }
+        const handle5CCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            setFiveCisChecked(event.target.checked);
+        }
+        const handle5DCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            setFiveDisChecked(event.target.checked);
+        }
+        const handle5ECheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            setFiveEisChecked(event.target.checked);
+        }
+        const handle5FCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            setFiveFisChecked(event.target.checked);
+        }
+        const handle5GCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            setFiveGisChecked(event.target.checked);
         }
 
-        if ([sixAisChecked, sixBisChecked, sixCisChecked, sixDisChecked, sixEisChecked, sixFisChecked, sixGisChecked].every(key => !key)) {
-            valid = false
-            setError6("请至少选择一个选项")
-        } else {
-            setError6("")
+        const handle6ACheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            setsixAisChecked(event.target.checked);
         }
 
-        if (!valid) {
-            setValidated(false);
+        const handle6BCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            setsixBisChecked(event.target.checked);
         }
-        else {
-            setValidated(true);
-            const payload = {
-                'day': props.day,
-                "content1": content1,
-                "content2": content2,
-                "content3": content3,
-                "content4": content4,
-                "content5a": content5a,
-                "content5b": content5b,
-                "content5c": content5c,
-                "content5d": content5d,
-                "content5e": content5e,
-                "content5f": content5f,
-                "content5g": content5g,
-                "fiveAisChecked": fiveAisChecked,
-                "fiveBisChecked": fiveBisChecked,
-                "fiveCisChecked": fiveCisChecked,
-                "fiveDisChecked": fiveDisChecked,
-                "fiveEisChecked": fiveEisChecked,
-                "fiveFisChecked": fiveFisChecked,
-                "fiveGisChecked": fiveGisChecked,
-                "content6a": content6a,
-                "content6b": content6b,
-                "content6c": content6c,
-                "content6d": content6d,
-                "content6e": content6e,
-                "content6f": content6f,
-                "content6g": content6g,
-                "sixAisChecked": sixAisChecked,
-                "sixBisChecked": sixBisChecked,
-                "sixCisChecked": sixCisChecked,
-                "sixDisChecked": sixDisChecked,
-                "sixEisChecked": sixEisChecked,
-                "sixFisChecked": sixFisChecked,
-                "sixGisChecked": sixGisChecked,
-                "content7": content7,
+        const handle6CCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            setsixCisChecked(event.target.checked);
+        }
+        const handle6DCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            setsixDisChecked(event.target.checked);
+        }
+        const handle6ECheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            setsixEisChecked(event.target.checked);
+        }
+        const handle6FCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            setsixFisChecked(event.target.checked);
+        }
+        const handle6GCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            setsixGisChecked(event.target.checked);
+        }
+
+        // get the content from the database
+        useEffect(() => {
+            let writing123Day
+            if (props.day === 6) {
+                writing123Day = 1
+            } else if (props.day === 8) {
+                writing123Day = 2
+            } else if (props.day === 10) {
+                writing123Day = 3
             }
-            const res = await fetch(URL + "api/writing6810/", {
-                method: 'POST',
+            fetch(URL + `api/writing123?day=${writing123Day}`, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     "Authorization": "Bearer " + getTokenFromCookie()
-                },
-                body: JSON.stringify(payload),
-
+                }
             })
-            const response = await res.json()
-            console.log(response)
-            if (response.status === "Success") {
+                .then(response => response.json())
+                .then(data => {
+                    data.message = JSON.parse(data.message)
+                    setContent1(data.message.content1)
+                    setContent2(data.message.content2)
+                })
+        }, [])
 
-                alert("感谢您用写作的方式关怀自己！")
-                window.location.href = "/home"
-
+        // load the content from the localstorage
+        useEffect(() => {
+            if (content) {
+                const disableAll = () => {
+                    // set all input, textarea and checkbox to be disabled
+                    const inputs = document.querySelectorAll('input')
+                    const textareas = document.querySelectorAll('textarea')
+                    const checkboxes = document.querySelectorAll('input[type=checkbox]')
+                    inputs.forEach(input => {
+                        input.setAttribute('disabled', 'true')
+                    })
+                    textareas.forEach(textarea => {
+                        textarea.setAttribute('disabled', 'true')
+                    })
+                    checkboxes.forEach(checkbox => {
+                        checkbox.setAttribute('disabled', 'true')
+                    })
+                }
+                disableAll()
+                setTimeout(() => { disableAll() })
+                // set the content
+                setContent3(content['6-3'] || content['10-3'] || content['8-3'])
+                setContent4(content['6-4'] || content['10-4'] || content['8-4'])
+                setContent5a(content['6-5-a'] || content['10-5-a'] || content['8-5-a'])
+                setContent5b(content['6-5-b'] || content['10-5-b'] || content['8-5-b'])
+                setContent5c(content['6-5-c'] || content['10-5-c'] || content['8-5-c'])
+                setContent5d(content['6-5-d'] || content['10-5-d'] || content['8-5-d'])
+                setContent5e(content['6-5-e'] || content['10-5-e'] || content['8-5-e'])
+                setContent5f(content['6-5-f'] || content['10-5-f'] || content['8-5-f'])
+                setContent5g(content['6-5-g'] || content['10-5-g'] || content['8-5-g'])
+                setFiveAisChecked(!!(content['6-5-a'] || content['10-5-a'] || content['8-5-a']))
+                setFiveBisChecked(!!(content['6-5-b'] || content['10-5-b'] || content['8-5-b']))
+                setFiveCisChecked(!!(content['6-5-c'] || content['10-5-c'] || content['8-5-c']))
+                setFiveDisChecked(!!(content['6-5-d'] || content['10-5-d'] || content['8-5-d']))
+                setFiveEisChecked(!!(content['6-5-e'] || content['10-5-e'] || content['8-5-e']))
+                setFiveFisChecked(!!(content['6-5-f'] || content['10-5-f'] || content['8-5-f']))
+                setFiveGisChecked(!!(content['6-5-g'] || content['10-5-g'] || content['8-5-g']))
+                setContent6a(content['6-6-a'] || content['10-6-a'] || content['8-6-a'])
+                setContent6b(content['6-6-b'] || content['10-6-b'] || content['8-6-b'])
+                setContent6c(content['6-6-c'] || content['10-6-c'] || content['8-6-c'])
+                setContent6d(content['6-6-d'] || content['10-6-d'] || content['8-6-d'])
+                setContent6e(content['6-6-e'] || content['10-6-e'] || content['8-6-e'])
+                setContent6f(content['6-6-f'] || content['10-6-f'] || content['8-6-f'])
+                setContent6g(content['6-6-g'] || content['10-6-g'] || content['8-6-g'])
+                setsixAisChecked(!!(content['6-6-a'] || content['10-6-a'] || content['8-6-a']))
+                setsixBisChecked(!!(content['6-6-b'] || content['10-6-b'] || content['8-6-b']))
+                setsixCisChecked(!!(content['6-6-c'] || content['10-6-c'] || content['8-6-c']))
+                setsixDisChecked(!!(content['6-6-d'] || content['10-6-d'] || content['8-6-d']))
+                setsixEisChecked(!!(content['6-6-e'] || content['10-6-e'] || content['8-6-e']))
+                setsixFisChecked(!!(content['6-6-f'] || content['10-6-f'] || content['8-6-f']))
+                setsixGisChecked(!!(content['6-6-g'] || content['10-6-g'] || content['8-6-g']))
+                setContent7(content['6-7'] || content['10-7'] || content['8-7'])
+                return
             } else {
-                alert(response.message)
+                const content = JSON.parse(localStorage.getItem(window.location.href + '_content') || '{}')
+                if (content.content3) setContent3(content.content3)
+                if (content.content4) setContent4(content.content4)
+                if (content.content5a) setContent5a(content.content5a)
+                if (content.content5b) setContent5b(content.content5b)
+                if (content.content5c) setContent5c(content.content5c)
+                if (content.content5d) setContent5d(content.content5d)
+                if (content.content5e) setContent5e(content.content5e)
+                if (content.content5f) setContent5f(content.content5f)
+                if (content.content5g) setContent5g(content.content5g)
+                if (content.fiveAisChecked) setFiveAisChecked(content.fiveAisChecked)
+                if (content.fiveBisChecked) setFiveBisChecked(content.fiveBisChecked)
+                if (content.fiveCisChecked) setFiveCisChecked(content.fiveCisChecked)
+                if (content.fiveDisChecked) setFiveDisChecked(content.fiveDisChecked)
+                if (content.fiveEisChecked) setFiveEisChecked(content.fiveEisChecked)
+                if (content.fiveFisChecked) setFiveFisChecked(content.fiveFisChecked)
+                if (content.fiveGisChecked) setFiveGisChecked(content.fiveGisChecked)
+                if (content.content6a) setContent6a(content.content6a)
+                if (content.content6b) setContent6b(content.content6b)
+                if (content.content6c) setContent6c(content.content6c)
+                if (content.content6d) setContent6d(content.content6d)
+                if (content.content6e) setContent6e(content.content6e)
+                if (content.content6f) setContent6f(content.content6f)
+                if (content.content6g) setContent6g(content.content6g)
+                if (content.sixAisChecked) setsixAisChecked(content.sixAisChecked)
+                if (content.sixBisChecked) setsixBisChecked(content.sixBisChecked)
+                if (content.sixCisChecked) setsixCisChecked(content.sixCisChecked)
+                if (content.sixDisChecked) setsixDisChecked(content.sixDisChecked)
+                if (content.sixEisChecked) setsixEisChecked(content.sixEisChecked)
+                if (content.sixFisChecked) setsixFisChecked(content.sixFisChecked)
+                if (content.sixGisChecked) setsixGisChecked(content.sixGisChecked)
+                if (content.content7) setContent7(content.content7)
+                setDateSaved("已自动加载上次的写作内容")
             }
-        }
+        }, [content])
+
+        // save the content to the localstorage
+        useEffect(() => {
+            if (content) {
+                return
+            }
+            else {
+                const raw_content = {
+                    "content3": content3,
+                    "content4": content4,
+                    "content5a": content5a,
+                    "content5b": content5b,
+                    "content5c": content5c,
+                    "content5d": content5d,
+                    "content5e": content5e,
+                    "content5f": content5f,
+                    "content5g": content5g,
+                    "fiveAisChecked": fiveAisChecked,
+                    "fiveBisChecked": fiveBisChecked,
+                    "fiveCisChecked": fiveCisChecked,
+                    "fiveDisChecked": fiveDisChecked,
+                    "fiveEisChecked": fiveEisChecked,
+                    "fiveFisChecked": fiveFisChecked,
+                    "fiveGisChecked": fiveGisChecked,
+                    "content6a": content6a,
+                    "content6b": content6b,
+                    "content6c": content6c,
+                    "content6d": content6d,
+                    "content6e": content6e,
+                    "content6f": content6f,
+                    "content6g": content6g,
+                    "sixAisChecked": sixAisChecked,
+                    "sixBisChecked": sixBisChecked,
+                    "sixCisChecked": sixCisChecked,
+                    "sixDisChecked": sixDisChecked,
+                    "sixEisChecked": sixEisChecked,
+                    "sixFisChecked": sixFisChecked,
+                    "sixGisChecked": sixGisChecked,
+                    "content7": content7
+                }
+                const content = JSON.stringify(raw_content)
+                if (content != localStorage.getItem(window.location.href + '_content') && Object.values(raw_content).some(key => key)) {
+                    localStorage.setItem(window.location.href + '_content', content)
+                    setDateSaved(moment().format("HH:mm") + " 已自动保存于本地")
+                }
+            }
+
+        }, [
+            content3, content4, content5a, content5b, content5c, content5d, content5e, content5f, content5g,
+            fiveAisChecked, fiveBisChecked, fiveCisChecked, fiveDisChecked, fiveEisChecked, fiveFisChecked, fiveGisChecked,
+            content6a, content6b, content6c, content6d, content6e, content6f, content6g,
+            sixAisChecked, sixBisChecked, sixCisChecked, sixDisChecked, sixEisChecked, sixFisChecked, sixGisChecked,
+            content7, content])
+
+
+
+        const handleSubmit = async (event: SyntheticEvent) => {
+            event.preventDefault();
+            const form = event.currentTarget;
+
+            let valid = true
+
+            console.log(form)
+
+            if (!((form as HTMLInputElement).checkValidity())) {
+                valid = false
+            }
+
+            if ([fiveAisChecked, fiveBisChecked, fiveCisChecked, fiveDisChecked, fiveEisChecked, fiveFisChecked, fiveGisChecked].every(key => !key)) {
+                valid = false
+                setError5("请至少选择一个选项")
+            } else {
+                setError5("")
+            }
+
+            if ([sixAisChecked, sixBisChecked, sixCisChecked, sixDisChecked, sixEisChecked, sixFisChecked, sixGisChecked].every(key => !key)) {
+                valid = false
+                setError6("请至少选择一个选项")
+            } else {
+                setError6("")
+            }
+
+            if (!valid) {
+                setValidated(false);
+            }
+            else {
+                setValidated(true);
+                const payload = {
+                    'day': props.day,
+                    "content1": content1,
+                    "content2": content2,
+                    "content3": content3,
+                    "content4": content4,
+                    "content5a": content5a,
+                    "content5b": content5b,
+                    "content5c": content5c,
+                    "content5d": content5d,
+                    "content5e": content5e,
+                    "content5f": content5f,
+                    "content5g": content5g,
+                    "fiveAisChecked": fiveAisChecked,
+                    "fiveBisChecked": fiveBisChecked,
+                    "fiveCisChecked": fiveCisChecked,
+                    "fiveDisChecked": fiveDisChecked,
+                    "fiveEisChecked": fiveEisChecked,
+                    "fiveFisChecked": fiveFisChecked,
+                    "fiveGisChecked": fiveGisChecked,
+                    "content6a": content6a,
+                    "content6b": content6b,
+                    "content6c": content6c,
+                    "content6d": content6d,
+                    "content6e": content6e,
+                    "content6f": content6f,
+                    "content6g": content6g,
+                    "sixAisChecked": sixAisChecked,
+                    "sixBisChecked": sixBisChecked,
+                    "sixCisChecked": sixCisChecked,
+                    "sixDisChecked": sixDisChecked,
+                    "sixEisChecked": sixEisChecked,
+                    "sixFisChecked": sixFisChecked,
+                    "sixGisChecked": sixGisChecked,
+                    "content7": content7,
+                }
+                const res = await fetch(URL + "api/writing6810/", {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        "Authorization": "Bearer " + getTokenFromCookie()
+                    },
+                    body: JSON.stringify(payload),
+
+                })
+                const response = await res.json()
+                console.log(response)
+                if (response.status === "Success") {
+
+                    alert("感谢您用写作的方式关怀自己！")
+                    window.location.href = "/home"
+
+                } else {
+                    alert(response.message)
+                }
+            }
 
 
 
 
-    };
+        };
 
 
-    const articles = props.content
+        const articles = props.content
 
 
-    const WORD_MIN_LIMIT = 20;
-    return <div className={style.container}>
-        <Header />
-        <div className={style.content}>
+        const WORD_MIN_LIMIT = 20;
+        return <div className={style.content}>
             <style>
                 {`
-            .was-validated textarea{
-                background-image: none !important;
-            }
-            `}
+                .was-validated textarea{
+                    background-image: none !important;
+                }
+                `}
             </style>
             <div className={style.title}>第{props.day}天</div>
             <div style={{ margin: '3em' }}>
@@ -768,17 +858,29 @@ export function Writing6810(props: Prop) {
                             {dateSaved}
                         </span>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                        <Button className={style.button} variant="primary" type="submit">
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '16px' }}>
+                        <Button className={style.button} variant="primary" type="submit" disabled={content}>
                             提交
+                        </Button>
+                        <Button className={style.button} variant="primary" onClick={() => { window.location.href = 'home' }}>
+                            返回
                         </Button>
                     </div>
                 </Form>
             </div>
         </div>
+    }
+
+    return <div className={style.container}>
+        <Header />
+        {
+            loading ?
+                <div className={style.loading}>
+                    <Spinner id={style.spinner} animation="border" role="status" />
+                </div>
+                :
+                <Main />
+        }
         <Footer />
     </div>
 }
-
-
-

@@ -25,7 +25,10 @@
     .button {
         margin-top: 1em;
         background-color: #5A57FF;
-
+        &:disabled {
+            background-color: #C4C4C4;
+            border: none;
+        }
     }
 textarea {
         margin: 0 0 1em 0;
@@ -44,4 +47,18 @@ textarea {
     font-size: 0.8em;
     font-weight: 400;
     color: green;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    width: 100%;
+    background-color: #eeebf3;
+
+    #spinner {
+        border-color: #261274;
+        border-right-color: transparent;
+    }
 }

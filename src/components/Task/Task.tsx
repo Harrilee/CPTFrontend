@@ -40,15 +40,30 @@ export function Task(props: Props) {
                     }
                 }}
             >
-                点击开始
+                {props.questionType.includes('阅读反馈') ? "查看反馈" : "点击开始"}
             </Button>
     } else {
         if (props.currentDay > props.days) {
-            button = (
-                <Button className={style.button} disabled>
-                    已经完成
-                </Button>
-            )
+            if (props.questionType.includes('写作')) {
+                button = (
+                    <Button className={style.button} onClick={() => window.location.href = props.taskURL}>
+                        查看内容
+                    </Button>
+                )
+            } else if (props.questionType.includes('阅读反馈')) {
+                button = (
+                    <Button className={style.button} disabled>
+                        暂无反馈
+                    </Button>
+                )
+            }
+            else {
+                button = (
+                    <Button className={style.button} disabled>
+                        已经完成
+                    </Button>
+                )
+            }
         } else {
             button = (
                 <div onMouseEnter={() => setShow(true)} onMouseLeave={() => setShow(false)} ref={target}>
