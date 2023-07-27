@@ -477,6 +477,13 @@ export function Home() {
             }
         }
 
+        static laterOrEqualToDayProgress(taskDay: number): true | string {
+            if (Number(info.day) >= taskDay)
+                return true
+            else
+                return "(laterOrEqualToDayProgress) 当前任务编号为" + taskDay + "，大于当前用户的任务编号：[" + info.day + "] 。"
+        }
+
 
         // check access with given task day and requirements
         static checkAccess(taskDay: number, rule: Rule): true | string[] {
@@ -501,6 +508,7 @@ export function Home() {
                 case Rule.video:
                     check(this.isValidUser())
                     check(this.afterEarlistStartDate(taskDay))
+                    check(this.laterOrEqualToDayProgress(taskDay))
                     break
                 case Rule.global:
                     check(this.isValidUser())
@@ -511,6 +519,7 @@ export function Home() {
             else
                 return reasons
         }
+
     }
 
     useEffect(() => {
