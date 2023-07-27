@@ -59,14 +59,14 @@ const tasks_expgroup = [
         day: 4.1,
         questionType: '游戏',
         timeToFinish: 30,
-        taskURL: '/game',
+        taskURL: '/game1',
         rule: Rule.basic
     },
     {
         day: 5,
         questionType: '游戏',
         timeToFinish: 30,
-        taskURL: '/game',
+        taskURL: '/game2',
         rule: Rule.basic
     },
     {
@@ -224,14 +224,14 @@ const tasks_controlgroup = [
         day: 106,
         questionType: '游戏*',
         timeToFinish: 30,
-        taskURL: '/game',
+        taskURL: '/game1',
         rule: Rule.basic
     },
     {
         day: 106,
         questionType: '游戏*',
         timeToFinish: 30,
-        taskURL: '/game',
+        taskURL: '/game2',
         rule: Rule.basic
     },
     {
