@@ -5,8 +5,8 @@ import { parse } from 'path'
 
 const usernameEncryptionSalt = 1237890 // same as in backend
 
-export const URL = 'http://127.0.0.1:8000/'
-// export const URL = 'https://api.nyuhealthstudy.com/';
+// export const URL = 'http://127.0.0.1:8000/'
+export const URL = 'https://api.nyuhealthstudy.com/';
 export const timeOut = 600 // 28800 max
 export const conversationGap = 3000 // 3000
 export const shuffleArrayFlag = true
