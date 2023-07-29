@@ -28,7 +28,7 @@ export function Writing123(props: Prop) {
             },
         }).then(res => res.json()).then(data => {
             const day = JSON.parse(data.message).day;
-            if (day <= props.day) { // task not done
+            if (parseInt(day) <= props.day) { // task not done
                 setLoading(false);
             } else {
                 fetch(URL + `api/writing123?day=${props.day}`, {
