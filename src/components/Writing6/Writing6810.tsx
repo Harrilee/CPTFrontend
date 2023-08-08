@@ -67,6 +67,7 @@ export function Writing6810(props: Prop) {
         const [content5f, setContent5f] = useState('');
         const [fiveGisChecked, setFiveGisChecked] = useState(false);
         const [content5g, setContent5g] = useState('');
+        const [fiveHisChecked, setFiveHisChecked] = useState(false);
 
         const [sixAisChecked, setsixAisChecked] = useState(false);
         const [content6a, setContent6a] = useState('');
@@ -82,6 +83,7 @@ export function Writing6810(props: Prop) {
         const [content6f, setContent6f] = useState('');
         const [sixGisChecked, setsixGisChecked] = useState(false);
         const [content6g, setContent6g] = useState('');
+        const [sixHisChecked, setsixHisChecked] = useState(false);
 
         const [content7, setContent7] = useState('');
 
@@ -115,6 +117,9 @@ export function Writing6810(props: Prop) {
         const handle5GCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             setFiveGisChecked(event.target.checked);
         }
+        const handle5HCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            setFiveHisChecked(event.target.checked);
+        }
 
         const handle6ACheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             setsixAisChecked(event.target.checked);
@@ -137,6 +142,9 @@ export function Writing6810(props: Prop) {
         }
         const handle6GCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             setsixGisChecked(event.target.checked);
+        }
+        const handle6HCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            setsixHisChecked(event.target.checked);
         }
 
         // get the content from the database
@@ -201,6 +209,7 @@ export function Writing6810(props: Prop) {
                 setFiveEisChecked(!!(content['6-5-e'] || content['10-5-e'] || content['8-5-e']))
                 setFiveFisChecked(!!(content['6-5-f'] || content['10-5-f'] || content['8-5-f']))
                 setFiveGisChecked(!!(content['6-5-g'] || content['10-5-g'] || content['8-5-g']))
+                setFiveHisChecked(!!(content['6-5-h'] || content['10-5-h'] || content['8-5-h']))
                 setContent6a(content['6-6-a'] || content['10-6-a'] || content['8-6-a'])
                 setContent6b(content['6-6-b'] || content['10-6-b'] || content['8-6-b'])
                 setContent6c(content['6-6-c'] || content['10-6-c'] || content['8-6-c'])
@@ -215,6 +224,7 @@ export function Writing6810(props: Prop) {
                 setsixEisChecked(!!(content['6-6-e'] || content['10-6-e'] || content['8-6-e']))
                 setsixFisChecked(!!(content['6-6-f'] || content['10-6-f'] || content['8-6-f']))
                 setsixGisChecked(!!(content['6-6-g'] || content['10-6-g'] || content['8-6-g']))
+                setsixHisChecked(!!(content['6-6-h'] || content['10-6-h'] || content['8-6-h']))
                 setContent7(content['6-7'] || content['10-7'] || content['8-7'])
                 return
             } else {
@@ -235,6 +245,7 @@ export function Writing6810(props: Prop) {
                 if (content.fiveEisChecked) setFiveEisChecked(content.fiveEisChecked)
                 if (content.fiveFisChecked) setFiveFisChecked(content.fiveFisChecked)
                 if (content.fiveGisChecked) setFiveGisChecked(content.fiveGisChecked)
+                if (content.fiveHisChecked) setFiveHisChecked(content.fiveHisChecked)
                 if (content.content6a) setContent6a(content.content6a)
                 if (content.content6b) setContent6b(content.content6b)
                 if (content.content6c) setContent6c(content.content6c)
@@ -249,6 +260,7 @@ export function Writing6810(props: Prop) {
                 if (content.sixEisChecked) setsixEisChecked(content.sixEisChecked)
                 if (content.sixFisChecked) setsixFisChecked(content.sixFisChecked)
                 if (content.sixGisChecked) setsixGisChecked(content.sixGisChecked)
+                if (content.sixHisChecked) setsixHisChecked(content.sixHisChecked)
                 if (content.content7) setContent7(content.content7)
                 setDateSaved("已自动加载上次的写作内容")
             }
@@ -277,6 +289,7 @@ export function Writing6810(props: Prop) {
                     "fiveEisChecked": fiveEisChecked,
                     "fiveFisChecked": fiveFisChecked,
                     "fiveGisChecked": fiveGisChecked,
+                    'fiveHisChecked': fiveHisChecked,
                     "content6a": content6a,
                     "content6b": content6b,
                     "content6c": content6c,
@@ -291,6 +304,7 @@ export function Writing6810(props: Prop) {
                     "sixEisChecked": sixEisChecked,
                     "sixFisChecked": sixFisChecked,
                     "sixGisChecked": sixGisChecked,
+                    'sixHisChecked': sixHisChecked,
                     "content7": content7
                 }
                 const content = JSON.stringify(raw_content)
@@ -302,9 +316,9 @@ export function Writing6810(props: Prop) {
 
         }, [
             content3, content4, content5a, content5b, content5c, content5d, content5e, content5f, content5g,
-            fiveAisChecked, fiveBisChecked, fiveCisChecked, fiveDisChecked, fiveEisChecked, fiveFisChecked, fiveGisChecked,
+            fiveAisChecked, fiveBisChecked, fiveCisChecked, fiveDisChecked, fiveEisChecked, fiveFisChecked, fiveGisChecked, fiveHisChecked,
             content6a, content6b, content6c, content6d, content6e, content6f, content6g,
-            sixAisChecked, sixBisChecked, sixCisChecked, sixDisChecked, sixEisChecked, sixFisChecked, sixGisChecked,
+            sixAisChecked, sixBisChecked, sixCisChecked, sixDisChecked, sixEisChecked, sixFisChecked, sixGisChecked, sixHisChecked,
             content7, content])
 
 
@@ -321,14 +335,14 @@ export function Writing6810(props: Prop) {
                 valid = false
             }
 
-            if ([fiveAisChecked, fiveBisChecked, fiveCisChecked, fiveDisChecked, fiveEisChecked, fiveFisChecked, fiveGisChecked].every(key => !key)) {
+            if ([fiveAisChecked, fiveBisChecked, fiveCisChecked, fiveDisChecked, fiveEisChecked, fiveFisChecked, fiveGisChecked, fiveHisChecked].every(key => !key)) {
                 valid = false
                 setError5("请至少选择一个选项")
             } else {
                 setError5("")
             }
 
-            if ([sixAisChecked, sixBisChecked, sixCisChecked, sixDisChecked, sixEisChecked, sixFisChecked, sixGisChecked].every(key => !key)) {
+            if ([sixAisChecked, sixBisChecked, sixCisChecked, sixDisChecked, sixEisChecked, sixFisChecked, sixGisChecked, sixHisChecked].every(key => !key)) {
                 valid = false
                 setError6("请至少选择一个选项")
             } else {
@@ -360,6 +374,7 @@ export function Writing6810(props: Prop) {
                     "fiveEisChecked": fiveEisChecked,
                     "fiveFisChecked": fiveFisChecked,
                     "fiveGisChecked": fiveGisChecked,
+                    "fiveHisChecked": fiveHisChecked,
                     "content6a": content6a,
                     "content6b": content6b,
                     "content6c": content6c,
@@ -374,6 +389,7 @@ export function Writing6810(props: Prop) {
                     "sixEisChecked": sixEisChecked,
                     "sixFisChecked": sixFisChecked,
                     "sixGisChecked": sixGisChecked,
+                    "sixHisChecked": sixHisChecked,
                     "content7": content7,
                 }
                 const res = await fetch(URL + "api/writing6810/", {
@@ -642,6 +658,14 @@ export function Writing6810(props: Prop) {
                                 onChange={handle5GCheckboxChange}
                             />
                         </div>
+                        <div className={style.checkboxContainer}>
+                            <div className={style.checkboxLabel}>h) 我没有发现自己的非适应性思维。</div>
+                            <input className={style.checkbox}
+                                type="checkbox"
+                                checked={fiveHisChecked}
+                                onChange={handle5HCheckboxChange}
+                            />
+                        </div>
                         <div className={fiveGisChecked ? style.thought : style.hiddenThought}>
                             <Form.Group controlId="content5g">
                                 <Form.Label>对应的想法：</Form.Label>
@@ -823,6 +847,14 @@ export function Writing6810(props: Prop) {
                                 onChange={handle6GCheckboxChange}
                             />
                         </div>
+                        <div className={style.checkboxContainer}>
+                            <div className={style.checkboxLabel}>h) 我没有发现自己的非适应性思维，所以我不需要提问。</div>
+                            <input className={style.checkbox}
+                                type="checkbox"
+                                checked={sixHisChecked}
+                                onChange={handle6HCheckboxChange}
+                            />
+                        </div>
                         <div className={sixGisChecked ? style.thought : style.hiddenThought}>
                             <Form.Group controlId="content6g">
                                 <Form.Label>对应的想法：</Form.Label>
@@ -841,16 +873,16 @@ export function Writing6810(props: Prop) {
                         </div>
                     </Form.Group>
                     <Form.Group controlId="formBasicContent7">
-                        <Form.Label>7）在思考完以上问题之后，您认为自己可以如何更灵活、全面地看待当时的处境？</Form.Label>
+                        <Form.Label>7）在思考完以上问题之后，您认为自己可以如何更灵活、全面地看待当时的处境？（字数要求：≥300字）</Form.Label>
                         <Form.Control
                             required
                             type="text"
                             as="textarea" rows={5}
                             value={content7}
-                            minLength={WORD_MIN_LIMIT}
+                            minLength={300}
                             onChange={e => setContent7(e.target.value)} />
                         <Form.Control.Feedback type="invalid">
-                            请至少输入20个字
+                            请至少输入300个字
                         </Form.Control.Feedback>
                     </Form.Group>
                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
