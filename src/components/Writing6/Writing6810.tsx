@@ -31,7 +31,7 @@ export function Writing6810(props: Prop) {
             if (day <= props.day) { // task not done
                 setLoading(false);
             } else {
-                fetch(URL + `api/writing6810?day=${props.day}`, {
+                fetch(URL + `api/writing6810/?day=${props.day}`, {
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ export function Writing6810(props: Prop) {
             } else if (props.day === 10) {
                 writing123Day = 3
             }
-            fetch(URL + `api/writing123?day=${writing123Day}`, {
+            fetch(URL + `api/writing123/?day=${writing123Day}`, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',

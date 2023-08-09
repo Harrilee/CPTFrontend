@@ -31,7 +31,7 @@ export function Writing123(props: Prop) {
             if (parseInt(day) <= props.day) { // task not done
                 setLoading(false);
             } else {
-                fetch(URL + `api/writing123?day=${props.day}`, {
+                fetch(URL + `api/writing123/?day=${props.day}`, {
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
