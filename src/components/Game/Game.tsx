@@ -58,7 +58,7 @@ export function Game() {
     const clientColorHighlight = () => {
         for (let i = 0; i < visitorCount; i++) {
             const visitorElement = document.querySelector('#client' + (i + 1)) as HTMLElement;
-            visitorElement.style.color = "";
+            visitorElement && (visitorElement.style.color = "");
         }
         const visitorElement = document.querySelector('#client' + (displayID + 1)) as HTMLElement;
         visitorElement && (visitorElement.style.color = "#ff8300");
@@ -197,6 +197,14 @@ export function Game() {
                     <div className={style.clientInfo}>
                         <div><img className={style.avatar} src={client14_avatar} alt={"来访者14头像"}/></div>
                         <div id={'client14'} className={style.clientName}>{names[13]}</div>
+                    </div>
+                    <div className={style.clientInfo}>
+                        <div><img className={style.avatar} src={client1_avatar} alt={"来访者15头像"} /></div>
+                        <div id={'client15'} className={style.clientName}>{names[14]}</div>
+                    </div>
+                    <div className={style.clientInfo}>
+                        <div><img className={style.avatar} src={client2_avatar} alt={"来访者16头像"} /></div>
+                        <div id={'client16'} className={style.clientName}>{names[15]}</div>
                     </div>
 
 
