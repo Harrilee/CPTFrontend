@@ -53,15 +53,15 @@ export function Game() {
     const [realID, setRealID] = useState(0);
     const [showArr, setShowArr] = useState<boolean[]>([]);
     const [names, setNames] = useState<string[]>([]);
-    const visitorCount = 14;
+    const visitorCount = 16;
 
     const clientColorHighlight = () => {
         for (let i = 0; i < visitorCount; i++) {
             const visitorElement = document.querySelector('#client' + (i + 1)) as HTMLElement;
-            visitorElement!.style.color = "";
+            visitorElement.style.color = "";
         }
         const visitorElement = document.querySelector('#client' + (displayID + 1)) as HTMLElement;
-        visitorElement!.style.color = "#ff8300";
+        visitorElement && (visitorElement.style.color = "#ff8300");
     }
     const elicitResponse = async (payload: choicePayload = {"choice": ""}) => {
 
