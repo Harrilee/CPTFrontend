@@ -66,6 +66,24 @@ function App() {
         })
     }, [])
 
+    useEffect(() => {
+        const url_path = location.pathname
+        if (url_path !== '/') {
+            const linkDomObj = document.createElement('link')
+            linkDomObj.rel = "apple-touch-icon"
+            linkDomObj.href = '/rainbow.ong'
+            document.head.appendChild(linkDomObj)
+            const iconDomObj = document.createElement('link')
+            iconDomObj.rel = 'icon'
+            iconDomObj.href = '/rainbow.png'
+            document.head.appendChild(iconDomObj)
+            return () => {
+                document.removeChild(linkDomObj)
+                document.removeChild(iconDomObj)
+            }
+        }
+    }, [])
+
     // return <UserContext.Provider value={{value}}>
     return (
         <>

@@ -102,9 +102,9 @@ export function Login() {
     return (
         <>
             <div className={style.container}>
-                <div>
+                {/* <div>
                     <img src="/rainbow.png" alt="上海纽约大学压力与健康研究" className={style.image} />
-                </div>
+                </div> */}
                 <div className={style.text}>上海纽约大学压力与健康研究</div>
                 {isMobile ? (
                     <div className={style.mobileText}>手机端暂不支持登录，请使用电脑端登录</div>
