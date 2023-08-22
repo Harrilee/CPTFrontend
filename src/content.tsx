@@ -72,9 +72,6 @@ export const CONTENT_WRITING_DAY6 = `
 
 下面是写作练习的一个举例。
 
-李明在他的书写练习中写到：
-
-
 ---
 
 

@@ -361,7 +361,7 @@ export function Home() {
         // if backend allow this user to continue experiment (BE: banFlag)
         static isValidUser(): true | string {
             if (info.banFlag) {
-                return "(isValidUser) 后台禁止用户访问，原因 [" + info.banReason + "]。请联系管理员"
+                return "(isValidUser) 后台禁止用户访问，原因 [" + info.banReason + "]。"
             }
             return true
         }
@@ -555,7 +555,7 @@ export function Home() {
                     {globalAccess === true ? <></> :
 
                         <div className={style.errorContainer}>
-                            <p>您暂时无法参与后续研究，请联系管理员。系统检测到原因如下</p>
+                            <p>您暂时无法参与后续研究，系统检测到原因如下</p>
                             {globalAccess.map((reason, index) => {
                                 return <div className={style.errorCard} key={index}>{reason}</div>
                             })}
