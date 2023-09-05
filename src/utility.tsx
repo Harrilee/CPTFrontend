@@ -8,7 +8,7 @@ const usernameEncryptionSalt = 1237890 // same as in backend
 // export const URL = 'http://127.0.0.1:8000/'
 export const URL = 'https://api.nyuhealthstudy.com/';
 export const timeOut = 600 // 28800 max
-export const conversationGap = 3000 // 3000
+export const conversationGap = 4500 // 3000
 export const shuffleArrayFlag = true
 export const getUserNameFromCookie = (): string => {
     const cookie = document.cookie.split(';').map(x => x.trim())

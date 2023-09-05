@@ -9,8 +9,180 @@ import Spinner from 'react-bootstrap/Spinner';
 import Overlay from 'react-bootstrap/Overlay'
 import moment from 'moment'
 
+export class AcsMngr {
+    info: any
 
-enum Rule {
+    constructor(info: any) {
+        this.info = info
+    }
+
+
+    // if backend allow this user to continue experiment (BE: banFlag)
+    isValidUser(): true | string {
+        if (this.info.banFlag) {
+            return "(isValidUser) 后台禁止用户访问，原因 [" + this.info.banReason + "]。"
+        }
+        return true
+    }
+
+    // within the valid day range
+    // user experiment progress defined as a finite state machine (the old day and setDay)
+    equalDayProgress(taskDay: number): true | string {
+        if (Number(this.info.day) == taskDay)
+            return true
+        else
+            return "(equalDayProgress) 当前任务编号为" + taskDay + "，与当前用户的任务编号：[" + this.info.day + "] 不一致。"
+    }
+
+    // after eairlist start date
+    // user experiment time range defined as a time range (the old time and setTime)
+    afterEarlistStartDate(taskDay: number): true | string {
+        const startDate = moment(this.info.startDate)
+        const currentTaskDay = Math.floor(taskDay)
+        // earlist start date = user_experiment_start_date + (current_task_day - 1) + 4 hours (4 am)
+        // 任务开启当天的4点开始
+        const earlistStartDate = startDate.clone().add(currentTaskDay - 1, 'days').add(4, 'hours')
+        // if current time is after the earlist start date
+        if (moment().isAfter(earlistStartDate)) {
+            return true
+        }
+        return "(afterEarlistStartDate) 未到达任务开启时间。开启时间为" + earlistStartDate.format('YYYY-MM-DD hh:mm A') + "。"
+    }
+
+    // if local time is within the time range of the task
+    isValidTimeRange(taskDay: number): true | string {
+        const startDate = moment(this.info.startDate)
+        const currentTaskDay = Math.floor(taskDay)
+        // earlist start date = user_experiment_start_date + (current_task_day - 1) + 4 hours (4 am)
+        // 任务开启当天的4点开始
+        const earlistStartDate = startDate.clone().add(currentTaskDay - 1, 'days').add(4, 'hours')
+        // latest start date = user_experiment_start_date + (current_task_day + 1) + 4 hours (9 am)
+        // 任务开启第三天4点结束
+        const latestStartDate = startDate.clone().add(currentTaskDay + 1, 'days').add(4, 'hours')
+        // if current time is within the time range
+        if (moment().isBetween(earlistStartDate, latestStartDate)) {
+            return true
+        }
+        return "(isValidTimeRange) 当前时间不在任务开启时间范围内。开启时间为" + earlistStartDate.format('YYYY-MM-DD hh:mm A') + "，结束时间为" + latestStartDate.format('YYYY-MM-DD hh:mm A') + "。"
+    }
+
+    // if user has view the feedback
+    viewedFeedback(taskDay: number): true | string {
+        switch (taskDay) {
+            case 8:
+                if (this.info.feedbackDay6Viewed)
+                    return true
+                else
+                    return "(viewedFeedback) 请先查看第6天的反馈。"
+            case 10:
+                if (this.info.feedbackDay8Viewed)
+                    return true
+                else
+                    return "(viewedFeedback) 请先查看第8天的反馈。"
+            case 12:
+                if (this.info.feedbackDay10Viewed)
+                    return true
+                else
+                    return "(viewedFeedback) 请先查看第10天的反馈。"
+            case 14:
+                if (this.info.feedbackDay12Viewed)
+                    return true
+                else
+                    return "(viewedFeedback) 请先查看第12天的反馈。"
+            case 29:
+                if (this.info.feedbackDay14Viewed)
+                    return true
+                else
+                    return "(viewedFeedback) 请先查看第14天的反馈。"
+            default:
+                console.error("viewedFeedback: taskDay is not in the list")
+                return "(viewedFeedback) 这是一个程序错误。请通知管理员联系开发者。"
+
+        }
+    }
+
+
+    // if user has feedback, they should not be able to access the task
+    hasFeedback(taskDay: number): true | string {
+        switch (taskDay) {
+            case 7:
+                if (this.info.feedbackDay6 !== "")
+                    return true
+                else
+                    return "(hasFeedback) 管理员还未为您提供第6天的反馈。"
+            case 9:
+                if (this.info.feedbackDay8 !== "")
+                    return true
+                else
+                    return "(hasFeedback) 管理员还未为您提供第8天的反馈。"
+            case 11:
+                if (this.info.feedbackDay10 !== "")
+                    return true
+                else
+                    return "(hasFeedback) 管理员还未为您提供第10天的反馈。"
+            case 13:
+                if (this.info.feedbackDay12 !== "")
+                    return true
+                else
+                    return "(hasFeedback) 管理员还未为您提供第12天的反馈。"
+            case 15:
+                if (this.info.feedbackDay14 !== "")
+                    return true
+                else
+                    return "(hasFeedback) 管理员还未为您提供第14天的反馈。"
+            default:
+                console.error("hasFeedback: taskDay is not in the list")
+                return "(hasFeedback) 这是一个程序错误。请通知管理员联系开发者。"
+        }
+    }
+
+    laterOrEqualToDayProgress(taskDay: number): true | string {
+        if (Number(this.info.day) >= taskDay)
+            return true
+        else
+            return "(laterOrEqualToDayProgress) 当前任务编号为" + taskDay + "，大于当前用户的任务编号：[" + this.info.day + "] 。"
+    }
+
+
+    // check access with given task day and requirements
+    checkAccess(taskDay: number, rule: Rule): true | string[] {
+        const reasons: string[] = []
+        const check = (result: true | string) => {
+            if (result !== true) {
+                reasons.push(result)
+            }
+        }
+        if (rule === Rule.basic || rule === Rule.viewFbFirst) {
+            check(this.isValidUser())
+            check(this.equalDayProgress(taskDay))
+            check(this.isValidTimeRange(taskDay))
+        }
+        switch (rule) {
+            case Rule.feedback:
+                check(this.hasFeedback(taskDay))
+                break
+            case Rule.viewFbFirst:
+                check(this.viewedFeedback(taskDay))
+                break
+            case Rule.video:
+                check(this.isValidUser())
+                check(this.afterEarlistStartDate(taskDay))
+                check(this.laterOrEqualToDayProgress(taskDay))
+                break
+            case Rule.global:
+                check(this.isValidUser())
+                break
+        }
+        if (reasons.length === 0)
+            return true
+        else
+            return reasons
+    }
+
+}
+
+
+export enum Rule {
     'basic', // isValidUser, equalDayProgress, isValidTimeRange
     'feedback', // hasFeedback
     'viewFbFirst', // basic, viewedFeedback
@@ -18,7 +190,7 @@ enum Rule {
     'global', // isValidUser -> this is for global display
 }
 
-const tasks_expgroup = [
+export const tasks_expgroup = [
     {
         day: 1,
         questionType: '问卷调查',
@@ -162,7 +334,7 @@ const tasks_expgroup = [
     }
 ]
 
-const tasks_controlgroup = [
+export const tasks_controlgroup = [
     {
         day: 1,
         questionType: '问卷调查',
@@ -357,170 +529,7 @@ export function Home() {
         }
     }
 
-    class AcsMngr {
-        // if backend allow this user to continue experiment (BE: banFlag)
-        static isValidUser(): true | string {
-            if (info.banFlag) {
-                return "(isValidUser) 后台禁止用户访问，原因 [" + info.banReason + "]。"
-            }
-            return true
-        }
 
-        // within the valid day range
-        // user experiment progress defined as a finite state machine (the old day and setDay)
-        static equalDayProgress(taskDay: number): true | string {
-            if (Number(info.day) == taskDay)
-                return true
-            else
-                return "(equalDayProgress) 当前任务编号为" + taskDay + "，与当前用户的任务编号：[" + info.day + "] 不一致。"
-        }
-
-        // after eairlist start date
-        // user experiment time range defined as a time range (the old time and setTime)
-        static afterEarlistStartDate(taskDay: number): true | string {
-            const startDate = moment(info.startDate)
-            const currentTaskDay = Math.floor(taskDay)
-            // earlist start date = user_experiment_start_date + (current_task_day - 1) + 4 hours (4 am)
-            // 任务开启当天的4点开始
-            const earlistStartDate = startDate.clone().add(currentTaskDay - 1, 'days').add(4, 'hours')
-            // if current time is after the earlist start date
-            if (moment().isAfter(earlistStartDate)) {
-                return true
-            }
-            return "(afterEarlistStartDate) 未到达任务开启时间。开启时间为" + earlistStartDate.format('YYYY-MM-DD hh:mm A') + "。"
-        }
-
-        // if local time is within the time range of the task
-        static isValidTimeRange(taskDay: number): true | string {
-            const startDate = moment(info.startDate)
-            const currentTaskDay = Math.floor(taskDay)
-            // earlist start date = user_experiment_start_date + (current_task_day - 1) + 4 hours (4 am)
-            // 任务开启当天的4点开始
-            const earlistStartDate = startDate.clone().add(currentTaskDay - 1, 'days').add(4, 'hours')
-            // latest start date = user_experiment_start_date + (current_task_day + 1) + 4 hours (9 am)
-            // 任务开启第三天4点结束
-            const latestStartDate = startDate.clone().add(currentTaskDay + 1, 'days').add(4, 'hours')
-            // if current time is within the time range
-            if (moment().isBetween(earlistStartDate, latestStartDate)) {
-                return true
-            }
-            return "(isValidTimeRange) 当前时间不在任务开启时间范围内。开启时间为" + earlistStartDate.format('YYYY-MM-DD hh:mm A') + "，结束时间为" + latestStartDate.format('YYYY-MM-DD hh:mm A') + "。"
-        }
-
-        // if user has view the feedback
-        static viewedFeedback(taskDay: number): true | string {
-            switch (taskDay) {
-                case 8:
-                    if (info.feedbackDay6Viewed)
-                        return true
-                    else
-                        return "(viewedFeedback) 请先查看第6天的反馈。"
-                case 10:
-                    if (info.feedbackDay8Viewed)
-                        return true
-                    else
-                        return "(viewedFeedback) 请先查看第8天的反馈。"
-                case 12:
-                    if (info.feedbackDay10Viewed)
-                        return true
-                    else
-                        return "(viewedFeedback) 请先查看第10天的反馈。"
-                case 14:
-                    if (info.feedbackDay12Viewed)
-                        return true
-                    else
-                        return "(viewedFeedback) 请先查看第12天的反馈。"
-                case 29:
-                    if (info.feedbackDay14Viewed)
-                        return true
-                    else
-                        return "(viewedFeedback) 请先查看第14天的反馈。"
-                default:
-                    console.error("viewedFeedback: taskDay is not in the list")
-                    return "(viewedFeedback) 这是一个程序错误。请通知管理员联系开发者。"
-
-            }
-        }
-
-
-        // if user has feedback, they should not be able to access the task
-        static hasFeedback(taskDay: number): true | string {
-            switch (taskDay) {
-                case 7:
-                    if (info.feedbackDay6 !== "")
-                        return true
-                    else
-                        return "(hasFeedback) 管理员还未为您提供第6天的反馈。"
-                case 9:
-                    if (info.feedbackDay8 !== "")
-                        return true
-                    else
-                        return "(hasFeedback) 管理员还未为您提供第8天的反馈。"
-                case 11:
-                    if (info.feedbackDay10 !== "")
-                        return true
-                    else
-                        return "(hasFeedback) 管理员还未为您提供第10天的反馈。"
-                case 13:
-                    if (info.feedbackDay12 !== "")
-                        return true
-                    else
-                        return "(hasFeedback) 管理员还未为您提供第12天的反馈。"
-                case 15:
-                    if (info.feedbackDay14 !== "")
-                        return true
-                    else
-                        return "(hasFeedback) 管理员还未为您提供第14天的反馈。"
-                default:
-                    console.error("hasFeedback: taskDay is not in the list")
-                    return "(hasFeedback) 这是一个程序错误。请通知管理员联系开发者。"
-            }
-        }
-
-        static laterOrEqualToDayProgress(taskDay: number): true | string {
-            if (Number(info.day) >= taskDay)
-                return true
-            else
-                return "(laterOrEqualToDayProgress) 当前任务编号为" + taskDay + "，大于当前用户的任务编号：[" + info.day + "] 。"
-        }
-
-
-        // check access with given task day and requirements
-        static checkAccess(taskDay: number, rule: Rule): true | string[] {
-            const reasons: string[] = []
-            const check = (result: true | string) => {
-                if (result !== true) {
-                    reasons.push(result)
-                }
-            }
-            if (rule === Rule.basic || rule === Rule.viewFbFirst) {
-                check(this.isValidUser())
-                check(this.equalDayProgress(taskDay))
-                check(this.isValidTimeRange(taskDay))
-            }
-            switch (rule) {
-                case Rule.feedback:
-                    check(this.hasFeedback(taskDay))
-                    break
-                case Rule.viewFbFirst:
-                    check(this.viewedFeedback(taskDay))
-                    break
-                case Rule.video:
-                    check(this.isValidUser())
-                    check(this.afterEarlistStartDate(taskDay))
-                    check(this.laterOrEqualToDayProgress(taskDay))
-                    break
-                case Rule.global:
-                    check(this.isValidUser())
-                    break
-            }
-            if (reasons.length === 0)
-                return true
-            else
-                return reasons
-        }
-
-    }
 
     useEffect(() => {
         const response = async () => {
@@ -545,7 +554,8 @@ export function Home() {
         })
     }, [])
 
-    const globalAccess = AcsMngr.checkAccess(0, Rule.global)
+    const acsMngr = new AcsMngr(info)
+    const globalAccess = acsMngr.checkAccess(0, Rule.global)
 
     const Main = () => {
         return <div className={style.container}>
@@ -627,7 +637,7 @@ export function Home() {
                                 questionType={task.questionType}
                                 timeToFinish={task.timeToFinish}
                                 taskURL={task.taskURL}
-                                isOpen={AcsMngr.checkAccess(task.day, task.rule)} />
+                                    isOpen={acsMngr.checkAccess(task.day, task.rule)} />
                             )
                                 :
                                 info.expGroup === 'Waitlist' ? <>
@@ -639,7 +649,7 @@ export function Home() {
                                         questionType={task.questionType}
                                         timeToFinish={task.timeToFinish}
                                         taskURL={task.taskURL}
-                                        isOpen={AcsMngr.checkAccess(task.day, task.rule)} />
+                                        isOpen={acsMngr.checkAccess(task.day, task.rule)} />
                                     )}
                                 </>
                                     :

@@ -67,7 +67,12 @@ export default function Message() {
         <Header />
         <div className={style.messageWrapper}>
             <div className={style.message}>
-                {/* <MsgCard title='新反馈' message="Markdown **bold**" time={'Jul 15 2023 00:11:43 GMT+0800'} /> */}
+                {
+                    loading && <div className={style.loading}>加载中...</div>
+                }
+                {
+                    messages.length === 0 && !loading && <div className={style.noMsg}>还没有站内信哦</div>
+                }
                 {messages.sort((a: any, b: any) => b.id - a.id).map((msg: any) =>
                     <MsgCard {...msg} key={msg.id} />)}
             </div>
