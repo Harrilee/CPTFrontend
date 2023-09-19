@@ -16,7 +16,7 @@ import client11_avatar from './avatar/Client 11.png'
 import client12_avatar from './avatar/Client 12.png'
 import client13_avatar from './avatar/Client 13.png'
 import client14_avatar from './avatar/Client 14.png'
-import {useEffect, useState} from "react";
+import { useEffect, useState, useRef } from "react";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Draggable from 'react-draggable';
@@ -49,11 +49,14 @@ export function Game() {
 
     const [chat, setChat] = useState<any>([])
     const [score, setScore] = useState(0);
-    const [displayID, setDisplayID] = useState(0);
+    const [displayID, setDisplayID] = useState(window.location.href.includes('game1') ? 0 : 8);
     const [realID, setRealID] = useState(0);
     const [showArr, setShowArr] = useState<boolean[]>([]);
     const [names, setNames] = useState<string[]>([]);
     const visitorCount = 16;
+
+    const oldDisplayID = useRef(displayID);
+    const oldRealID = useRef(realID);
 
     const clientColorHighlight = () => {
         for (let i = 0; i < visitorCount; i++) {
@@ -92,10 +95,13 @@ export function Game() {
         //     setShowArr(showArr)
         //
         // }
+        console.log('elicitResponse', newshowArr, msgs, score, newDisplayID, realID, name_list)
 
         setScore(score)
-        setDisplayID(newDisplayID)
-        setRealID(realID)
+        setDisplayID(oldDisplayID.current)
+        setRealID(oldRealID.current)
+        oldDisplayID.current = newDisplayID;
+        oldRealID.current = realID;
         setShowArr((oldArr) => [...oldArr, ...newshowArr])
         setChat((chat: any) => [...chat, ...msgs])
         setNames(name_list)
