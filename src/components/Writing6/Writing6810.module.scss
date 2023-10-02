@@ -1,4 +1,3 @@
-
 .container {
     background-color: #eeebf3;
 
@@ -10,7 +9,7 @@
     }
     .line {
         border-bottom: 1px solid gray;
-        margin:0 1.5em 0 1.5em;
+        margin: 0 1.5em 0 1.5em;
     }
 
     .paragraph {
@@ -21,27 +20,25 @@
         display: flex;
         flex-direction: column;
         margin: 3em;
-
     }
     .button {
         margin-top: 1em;
-        background-color: #5A57FF;
+        background-color: #5a57ff;
         &:disabled {
-            background-color: #C4C4C4;
+            background-color: #c4c4c4;
             border: none;
         }
     }
-    textarea{
+    textarea {
         margin: 0 0 1em 0;
     }
-    .checkboxContainer{
+    .checkboxContainer {
         display: flex;
         flex-direction: row;
         align-items: center;
         margin: 0.8em 0 0.8em 0;
-
     }
-    .checkbox{
+    .checkbox {
         margin-left: 1em;
         height: 1em;
         width: 1em;
@@ -58,7 +55,7 @@
     margin: 80px auto;
     display: flex;
     flex-direction: column;
-    background-color: rgba(243, 246, 255, 0.80);
+    background-color: rgba(243, 246, 255, 0.8);
     border-radius: 32px;
 }
 
@@ -86,4 +83,9 @@
         border-color: #261274;
         border-right-color: transparent;
     }
+}
+
+pre code {
+    font-family: 'Microsoft Yahei', -apple-system, SimHei, sans-serif !important;
+    font-size: 20px !important;
 }

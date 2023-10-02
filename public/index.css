@@ -1,5 +1,7 @@
 html,
-body {
+body,
+code,
+pre {
     margin: 0;
     padding: 0;
     font-family: 'Microsoft Yahei', -apple-system, SimHei, sans-serif;

@@ -434,7 +434,7 @@ export function Writing6810(props: Prop) {
             </style>
             <div className={style.title}>第{props.day}天</div>
             <div style={{ margin: '3em' }}>
-                <Markdown>
+                <Markdown classname={style.markdown}>
                     {articles}
                 </Markdown>
             </div>
@@ -658,14 +658,6 @@ export function Writing6810(props: Prop) {
                                 onChange={handle5GCheckboxChange}
                             />
                         </div>
-                        <div className={style.checkboxContainer}>
-                            <div className={style.checkboxLabel}>h) 我没有发现自己的非适应性思维。</div>
-                            <input className={style.checkbox}
-                                type="checkbox"
-                                checked={fiveHisChecked}
-                                onChange={handle5HCheckboxChange}
-                            />
-                        </div>
                         <div className={fiveGisChecked ? style.thought : style.hiddenThought}>
                             <Form.Group controlId="content5g">
                                 <Form.Label>对应的想法：</Form.Label>
@@ -681,6 +673,14 @@ export function Writing6810(props: Prop) {
                                     请至少输入20个字
                                 </Form.Control.Feedback>
                             </Form.Group>
+                        </div>
+                        <div className={style.checkboxContainer}>
+                            <div className={style.checkboxLabel}>h) 我没有发现自己的非适应性思维。</div>
+                            <input className={style.checkbox}
+                                type="checkbox"
+                                checked={fiveHisChecked}
+                                onChange={handle5HCheckboxChange}
+                            />
                         </div>
                     </Form.Group>
 
@@ -847,14 +847,6 @@ export function Writing6810(props: Prop) {
                                 onChange={handle6GCheckboxChange}
                             />
                         </div>
-                        <div className={style.checkboxContainer}>
-                            <div className={style.checkboxLabel}>h) 我没有发现自己的非适应性思维，所以我不需要提问。</div>
-                            <input className={style.checkbox}
-                                type="checkbox"
-                                checked={sixHisChecked}
-                                onChange={handle6HCheckboxChange}
-                            />
-                        </div>
                         <div className={sixGisChecked ? style.thought : style.hiddenThought}>
                             <Form.Group controlId="content6g">
                                 <Form.Label>对应的想法：</Form.Label>
@@ -870,6 +862,14 @@ export function Writing6810(props: Prop) {
                                     请至少输入20个字
                                 </Form.Control.Feedback>
                             </Form.Group>
+                        </div>
+                        <div className={style.checkboxContainer}>
+                            <div className={style.checkboxLabel}>h) 我没有发现自己的非适应性思维，所以我不需要提问。</div>
+                            <input className={style.checkbox}
+                                type="checkbox"
+                                checked={sixHisChecked}
+                                onChange={handle6HCheckboxChange}
+                            />
                         </div>
                     </Form.Group>
                     <Form.Group controlId="formBasicContent7">
