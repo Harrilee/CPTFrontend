@@ -159,7 +159,10 @@ export function Header() {
             <Modal.Body>
                 <p style={{ fontSize: '16px' }}>
                     如您有任何疑问，欢迎通过邮箱联系我们：<a href='mailto:shanghai.nyuhealthstudy@nyu.edu'>shanghai.nyuhealthstudy@nyu.edu</a>
+                    <br />
+                    请您再联系我们时注明您的用户ID，您可以在每日任务页面的左上角找到您的ID号。
                 </p>
+
             </Modal.Body>
         </Modal>
     </header>
