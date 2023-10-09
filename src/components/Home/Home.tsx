@@ -172,6 +172,9 @@ export class AcsMngr {
             case Rule.global:
                 check(this.isValidUser())
                 break
+            case Rule.timewindow:
+                check(this.isValidUser())
+                check(this.isValidTimeRange(taskDay))
         }
         if (reasons.length === 0)
             return true
@@ -188,6 +191,7 @@ export enum Rule {
     'viewFbFirst', // basic, viewedFeedback
     'video', // isValidUser, afterEarlistStartDate
     'global', // isValidUser -> this is for global display
+    'timewindow' // isValidUser, isValidTimeRange
 }
 
 export const tasks_expgroup = [
@@ -316,21 +320,21 @@ export const tasks_expgroup = [
         questionType: '问卷调查',
         timeToFinish: 25,
         taskURL: '/day29ct',
-        rule: Rule.viewFbFirst
+        rule: Rule.timewindow
     },
     {
         day: 45,
         questionType: '问卷调查',
         timeToFinish: 25,
         taskURL: '/day45',
-        rule: Rule.basic
+        rule: Rule.timewindow
     },
     {
         day: 105,
         questionType: '问卷调查',
         timeToFinish: 25,
         taskURL: '/day105',
-        rule: Rule.basic
+        rule: Rule.timewindow
     }
 ]
 
