@@ -127,7 +127,7 @@ export function ChatBox(props: Prop) {
         let transition = false
 
         for (const [key, value] of Object.entries(choices)) {
-            choicesArray.push(value as string)
+            value && choicesArray.push(value as string)
         }
 
         // console.log('before **************')
